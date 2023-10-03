@@ -1,0 +1,520 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>第12条-使用复合字面值作为初值构造器 · 深入理解Java虚拟机</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-insert-logo/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="第13条-了解切片实现原理并高效使用.html" />
+    
+    
+    <link rel="prev" href="第11条-尽量定义零值可用的类型.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="第1条-了解Go语言的诞生和演进.html">
+            
+                <a href="第1条-了解Go语言的诞生和演进.html">
+            
+                    
+                    第1条-了解Go语言的诞生和演进
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="第2条-选择适当的Go语言版本.html">
+            
+                <a href="第2条-选择适当的Go语言版本.html">
+            
+                    
+                    第2条-选择适当的Go语言版本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="第3条-理解Go语言的设计哲学.html">
+            
+                <a href="第3条-理解Go语言的设计哲学.html">
+            
+                    
+                    第3条-理解Go语言的设计哲学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                <a href="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                    
+                    第4条-使用Go语言原生编程思维来写Go代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                <a href="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                    
+                    第5条-使用得到工人且广泛使用的项目结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="第6条-提交前使用gofmt格式化源码.html">
+            
+                <a href="第6条-提交前使用gofmt格式化源码.html">
+            
+                    
+                    第6条-提交前使用gofmt格式化源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                <a href="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                    
+                    第7条-使用Go命名惯例对标识符进行命名
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="第8条-使用一致的变量声明形式.html">
+            
+                <a href="第8条-使用一致的变量声明形式.html">
+            
+                    
+                    第8条-使用一致的变量声明形式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="第9条-使用无类型常量简化代码.html">
+            
+                <a href="第9条-使用无类型常量简化代码.html">
+            
+                    
+                    第9条-使用无类型常量简化代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="第10条-使用iota实现枚举常量.html">
+            
+                <a href="第10条-使用iota实现枚举常量.html">
+            
+                    
+                    第10条-使用iota实现枚举常量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="第11条-尽量定义零值可用的类型.html">
+            
+                <a href="第11条-尽量定义零值可用的类型.html">
+            
+                    
+                    第11条-尽量定义零值可用的类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.13" data-path="第12条-使用复合字面值作为初值构造器.html">
+            
+                <a href="第12条-使用复合字面值作为初值构造器.html">
+            
+                    
+                    第12条-使用复合字面值作为初值构造器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="第13条-了解切片实现原理并高效使用.html">
+            
+                <a href="第13条-了解切片实现原理并高效使用.html">
+            
+                    
+                    第13条-了解切片实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="第14条-了解map实现原理并高效使用.html">
+            
+                <a href="第14条-了解map实现原理并高效使用.html">
+            
+                    
+                    第14条-了解map实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >第12条-使用复合字面值作为初值构造器</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#&#x7ED3;&#x6784;&#x4F53;&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;"><b>1. </b>&#x7ED3;&#x6784;&#x4F53;&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;</a></li><li><span class="title-icon "></span><a href="#&#x6570;&#x7EC4;--&#x5207;&#x7247;&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;"><b>2. </b>&#x6570;&#x7EC4; / &#x5207;&#x7247;&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;</a></li><li><span class="title-icon "></span><a href="#map&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;"><b>3. </b>map&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;</a></li></ul></div><a href="#&#x7ED3;&#x6784;&#x4F53;&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><blockquote>
+<p>Go&#x63D0;&#x4F9B;&#x7684;&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;&#xFF08;composite literal&#xFF09;&#x8BED;&#x6CD5;&#x53EF;&#x4EE5;&#x4F5C;&#x4E3A;&#x590D;&#x5408;&#x7C7B;&#x578B;&#x53D8;&#x91CF;&#x7684;&#x521D;&#x503C;&#x6784;&#x9020;&#x5668;&#x3002;</p>
+</blockquote>
+<pre class="language-"><code class="lang-go"><span class="token keyword">var</span> s myStruct
+s<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">&quot;tony&quot;</span>
+s<span class="token punctuation">.</span>age <span class="token operator">=</span> <span class="token number">23</span>
+<span class="token keyword">var</span> a <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">13</span>
+a<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">14</span>
+<span class="token operator">...</span>
+a<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">17</span>
+sl <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span>
+sl<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">23</span>
+sl<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">24</span>
+<span class="token operator">...</span>
+sl<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">27</span>
+m <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span>
+m<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;hello&quot;</span>
+m<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;gopher&quot;</span>
+m<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;!&quot;</span>
+<span class="token comment">// &#x4F7F;&#x7528;&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;&#x8FDB;&#x884C;&#x7B80;&#x5316;</span>
+s <span class="token operator">:=</span> myStruct<span class="token punctuation">{</span><span class="token string">&quot;tony&quot;</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">}</span>
+a <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">13</span><span class="token punctuation">,</span> <span class="token number">14</span><span class="token punctuation">,</span> <span class="token number">15</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">,</span> <span class="token number">17</span><span class="token punctuation">}</span>
+sl <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">23</span><span class="token punctuation">,</span> <span class="token number">24</span><span class="token punctuation">,</span> <span class="token number">25</span><span class="token punctuation">,</span> <span class="token number">26</span><span class="token punctuation">,</span> <span class="token number">27</span><span class="token punctuation">}</span>
+m <span class="token operator">:=</span> <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token string">&quot;hello&quot;</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">:</span><span class="token string">&quot;gopher&quot;</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">:</span><span class="token string">&quot;!&quot;</span><span class="token punctuation">}</span>
+</code></pre>
+<h1 id="&#x7ED3;&#x6784;&#x4F53;&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;"><a name="&#x7ED3;&#x6784;&#x4F53;&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;" class="anchor-navigation-ex-anchor" href="#&#x7ED3;&#x6784;&#x4F53;&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;"><i class="fa fa-link" aria-hidden="true"></i></a>1. &#x7ED3;&#x6784;&#x4F53;&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;</h1>
+<ul>
+<li>Go&#x63A8;&#x8350;&#x4F7F;&#x7528; <strong><u>field:value</u></strong> &#x7684;&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;&#x5F62;&#x5F0F;&#x5BF9; struct &#x7C7B;&#x578B;&#x53D8;&#x91CF;&#x8FDB;&#x884C;&#x503C;&#x6784;&#x9020;&#x3002;&#x8FD9;&#x79CD;&#x503C;&#x6784;&#x9020;&#x65B9;&#x5F0F;&#x53EF;&#x4EE5;&#x964D;&#x4F4E; <u>&#x7ED3;&#x6784;&#x4F53;&#x7C7B;&#x578B;&#x4F7F;&#x7528;&#x8005;</u> &#x4E0E; <u>&#x7ED3;&#x6784;&#x4F53;&#x7C7B;&#x578B;&#x8BBE;&#x8BA1;&#x8005;</u> &#x4E4B;&#x95F4;&#x7684;&#x8026;&#x5408;&#xFF0C;&#x8FD9;&#x4E5F;&#x662F;Go&#x8BED;&#x8A00;&#x7684;&#x60EF;&#x7528;&#x6CD5;</li>
+<li><strong><u>field:value</u></strong> &#x5F62;&#x5F0F;&#x5B57;&#x9762;&#x503C;&#x4E2D;&#x7684;&#x5B57;&#x6BB5;&#x53EF;&#x4EE5;&#x4EE5;&#x4EFB;&#x610F;&#x6B21;&#x5E8F;&#x51FA;&#x73B0;&#xFF0C;&#x672A;&#x663E;&#x5F0F;&#x51FA;&#x73B0;&#x5728;&#x5B57;&#x9762;&#x503C;&#x7684;&#x7ED3;&#x6784;&#x4F53;&#x4E2D;&#x7684;&#x5B57;&#x6BB5;&#x5C06;&#x91C7;&#x7528;&#x5176;&#x5BF9;&#x5E94;&#x7C7B;&#x578B;&#x7684;&#x96F6;&#x503C;</li>
+<li>&#x4E0D;&#x5141;&#x8BB8;&#x5C06;&#x4ECE;&#x5176;&#x4ED6;&#x5305;&#x5BFC;&#x5165;&#x7684;&#x7ED3;&#x6784;&#x4F53;&#x4E2D;&#x7684;&#x672A;&#x5BFC;&#x51FA;&#x5B57;&#x6BB5;&#x4F5C;&#x4E3A;&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;&#x4E2D;&#x7684;field&#xFF0C;&#x8FD9;&#x4F1A;&#x5BFC;&#x81F4;&#x7F16;&#x8BD1;&#x9519;&#x8BEF;</li>
+</ul>
+<h1 id="&#x6570;&#x7EC4;--&#x5207;&#x7247;&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;"><a name="&#x6570;&#x7EC4;--&#x5207;&#x7247;&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;" class="anchor-navigation-ex-anchor" href="#&#x6570;&#x7EC4;--&#x5207;&#x7247;&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;"><i class="fa fa-link" aria-hidden="true"></i></a>2. &#x6570;&#x7EC4; / &#x5207;&#x7247;&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;</h1>
+<p>&#x6570;&#x7EC4; / &#x5207;&#x7247;&#x4F7F;&#x7528;&#x4E0B;&#x6807;&#x4F5C;&#x4E3A;field&#xFF0C;&#x4ECE;&#x800C;&#x5B9E;&#x73B0;&#x5176;&#x9AD8;&#x7EA7;&#x6784;&#x9020;&#x5F62;&#x5F0F;&#xFF1A;</p>
+<pre class="language-"><code class="lang-go">numbers <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">256</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token char">&apos;a&apos;</span><span class="token punctuation">:</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token char">&apos;b&apos;</span><span class="token punctuation">:</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token char">&apos;c&apos;</span><span class="token punctuation">:</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token char">&apos;d&apos;</span><span class="token punctuation">:</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token char">&apos;e&apos;</span><span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token char">&apos;y&apos;</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token char">&apos;x&apos;</span><span class="token punctuation">:</span> <span class="token number">5</span><span class="token punctuation">}</span>
+<span class="token comment">// [10]float{-1, 0, 0, 0, -0.1, -0.1, 0, 0.1, 0, -1}</span>
+fnumbers <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token operator">...</span><span class="token punctuation">]</span>float<span class="token punctuation">{</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">:</span> <span class="token operator">-</span><span class="token number">0.1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.1</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0.1</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">:</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">}</span>
+<span class="token comment">// $GOROOT/src/sort/search_test.go</span>
+<span class="token keyword">var</span> data <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">:</span> <span class="token operator">-</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">:</span> <span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">:</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">:</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">:</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">:</span> <span class="token number">11</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">:</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">:</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">11</span><span class="token punctuation">:</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">:</span> <span class="token number">1000</span><span class="token punctuation">,</span> <span class="token number">13</span><span class="token punctuation">:</span> <span class="token number">10000</span><span class="token punctuation">}</span>
+<span class="token keyword">var</span> sdata <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">:</span> <span class="token string">&quot;f&quot;</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">:</span> <span class="token string">&quot;foo&quot;</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">:</span> <span class="token string">&quot;foobar&quot;</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">:</span> <span class="token string">&quot;x&quot;</span><span class="token punctuation">}</span>
+</code></pre>
+<h1 id="map&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;"><a name="map&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;" class="anchor-navigation-ex-anchor" href="#map&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;"><i class="fa fa-link" aria-hidden="true"></i></a>3. map&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;</h1>
+<p>&#x7531;&#x4E8E;map&#x7C7B;&#x578B;&#x5177;&#x6709;&#x539F;&#x751F;&#x7684; <strong><u>key:value</u></strong> &#x6784;&#x9020;&#x5F62;&#x5F0F;&#xFF0C;&#x56E0;&#x6B64;&#x4F7F;&#x7528;&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;&#x4F5C;&#x4E3A;&#x521D;&#x503C;&#x6784;&#x9020;&#x5668;&#x5C31;&#x663E;&#x5F97;&#x81EA;&#x7136;&#x8BB8;&#x591A;&#x3002;</p>
+<pre class="language-"><code class="lang-go"><span class="token comment">// $GOROOT/src/time/format.go</span>
+<span class="token keyword">var</span> unitMap <span class="token operator">=</span> <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int64</span><span class="token punctuation">{</span>
+    <span class="token string">&quot;ns&quot;</span><span class="token punctuation">:</span> <span class="token function">int64</span><span class="token punctuation">(</span>Nanosecond<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;us&quot;</span><span class="token punctuation">:</span> <span class="token function">int64</span><span class="token punctuation">(</span>Microsecond<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;&#xB5;s&quot;</span><span class="token punctuation">:</span> <span class="token function">int64</span><span class="token punctuation">(</span>Microsecond<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// U+00B5 = &#x5FAE;&#x7B26;&#x53F7;</span>
+    <span class="token string">&quot;&#x3BC;s&quot;</span><span class="token punctuation">:</span> <span class="token function">int64</span><span class="token punctuation">(</span>Microsecond<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// U+03BC = &#x5E0C;&#x814A;&#x5B57;&#x2E9F;&#x3BC;</span>
+    <span class="token string">&quot;ms&quot;</span><span class="token punctuation">:</span> <span class="token function">int64</span><span class="token punctuation">(</span>Millisecond<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token operator">...</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// $GOROOT/src/net/http/server.go</span>
+<span class="token keyword">var</span> stateName <span class="token operator">=</span> <span class="token keyword">map</span><span class="token punctuation">[</span>ConnState<span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">{</span>
+    StateNew<span class="token punctuation">:</span> <span class="token string">&quot;new&quot;</span><span class="token punctuation">,</span>
+    StateActive<span class="token punctuation">:</span> <span class="token string">&quot;active&quot;</span><span class="token punctuation">,</span>
+    StateIdle<span class="token punctuation">:</span> <span class="token string">&quot;idle&quot;</span><span class="token punctuation">,</span>
+    StateHijacked<span class="token punctuation">:</span> <span class="token string">&quot;hijacked&quot;</span><span class="token punctuation">,</span>
+    StateClosed<span class="token punctuation">:</span> <span class="token string">&quot;closed&quot;</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/poker-svg" target="_blank">YangXin Xu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-10-03 20:25:13 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="第11条-尽量定义零值可用的类型.html" class="navigation navigation-prev " aria-label="Previous page: 第11条-尽量定义零值可用的类型">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="第13条-了解切片实现原理并高效使用.html" class="navigation navigation-next " aria-label="Next page: 第13条-了解切片实现原理并高效使用">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"第12条-使用复合字面值作为初值构造器","level":"1.13","depth":1,"next":{"title":"第13条-了解切片实现原理并高效使用","level":"1.14","depth":1,"path":"第13条-了解切片实现原理并高效使用.md","ref":"第13条-了解切片实现原理并高效使用.md","articles":[]},"previous":{"title":"第11条-尽量定义零值可用的类型","level":"1.12","depth":1,"path":"第11条-尽量定义零值可用的类型.md","ref":"第11条-尽量定义零值可用的类型.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","-lunr","-search","search-pro","-sharing","splitter","hide-element","insert-logo","code","livereload"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"livereload":{},"page-footer-ex":{"copyright":"By [YangXin Xu](https://github.com/poker-svg)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"expandable-chapters-small":{},"copy-code-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"style":"background: none; max-height: 120px; min-height: 120px","url":"./images/icon.png"},"expandable-chapters":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"深入理解Java虚拟机","gitbook":"*"},"file":{"path":"第12条-使用复合字面值作为初值构造器.md","mtime":"2023-10-03T12:25:13.108Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-10-03T16:41:45.032Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-hide-element/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-insert-logo/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

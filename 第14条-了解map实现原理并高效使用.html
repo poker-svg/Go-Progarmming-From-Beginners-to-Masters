@@ -1,0 +1,601 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>第14条-了解map实现原理并高效使用 · 深入理解Java虚拟机</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-insert-logo/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="第13条-了解切片实现原理并高效使用.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="第1条-了解Go语言的诞生和演进.html">
+            
+                <a href="第1条-了解Go语言的诞生和演进.html">
+            
+                    
+                    第1条-了解Go语言的诞生和演进
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="第2条-选择适当的Go语言版本.html">
+            
+                <a href="第2条-选择适当的Go语言版本.html">
+            
+                    
+                    第2条-选择适当的Go语言版本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="第3条-理解Go语言的设计哲学.html">
+            
+                <a href="第3条-理解Go语言的设计哲学.html">
+            
+                    
+                    第3条-理解Go语言的设计哲学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                <a href="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                    
+                    第4条-使用Go语言原生编程思维来写Go代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                <a href="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                    
+                    第5条-使用得到工人且广泛使用的项目结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="第6条-提交前使用gofmt格式化源码.html">
+            
+                <a href="第6条-提交前使用gofmt格式化源码.html">
+            
+                    
+                    第6条-提交前使用gofmt格式化源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                <a href="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                    
+                    第7条-使用Go命名惯例对标识符进行命名
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="第8条-使用一致的变量声明形式.html">
+            
+                <a href="第8条-使用一致的变量声明形式.html">
+            
+                    
+                    第8条-使用一致的变量声明形式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="第9条-使用无类型常量简化代码.html">
+            
+                <a href="第9条-使用无类型常量简化代码.html">
+            
+                    
+                    第9条-使用无类型常量简化代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="第10条-使用iota实现枚举常量.html">
+            
+                <a href="第10条-使用iota实现枚举常量.html">
+            
+                    
+                    第10条-使用iota实现枚举常量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="第11条-尽量定义零值可用的类型.html">
+            
+                <a href="第11条-尽量定义零值可用的类型.html">
+            
+                    
+                    第11条-尽量定义零值可用的类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="第12条-使用复合字面值作为初值构造器.html">
+            
+                <a href="第12条-使用复合字面值作为初值构造器.html">
+            
+                    
+                    第12条-使用复合字面值作为初值构造器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="第13条-了解切片实现原理并高效使用.html">
+            
+                <a href="第13条-了解切片实现原理并高效使用.html">
+            
+                    
+                    第13条-了解切片实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.15" data-path="第14条-了解map实现原理并高效使用.html">
+            
+                <a href="第14条-了解map实现原理并高效使用.html">
+            
+                    
+                    第14条-了解map实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >第14条-了解map实现原理并高效使用</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#&#x4EC0;&#x4E48;&#x662F;map"><b>1. </b>&#x4EC0;&#x4E48;&#x662F;map</a></li><li><span class="title-icon "></span><a href="#map&#x7684;&#x57FA;&#x672C;&#x64CD;&#x4F5C;"><b>2. </b>map&#x7684;&#x57FA;&#x672C;&#x64CD;&#x4F5C;</a></li><li><span class="title-icon "></span><a href="#map&#x7684;&#x5185;&#x90E8;&#x5B9E;&#x73B0;"><b>3. </b>map&#x7684;&#x5185;&#x90E8;&#x5B9E;&#x73B0;</a></li><ul><li><span class="title-icon "></span><a href="#&#x521D;&#x59CB;&#x72B6;&#x6001;"><b>3.1. </b>&#x521D;&#x59CB;&#x72B6;&#x6001;</a></li><ul><li><span class="title-icon "></span><a href="#tophash&#x533A;&#x57DF;"><b>3.1.1. </b>tophash&#x533A;&#x57DF;</a></li><li><span class="title-icon "></span><a href="#key&#x5B58;&#x50A8;&#x533A;&#x57DF;"><b>3.1.2. </b>key&#x5B58;&#x50A8;&#x533A;&#x57DF;</a></li><li><span class="title-icon "></span><a href="#value&#x5B58;&#x50A8;&#x533A;&#x57DF;"><b>3.1.3. </b>value&#x5B58;&#x50A8;&#x533A;&#x57DF;</a></li></ul><li><span class="title-icon "></span><a href="#map&#x6269;&#x5BB9;"><b>3.2. </b>map&#x6269;&#x5BB9;</a></li><li><span class="title-icon "></span><a href="#map&#x548C;&#x5E76;&#x53D1;"><b>3.3. </b>map&#x548C;&#x5E76;&#x53D1;</a></li></ul><li><span class="title-icon "></span><a href="#&#x5C3D;&#x91CF;&#x4F7F;&#x7528;cap&#x53C2;&#x6570;&#x521B;&#x5EFA;map"><b>4. </b>&#x5C3D;&#x91CF;&#x4F7F;&#x7528;cap&#x53C2;&#x6570;&#x521B;&#x5EFA;map</a></li><li><span class="title-icon "></span><a href="#&#x5C0F;&#x7ED3;"><b>5. </b>&#x5C0F;&#x7ED3;</a></li></ul></div><a href="#&#x4EC0;&#x4E48;&#x662F;map" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="&#x4EC0;&#x4E48;&#x662F;map"><a name="&#x4EC0;&#x4E48;&#x662F;map" class="anchor-navigation-ex-anchor" href="#&#x4EC0;&#x4E48;&#x662F;map"><i class="fa fa-link" aria-hidden="true"></i></a>1. &#x4EC0;&#x4E48;&#x662F;map</h1>
+<ul>
+<li><p>map&#x5BF9;value&#x7684;&#x7C7B;&#x578B;&#x6CA1;&#x6709;&#x9650;&#x5236;&#xFF0C;&#x4F46;&#x5BF9;key&#x7684;&#x7C7B;&#x578B;&#x6709;&#x4E25;&#x683C;&#x8981;&#x6C42;&#xFF1A;<strong><u>key&#x7684;&#x7C7B;&#x578B;&#x5E94;&#x8BE5;&#x6768;&#x54E5;&#x5B9A;&#x4E49;&#x4E86;&#x591A;&#x4E3A; &#x201C;==&#x201D; &#x548C; &#x201C;!=&#x201D; &#x4E24;&#x4E2A;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x64CD;&#x4F5C;&#x6570;&#x662F;&#x7684;&#x884C;&#x4E3A;</u></strong> &#x3002;</p>
+</li>
+<li><p>&#x56E0;&#x6B64;&#x51FD;&#x6570;&#x3001;map&#x3001;&#x5207;&#x7247;&#x4E0D;&#x80FD;&#x4F5C;&#x4E3A;map&#x7684;key&#x7C7B;&#x578B;</p>
+</li>
+<li><p>map&#x7C7B;&#x578B;&#x4E0D;&#x652F;&#x6301;&#x96F6;&#x503C;&#x53EF;&#x7528;&#x3002;&#x56E0;&#x6B64;&#x5BF9;&#x5904;&#x4E8E;&#x96F6;&#x503C;&#x72B6;&#x6001;&#x7684;map&#x53D8;&#x91CF;&#x4F1A;&#x5BFC;&#x81F4;&#x8FD0;&#x884C;&#x65F6;panic&#xFF1A;</p>
+<ul>
+<li><pre class="language-"><code class="lang-go">  <span class="token keyword">var</span> m <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token comment">// m = nil</span>
+  m<span class="token punctuation">[</span><span class="token string">&quot;key&quot;</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span> <span class="token comment">// panic: assignment to entry in nil map</span>
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>&#x521B;&#x5EFA;map&#x7C7B;&#x578B;&#x53D8;&#x91CF;&#x6709;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#xFF1A;</p>
+<ol>
+<li><p>&#x4F7F;&#x7528;&#x590D;&#x5408;&#x5B57;&#x9762;&#x503C;&#x521B;&#x5EFA;map&#x7C7B;&#x578B;&#x53D8;&#x91CF;</p>
+<ul>
+<li><pre class="language-"><code class="lang-go">  <span class="token comment">// $GOROOT/src/net/status.go</span>
+  <span class="token keyword">var</span> statusText <span class="token operator">=</span> <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">{</span>
+   StatusOK<span class="token punctuation">:</span> <span class="token string">&quot;OK&quot;</span><span class="token punctuation">,</span>
+   StatusCreated<span class="token punctuation">:</span> <span class="token string">&quot;Created&quot;</span><span class="token punctuation">,</span>
+   StatusAccepted<span class="token punctuation">:</span> <span class="token string">&quot;Accepted&quot;</span><span class="token punctuation">,</span>
+   <span class="token operator">...</span>
+  <span class="token punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>&#x4F7F;&#x7528;make&#x521B;&#x5EFA;map&#x7C7B;&#x578B;&#x53D8;&#x91CF;</p>
+<ul>
+<li><pre class="language-"><code class="lang-go">  <span class="token comment">// $GOROOT/src/net/client.go</span>
+  icookies <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>Cookie<span class="token punctuation">)</span>
+  <span class="token comment">// $GOROOT/src/net/h2_bundle.go</span>
+  http2commonLowerHeader <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">,</span> <span class="token function">len</span><span class="token punctuation">(</span>common<span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p>map&#x4E5F;&#x662F;&#x5F15;&#x7528;&#x7C7B;&#x578B;&#xFF0C;&#x5C06;&#x5176;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x4F20;&#x5165;&#x4E0D;&#x4F1A;&#x6709;&#x5F88;&#x5927;&#x7684;&#x6027;&#x80FD;&#x635F;&#x8017;&#x3002;</p>
+<h1 id="map&#x7684;&#x57FA;&#x672C;&#x64CD;&#x4F5C;"><a name="map&#x7684;&#x57FA;&#x672C;&#x64CD;&#x4F5C;" class="anchor-navigation-ex-anchor" href="#map&#x7684;&#x57FA;&#x672C;&#x64CD;&#x4F5C;"><i class="fa fa-link" aria-hidden="true"></i></a>2. map&#x7684;&#x57FA;&#x672C;&#x64CD;&#x4F5C;</h1>
+<p>(&#x7565;)</p>
+<blockquote>
+<p>&#x6CE8;&#x610F;&#xFF1A;&#x5BF9;map&#x505A;&#x591A;&#x6B21;&#x904D;&#x5386;&#xFF0C;&#x904D;&#x5386;&#x7684;&#x5143;&#x7D20;&#x6B21;&#x5E8F;&#x5E76;&#x4E0D;&#x76F8;&#x540C;&#x3002;</p>
+</blockquote>
+<h1 id="map&#x7684;&#x5185;&#x90E8;&#x5B9E;&#x73B0;"><a name="map&#x7684;&#x5185;&#x90E8;&#x5B9E;&#x73B0;" class="anchor-navigation-ex-anchor" href="#map&#x7684;&#x5185;&#x90E8;&#x5B9E;&#x73B0;"><i class="fa fa-link" aria-hidden="true"></i></a>3. map&#x7684;&#x5185;&#x90E8;&#x5B9E;&#x73B0;</h1>
+<p>&#x5728;&#x7F16;&#x8BD1;&#x9636;&#x6BB5;Go&#x7F16;&#x8BD1;&#x5668;&#x4F1A;&#x5C06;&#x8BED;&#x6CD5;&#x5C42;&#x9762;&#x7684;map&#x64CD;&#x4F5C;&#x91CD;&#x5199;&#x6210;&#x8FD0;&#x884C;&#x65F6;&#x5BF9;&#x5E94;&#x7684;&#x51FD;&#x6570;&#x8C03;&#x7528;&#xFF1A;</p>
+<pre class="language-"><code class="lang-go"><span class="token comment">// $GOROOT/src/cmd/compile/internal/gc/walk.go</span>
+<span class="token comment">// $GOROOT/src/runtime/map.go</span>
+m <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span>keyType<span class="token punctuation">]</span>valType<span class="token punctuation">,</span> capacityhint<span class="token punctuation">)</span> &#x2192; m <span class="token operator">:=</span>
+runtime<span class="token punctuation">.</span><span class="token function">makemap</span><span class="token punctuation">(</span>maptype<span class="token punctuation">,</span> capacityhint<span class="token punctuation">,</span> m<span class="token punctuation">)</span>
+v <span class="token operator">:=</span> m<span class="token punctuation">[</span><span class="token string">&quot;key&quot;</span><span class="token punctuation">]</span> &#x2192; v <span class="token operator">:=</span> runtime<span class="token punctuation">.</span><span class="token function">mapaccess1</span><span class="token punctuation">(</span>maptype<span class="token punctuation">,</span> m<span class="token punctuation">,</span> <span class="token string">&quot;key&quot;</span><span class="token punctuation">)</span>
+v<span class="token punctuation">,</span> ok <span class="token operator">:=</span> m<span class="token punctuation">[</span><span class="token string">&quot;key&quot;</span><span class="token punctuation">]</span> &#x2192; v<span class="token punctuation">,</span> ok <span class="token operator">:=</span> runtime<span class="token punctuation">.</span><span class="token function">mapaccess2</span><span class="token punctuation">(</span>maptype<span class="token punctuation">,</span> m<span class="token punctuation">,</span> <span class="token string">&quot;key&quot;</span><span class="token punctuation">)</span>
+m<span class="token punctuation">[</span><span class="token string">&quot;key&quot;</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;value&quot;</span> &#x2192; v <span class="token operator">:=</span> runtime<span class="token punctuation">.</span><span class="token function">mapassign</span><span class="token punctuation">(</span>maptype<span class="token punctuation">,</span> m<span class="token punctuation">,</span> <span class="token string">&quot;key&quot;</span><span class="token punctuation">)</span>
+<span class="token comment">// v&#x662F;&#x2F64;&#x4E8E;&#x540E;&#x7EED;&#x5B58;&#x50A8;value &#x7684;&#x7A7A;&#x95F4;&#x7684;&#x5730;&#x5740;</span>
+<span class="token function">delete</span><span class="token punctuation">(</span>m<span class="token punctuation">,</span> <span class="token string">&quot;key&quot;</span><span class="token punctuation">)</span> &#x2192; runtime<span class="token punctuation">.</span><span class="token function">mapdelete</span><span class="token punctuation">(</span>maptype<span class="token punctuation">,</span> m<span class="token punctuation">,</span> <span class="token string">&quot;key&quot;</span><span class="token punctuation">)</span>
+</code></pre>
+<p>&#x4E0B;&#x56FE;&#x662F;map&#x7C7B;&#x578B;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x5C42;&#x5B9E;&#x73B0;&#x7684;&#x793A;&#x610F;&#x56FE;&#xFF1A;</p>
+<p><img src="images/image-20231003234446365.png" alt="image-20231003234446365"></p>
+<hr>
+<h2 id="&#x521D;&#x59CB;&#x72B6;&#x6001;"><a name="&#x521D;&#x59CB;&#x72B6;&#x6001;" class="anchor-navigation-ex-anchor" href="#&#x521D;&#x59CB;&#x72B6;&#x6001;"><i class="fa fa-link" aria-hidden="true"></i></a>3.1. &#x521D;&#x59CB;&#x72B6;&#x6001;</h2>
+<ol>
+<li><strong>hmap</strong> &#x662F;map&#x7C7B;&#x578B;&#x7684;header&#xFF0C;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;map&#x7C7B;&#x578B;&#x7684;&#x63CF;&#x8FF0;&#x7B26;&#xFF0C;&#x4ED6;&#x5B58;&#x50A8;&#x4E86;&#x540E;&#x5E8F;map&#x7C7B;&#x578B;&#x64CD;&#x4F5C;&#x6240;&#x9700;&#x7684;&#x6240;&#x6709;&#x4FE1;&#x606F;</li>
+<li><strong><u><code>count</code></u></strong> &#xFF1A;&#x5F53;&#x524D;map&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x4E2A;&#x6570;&#xFF1B;&#x4E5F;&#x662F;len&#x7684;&#x8FD4;&#x56DE;&#x503C;&#xFF1B;</li>
+<li><strong><u><code>flags</code></u></strong> &#xFF1A;&#x5F53;&#x524D;map&#x6240;&#x5904;&#x7684;&#x72B6;&#x6001;&#x6807;&#x5FD7;&#xFF0C;&#x76EE;&#x524D;&#x5B9A;&#x4E49;&#x4E86;4&#x4E2A;&#x72B6;&#x6001;&#x503C;&#x2014;&#x2014;<strong>iterator</strong> &#x3001;<strong>oldIterator</strong> &#x3001;<strong>hashWriting</strong> &#x3001;<strong>sameSizeGrow</strong></li>
+<li><strong><u><code>B</code></u></strong> &#xFF1A;&#x662F;bucket&#x6570;&#x91CF;&#x7684;&#x4EE5;2&#x4E3A;&#x5E95;&#x7684;&#x5BF9;&#x6570;</li>
+<li><strong><u><code>noverflow</code></u></strong> &#xFF1A;<strong>overflow bucket</strong> &#x7684;&#x5927;&#x7EA6;&#x6570;&#x91CF;</li>
+<li><strong><u><code>hash0</code></u></strong> &#xFF1A;&#x54C8;&#x5E0C;&#x51FD;&#x6570;&#x7684;&#x79CD;&#x5B50;&#x503C;</li>
+<li><strong><u><code>buckets</code></u></strong> &#xFF1A;&#x6307;&#x5411;bucket&#x6570;&#x7EC4;&#x7684;&#x6307;&#x9488;</li>
+<li><strong><u><code>oldbuckets</code></u></strong> &#xFF1A;&#x5728;map&#x6269;&#x5BB9;&#x9636;&#x6BB5;&#x6307;&#x5411;&#x65E7;bucket&#x6570;&#x7EC4;&#x7684;&#x6307;&#x9488;</li>
+<li><strong><u><code>nevacuate</code></u></strong> &#xFF1A;&#x5728;map&#x6269;&#x5BB9;&#x9636;&#x6BB5;&#x5145;&#x5F53;&#x6269;&#x5BB9;&#x8FDB;&#x5EA6;&#x8BA1;&#x6570;&#x5668;&#x3002;&#x6240;&#x6709;&#x4E0B;&#x6807;&#x5C0F;&#x4E8E;nevacuate&#x7684;bucket&#x90FD;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#x4E86;&#x6570;&#x636E;&#x6392;&#x7A7A;&#x548C;&#x8FC1;&#x79FB;&#x64CD;&#x4F5C;</li>
+<li><strong><u><code>extra</code></u></strong> &#xFF1A;&#x53EF;&#x9009;&#x5B57;&#x6BB5;</li>
+</ol>
+<hr>
+<ul>
+<li><p><strong>bucket</strong>&#xFF08;&#x6876;&#xFF09;&#x662F;&#x7528;&#x6765;&#x771F;&#x6B63;&#x5B58;&#x50A8;&#x952E;&#x503C;&#x5BF9;&#x6570;&#x636E;&#x7684;&#x5BB9;&#x5668;&#xFF0C;&#x6BCF;&#x4E2A;bucket&#x5B58;&#x50A8;&#x7684;&#x662F;Hash&#x503C;&#x4F4E;bit&#x4F4D;&#x6570;&#x503C;&#x76F8;&#x540C;&#x7684;&#x5143;&#x7D20;&#xFF0C;&#x9ED8;&#x8BA4;&#x5BB9;&#x91CF;&#x4E3A; <strong>BUCKETSIZE</strong> &#xFF08;&#x503C;&#x4E3A;8&#xFF09;&#xFF1B;</p>
+</li>
+<li><p>&#x5F53;&#x6876;&#x6EE1;&#x4E14;map&#x5C1A;&#x672A;&#x8FBE;&#x5230;&#x6269;&#x5BB9;&#x6761;&#x4EF6;&#x65F6;&#xFF0C;&#x8FD0;&#x884C;&#x65F6;&#x4F1A;&#x5EFA;&#x7ACB;overflow bucket&#x94FE;&#x8868;&#x6302;&#x5728;&#x5BF9;&#x5E94;&#x7684;bucket&#x5C3E;&#x90E8;&#xFF1B;</p>
+</li>
+<li>&#x6BCF;&#x4E2A;bucket&#x7531;&#x4E09;&#x90E8;&#x5206;&#x7EC4;&#x6210;&#xFF1A;<strong><u><code>tophash</code> &#x3001;<code>key</code> &#x3001;<code>value</code></u></strong></li>
+</ul>
+<h3 id="tophash&#x533A;&#x57DF;"><a name="tophash&#x533A;&#x57DF;" class="anchor-navigation-ex-anchor" href="#tophash&#x533A;&#x57DF;"><i class="fa fa-link" aria-hidden="true"></i></a>3.1.1. tophash&#x533A;&#x57DF;</h3>
+<ul>
+<li>&#x8FD0;&#x884C;&#x65F6;map&#x4F1A;&#x901A;&#x8FC7;&#x54C8;&#x5E0C;&#x51FD;&#x6570;&#x5BF9;key&#x505A;&#x54C8;&#x5E0C;&#x8FD0;&#x7B97;&#x5E76;&#x83B7;&#x5F97;&#x4E00;&#x4E2A;&#x54C8;&#x5E0C;&#x503C; <strong><u>hashcode</u></strong> &#x3002;</li>
+<li>&#x5176;&#x4F4E;&#x4F4D;&#x503C;&#x4F5C;&#x4E3A;&#x7D22;&#x5F15;&#x7528;&#x4E8E;&#x9009;&#x5B9A;bucket&#xFF0C;&#x9AD8;&#x4F4D;&#x503C;&#x4F5C;&#x4E3A;tag&#x7528;&#x4E8E;&#x7CBE;&#x5207;&#x5339;&#x914D;</li>
+</ul>
+<p><img src="images/image-20231004001731168.png" alt="image-20231004001731168" style="zoom: 67%;"></p>
+<h3 id="key&#x5B58;&#x50A8;&#x533A;&#x57DF;"><a name="key&#x5B58;&#x50A8;&#x533A;&#x57DF;" class="anchor-navigation-ex-anchor" href="#key&#x5B58;&#x50A8;&#x533A;&#x57DF;"><i class="fa fa-link" aria-hidden="true"></i></a>3.1.2. key&#x5B58;&#x50A8;&#x533A;&#x57DF;</h3>
+<ul>
+<li><p>&#x5F53;&#x6211;&#x4EEC;&#x58F0;&#x660E;&#x4E00;&#x4E2A;map&#x7C7B;&#x578B;&#x53D8;&#x91CF;&#x65F6;&#xFF0C;Go&#x8FD0;&#x884C;&#x65F6;&#x5C31;&#x4F1A;&#x4E3A;&#x8BE5;&#x53D8;&#x91CF;&#x5BF9;&#x5E94;&#x7684;&#x7279;&#x5B9A;map&#x7C7B;&#x578B;&#x751F;&#x6210;&#x4E00;&#x4E2A; <strong><u>runtime.maptype</u></strong> &#x5B9E;&#x4F8B;&#xFF1A;</p>
+<ul>
+<li><pre class="language-"><code class="lang-go">  <span class="token comment">// $GOROOT/src/runtime/type.go</span>
+  <span class="token keyword">type</span> maptype <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+      typ _type
+      key <span class="token operator">*</span>_type
+      elem <span class="token operator">*</span>_type
+      bucket <span class="token operator">*</span>_type <span class="token comment">// &#x8868;&#x2F70;hash bucket&#x7684;&#x5185;&#x90E8;&#x7C7B;&#x578B;</span>
+      keysize <span class="token builtin">uint8</span> <span class="token comment">// key&#x7684;&#x2F24;&#x2F29;</span>
+      elemsize <span class="token builtin">uint8</span> <span class="token comment">// elem&#x7684;&#x2F24;&#x2F29;</span>
+      bucketsize <span class="token builtin">uint16</span> <span class="token comment">// bucket&#x7684;&#x2F24;&#x2F29;</span>
+      flags <span class="token builtin">uint32</span>
+  <span class="token punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>maptype&#x7684;&#x5B58;&#x5728;&#x8BA9;Go&#x5728;&#x6240;&#x6709;map&#x7C7B;&#x578B;&#x5171;&#x4EAB;&#x4E00;&#x5957;&#x8FD0;&#x884C;&#x65F6;map&#x64CD;&#x4F5C;&#x51FD;&#x6570;&#xFF0C;&#x4ECE;&#x800C;&#x51CF;&#x5C11;&#x4E86;&#x6700;&#x7EC8;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x7A7A;&#x95F4;&#x7684;&#x5360;&#x7528;</p>
+</li>
+</ul>
+<h3 id="value&#x5B58;&#x50A8;&#x533A;&#x57DF;"><a name="value&#x5B58;&#x50A8;&#x533A;&#x57DF;" class="anchor-navigation-ex-anchor" href="#value&#x5B58;&#x50A8;&#x533A;&#x57DF;"><i class="fa fa-link" aria-hidden="true"></i></a>3.1.3. value&#x5B58;&#x50A8;&#x533A;&#x57DF;</h3>
+<ul>
+<li><p>Go&#x8FD0;&#x884C;&#x65F6;&#x91C7;&#x7528;&#x4E86;&#x5C06;key&#x548C;value&#x5206;&#x5F00;&#x5B58;&#x50A8;&#x7684;&#x7B56;&#x7565;&#xFF0C;&#x800C;&#x975E;&#x91C7;&#x7528;kv&#x7D27;&#x90BB;&#x5B58;&#x50A8;&#x65B9;&#x6848;&#x3002;&#x8FD9;&#x5E26;&#x6765;&#x4E86;&#x7B97;&#x6CD5;&#x4E0A;&#x7684;&#x590D;&#x6742;&#x6027;&#xFF0C;&#x4F46;&#x51CF;&#x5C11;&#x4E86;&#x56E0;&#x4E3A;&#x5185;&#x5B58;&#x5BF9;&#x9F50;&#x5E26;&#x6765;&#x7684;&#x5185;&#x5B58;&#x6D6A;&#x8D39;&#xFF1A;</p>
+<ul>
+<li><img src="images/image-20231004002320381.png" alt="image-20231004002320381" style="zoom:80%;"></li>
+</ul>
+</li>
+<li><p>&#x5982;&#x679C;key&#x6216;value&#x7684;&#x6570;&#x636E;&#x957F;&#x5EA6;&#x8D85;&#x8FC7;&#x4E00;&#x5B9A;&#x6570;&#x503C;&#xFF0C;&#x90A3;&#x4E48;&#x8FD0;&#x884C;&#x65F6;&#x4E0D;&#x4F1A;&#x518D;bucket&#x4E2D;&#x76F4;&#x63A5;&#x5B58;&#x50A8;&#x6570;&#x636E;&#xFF0C;&#x800C;&#x662F;&#x4F1A;&#x5B58;&#x50A8;key&#x6216;value&#x7684;&#x6307;&#x9488;</p>
+</li>
+</ul>
+<h2 id="map&#x6269;&#x5BB9;"><a name="map&#x6269;&#x5BB9;" class="anchor-navigation-ex-anchor" href="#map&#x6269;&#x5BB9;"><i class="fa fa-link" aria-hidden="true"></i></a>3.2. map&#x6269;&#x5BB9;</h2>
+<ul>
+<li>map&#x6269;&#x5BB9;&#x7684;&#x65F6;&#x673A;&#xFF1A;<ol>
+<li><u><strong>&#x201C;overflow bucket&#x201D; &#x8FC7;&#x591A;&#x5BFC;&#x81F4;&#x7684;&#x6269;&#x5BB9;</strong></u> &#xFF1A;&#x8FD0;&#x884C;&#x65F6;&#x4F1A;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;&#x548C;&#x73B0;&#x6709;&#x89C4;&#x6A21;&#x4E00;&#x6837;&#x7684;bucket&#x6570;&#x7EC4;&#xFF0C;&#x7136;&#x540E;&#x5728;&#x8FDB;&#x884C;assign&#x548C;delete&#x64CD;&#x4F5C;&#x65F6;&#x8FDB;&#x884C;&#x6392;&#x7A7A;&#x548C;&#x8FC1;&#x79FB;&#x3002;&#x5373;&#x6240;&#x8C13;&#x91CD;&#x65B0;&#x5206;&#x914D;</li>
+<li><strong><u>&#x201C;count &gt; LoadFactor(&#x8D1F;&#x8F7D;&#x56E0;&#x5B50;) * 2^B &#x201D; &#x5BFC;&#x81F4;&#x7684;&#x6269;&#x5BB9;</u></strong> &#xFF1A;&#x8FD0;&#x884C;&#x65F6;&#x4F1A;&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;&#x4E24;&#x500D;&#x4E8E;&#x73B0;&#x6709;&#x89C4;&#x6A21;&#x7684;&#x65B0;bucket&#x6570;&#x7EC4;&#xFF0C;&#x539F;bucket&#x6570;&#x7EC4;&#x4F1A;&#x6302;&#x5728;oldbuckets&#x6307;&#x9488;&#x4E0B;&#xFF0C;&#x65B0;bucket&#x6570;&#x7EC4;&#x5219;&#x4F1A;&#x6302;&#x5728;buckets&#x6307;&#x9488;&#x4E0B;&#x3002;&#x771F;&#x6B63;&#x7684;&#x6392;&#x7A7A;&#x548C;&#x8FC1;&#x79FB;&#x5DE5;&#x4F5C;&#x4E5F;&#x662F;&#x5728;&#x8FDB;&#x884C;assign&#x548C;delete&#x64CD;&#x4F5C;&#x65F6;&#x9010;&#x6B65;&#x8FDB;&#x884C;&#x7684;&#x3002;</li>
+</ol>
+</li>
+<li><img src="images/image-20231004003234090.png" alt="image-20231004003234090" style="zoom: 50%;"></li>
+</ul>
+<h2 id="map&#x548C;&#x5E76;&#x53D1;"><a name="map&#x548C;&#x5E76;&#x53D1;" class="anchor-navigation-ex-anchor" href="#map&#x548C;&#x5E76;&#x53D1;"><i class="fa fa-link" aria-hidden="true"></i></a>3.3. map&#x548C;&#x5E76;&#x53D1;</h2>
+<ul>
+<li>map&#x5B9E;&#x4F8B;&#x4E0D;&#x662F;&#x5E76;&#x53D1;&#x5199;&#x5B89;&#x5168;&#x7684;&#xFF0C;&#x4E0D;&#x652F;&#x6301;&#x5E76;&#x53D1;&#x8BFB;&#x5199;&#xFF1B;&#x5982;&#x679C;&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x5E76;&#x53D1;&#x8BFB;&#x5199;&#xFF0C;&#x4F1A;&#x4EA7;&#x751F;&#x8FD0;&#x884C;&#x65F6;panic&#xFF1B;&#x4F46;&#x662F;map&#x662F;&#x53EF;&#x4EE5;&#x5E76;&#x53D1;&#x8BFB;&#x7684;</li>
+<li>Go1.9&#x4E2D;&#x5F15;&#x5165;&#x4E86;&#x652F;&#x6301;&#x5E76;&#x53D1;&#x5B89;&#x5168;&#x7684; <strong>sync.Map</strong> &#x7C7B;&#x578B;</li>
+<li>&#x7531;&#x4E8E;map&#x4F1A;&#x81EA;&#x52A8;&#x6269;&#x5BB9;&#xFF0C;&#x6240;&#x4EE5;Go&#x4E0D;&#x5141;&#x8BB8;&#x83B7;&#x53D6;map&#x4E2D;value&#x7684;&#x5730;&#x5740;</li>
+</ul>
+<h1 id="&#x5C3D;&#x91CF;&#x4F7F;&#x7528;cap&#x53C2;&#x6570;&#x521B;&#x5EFA;map"><a name="&#x5C3D;&#x91CF;&#x4F7F;&#x7528;cap&#x53C2;&#x6570;&#x521B;&#x5EFA;map" class="anchor-navigation-ex-anchor" href="#&#x5C3D;&#x91CF;&#x4F7F;&#x7528;cap&#x53C2;&#x6570;&#x521B;&#x5EFA;map"><i class="fa fa-link" aria-hidden="true"></i></a>4. &#x5C3D;&#x91CF;&#x4F7F;&#x7528;cap&#x53C2;&#x6570;&#x521B;&#x5EFA;map</h1>
+<p>&#x5982;&#x679C;&#x53EF;&#x80FD;&#x7684;&#x8BDD;&#xFF0C;&#x6211;&#x4EEC;&#x6700;&#x597D;&#x5BF9;map&#x4F7F;&#x7528;&#x89C4;&#x6A21;&#x505A;&#x51FA;&#x7C97;&#x7565;&#x7684;&#x4F30;&#x7B97;&#xFF0C;&#x5E76;&#x4F7F;&#x7528;cap&#x53C2;&#x6570;&#x5BF9;map&#x5B9E;&#x4F8B;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#x3002;</p>
+<h1 id="&#x5C0F;&#x7ED3;"><a name="&#x5C0F;&#x7ED3;" class="anchor-navigation-ex-anchor" href="#&#x5C0F;&#x7ED3;"><i class="fa fa-link" aria-hidden="true"></i></a>5. &#x5C0F;&#x7ED3;</h1>
+<p>&#x5728;&#x65E5;&#x5E38;&#x4F7F;&#x7528;map&#x7684;&#x573A;&#x5408;&#x8981;&#x628A;&#x63E1;&#x4F4F;&#x4E0B;&#x9762;&#x51E0;&#x4E2A;&#x8981;&#x70B9;&#xFF1A; </p>
+<ol>
+<li>&#x4E0D;&#x8981;&#x4F9D;&#x8D56;map&#x7684;&#x5143;&#x7D20;&#x904D;&#x5386;&#x987A;&#x5E8F;&#xFF1B; </li>
+<li>map&#x4E0D;&#x662F;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x7684;&#xFF0C;&#x4E0D;&#x652F;&#x6301;&#x5E76;&#x53D1;&#x5199;&#xFF1B; </li>
+<li>&#x4E0D;&#x8981;&#x5C1D;&#x8BD5;&#x83B7;&#x53D6;map&#x4E2D;&#x5143;&#x7D20;&#xFF08;value&#xFF09;&#x7684;&#x5730;&#x5740;&#xFF1B; </li>
+<li>&#x5C3D;&#x91CF;&#x4F7F;&#x7528;cap&#x53C2;&#x6570;&#x521B;&#x5EFA;map&#xFF0C;&#x4EE5;&#x63D0;&#x5347;map&#x5E73;&#x5747;&#x8BBF;&#x95EE;&#x6027;&#x80FD;&#xFF0C;&#x51CF;&#x5C11;&#x9891;&#x7E41;&#x6269;&#x5BB9;&#x5E26;&#x6765;&#x7684;&#x4E0D;&#x5FC5;&#x8981;&#x635F;&#x8017;&#x3002;</li>
+</ol>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/poker-svg" target="_blank">YangXin Xu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-10-04 00:38:42 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="第13条-了解切片实现原理并高效使用.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 第13条-了解切片实现原理并高效使用">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"第14条-了解map实现原理并高效使用","level":"1.15","depth":1,"previous":{"title":"第13条-了解切片实现原理并高效使用","level":"1.14","depth":1,"path":"第13条-了解切片实现原理并高效使用.md","ref":"第13条-了解切片实现原理并高效使用.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","-lunr","-search","search-pro","-sharing","splitter","hide-element","insert-logo","code","livereload"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"livereload":{},"page-footer-ex":{"copyright":"By [YangXin Xu](https://github.com/poker-svg)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"expandable-chapters-small":{},"copy-code-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"style":"background: none; max-height: 120px; min-height: 120px","url":"./images/icon.png"},"expandable-chapters":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"深入理解Java虚拟机","gitbook":"*"},"file":{"path":"第14条-了解map实现原理并高效使用.md","mtime":"2023-10-03T16:38:42.058Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-10-03T16:41:45.032Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-hide-element/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-insert-logo/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

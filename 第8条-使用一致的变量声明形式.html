@@ -1,0 +1,564 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>第8条-使用一致的变量声明形式 · 深入理解Java虚拟机</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-insert-logo/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="第9条-使用无类型常量简化代码.html" />
+    
+    
+    <link rel="prev" href="第7条-使用Go命名惯例对标识符进行命名.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="第1条-了解Go语言的诞生和演进.html">
+            
+                <a href="第1条-了解Go语言的诞生和演进.html">
+            
+                    
+                    第1条-了解Go语言的诞生和演进
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="第2条-选择适当的Go语言版本.html">
+            
+                <a href="第2条-选择适当的Go语言版本.html">
+            
+                    
+                    第2条-选择适当的Go语言版本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="第3条-理解Go语言的设计哲学.html">
+            
+                <a href="第3条-理解Go语言的设计哲学.html">
+            
+                    
+                    第3条-理解Go语言的设计哲学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                <a href="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                    
+                    第4条-使用Go语言原生编程思维来写Go代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                <a href="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                    
+                    第5条-使用得到工人且广泛使用的项目结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="第6条-提交前使用gofmt格式化源码.html">
+            
+                <a href="第6条-提交前使用gofmt格式化源码.html">
+            
+                    
+                    第6条-提交前使用gofmt格式化源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                <a href="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                    
+                    第7条-使用Go命名惯例对标识符进行命名
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.9" data-path="第8条-使用一致的变量声明形式.html">
+            
+                <a href="第8条-使用一致的变量声明形式.html">
+            
+                    
+                    第8条-使用一致的变量声明形式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="第9条-使用无类型常量简化代码.html">
+            
+                <a href="第9条-使用无类型常量简化代码.html">
+            
+                    
+                    第9条-使用无类型常量简化代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="第10条-使用iota实现枚举常量.html">
+            
+                <a href="第10条-使用iota实现枚举常量.html">
+            
+                    
+                    第10条-使用iota实现枚举常量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="第11条-尽量定义零值可用的类型.html">
+            
+                <a href="第11条-尽量定义零值可用的类型.html">
+            
+                    
+                    第11条-尽量定义零值可用的类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="第12条-使用复合字面值作为初值构造器.html">
+            
+                <a href="第12条-使用复合字面值作为初值构造器.html">
+            
+                    
+                    第12条-使用复合字面值作为初值构造器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="第13条-了解切片实现原理并高效使用.html">
+            
+                <a href="第13条-了解切片实现原理并高效使用.html">
+            
+                    
+                    第13条-了解切片实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="第14条-了解map实现原理并高效使用.html">
+            
+                <a href="第14条-了解map实现原理并高效使用.html">
+            
+                    
+                    第14条-了解map实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >第8条-使用一致的变量声明形式</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#&#x5305;&#x7EA7;&#x53D8;&#x91CF;&#x7684;&#x58F0;&#x660E;&#x5F62;&#x5F0F;"><b>1. </b>&#x5305;&#x7EA7;&#x53D8;&#x91CF;&#x7684;&#x58F0;&#x660E;&#x5F62;&#x5F0F;</a></li><ul><li><span class="title-icon "></span><a href="#&#x58F0;&#x660E;&#x5E76;&#x540C;&#x65F6;&#x663E;&#x5F0F;&#x521D;&#x59CB;&#x5316;"><b>1.1. </b>&#x58F0;&#x660E;&#x5E76;&#x540C;&#x65F6;&#x663E;&#x5F0F;&#x521D;&#x59CB;&#x5316;</a></li><li><span class="title-icon "></span><a href="#&#x58F0;&#x660E;&#x4F46;&#x5EF6;&#x8FDF;&#x521D;&#x59CB;&#x5316;"><b>1.2. </b>&#x58F0;&#x660E;&#x4F46;&#x5EF6;&#x8FDF;&#x521D;&#x59CB;&#x5316;</a></li><li><span class="title-icon "></span><a href="#&#x58F0;&#x660E;&#x805A;&#x7C7B;&#x4E0E;&#x5C31;&#x8FD1;&#x539F;&#x5219;"><b>1.3. </b>&#x58F0;&#x660E;&#x805A;&#x7C7B;&#x4E0E;&#x5C31;&#x8FD1;&#x539F;&#x5219;</a></li></ul><li><span class="title-icon "></span><a href="#&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x7684;&#x58F0;&#x660E;&#x5F62;&#x5F0F;"><b>2. </b>&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x7684;&#x58F0;&#x660E;&#x5F62;&#x5F0F;</a></li><ul><li><span class="title-icon "></span><a href="#&#x5EF6;&#x8FDF;&#x521D;&#x59CB;&#x5316;&#x7684;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x58F0;&#x660E;"><b>2.1. </b>&#x5EF6;&#x8FDF;&#x521D;&#x59CB;&#x5316;&#x7684;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x58F0;&#x660E;</a></li><li><span class="title-icon "></span><a href="#&#x58F0;&#x660E;&#x4E14;&#x663E;&#x5F0F;&#x521D;&#x59CB;&#x5316;&#x7684;&#x5C40;&#x90E8;&#x53D8;&#x91CF;"><b>2.2. </b>&#x58F0;&#x660E;&#x4E14;&#x663E;&#x5F0F;&#x521D;&#x59CB;&#x5316;&#x7684;&#x5C40;&#x90E8;&#x53D8;&#x91CF;</a></li><li><span class="title-icon "></span><a href="#&#x5C3D;&#x91CF;&#x5728;&#x5206;&#x652F;&#x63A7;&#x5236;&#x5904;&#x5E94;&#x7528;&#x77ED;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x5F62;&#x5F0F;"><b>2.3. </b>&#x5C3D;&#x91CF;&#x5728;&#x5206;&#x652F;&#x63A7;&#x5236;&#x5904;&#x5E94;&#x7528;&#x77ED;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x5F62;&#x5F0F;</a></li></ul><li><span class="title-icon "></span><a href="#&#x5C0F;&#x7ED3;"><b>3. </b>&#x5C0F;&#x7ED3;</a></li></ul></div><a href="#&#x5305;&#x7EA7;&#x53D8;&#x91CF;&#x7684;&#x58F0;&#x660E;&#x5F62;&#x5F0F;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="&#x5305;&#x7EA7;&#x53D8;&#x91CF;&#x7684;&#x58F0;&#x660E;&#x5F62;&#x5F0F;"><a name="&#x5305;&#x7EA7;&#x53D8;&#x91CF;&#x7684;&#x58F0;&#x660E;&#x5F62;&#x5F0F;" class="anchor-navigation-ex-anchor" href="#&#x5305;&#x7EA7;&#x53D8;&#x91CF;&#x7684;&#x58F0;&#x660E;&#x5F62;&#x5F0F;"><i class="fa fa-link" aria-hidden="true"></i></a>1. &#x5305;&#x7EA7;&#x53D8;&#x91CF;&#x7684;&#x58F0;&#x660E;&#x5F62;&#x5F0F;</h1>
+<blockquote>
+<p>&#x5305;&#x7EA7;&#x53D8;&#x91CF;&#x53EA;&#x80FD;&#x4F7F;&#x7528;&#x5E26;&#x6709; var &#x5173;&#x952E;&#x5B57;&#x7684;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x5F62;&#x5F0F;</p>
+</blockquote>
+<h2 id="&#x58F0;&#x660E;&#x5E76;&#x540C;&#x65F6;&#x663E;&#x5F0F;&#x521D;&#x59CB;&#x5316;"><a name="&#x58F0;&#x660E;&#x5E76;&#x540C;&#x65F6;&#x663E;&#x5F0F;&#x521D;&#x59CB;&#x5316;" class="anchor-navigation-ex-anchor" href="#&#x58F0;&#x660E;&#x5E76;&#x540C;&#x65F6;&#x663E;&#x5F0F;&#x521D;&#x59CB;&#x5316;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1. &#x58F0;&#x660E;&#x5E76;&#x540C;&#x65F6;&#x663E;&#x5F0F;&#x521D;&#x59CB;&#x5316;</h2>
+<p>&#x6B64;&#x7C7B;&#x5305;&#x7EA7;&#x53D8;&#x91CF;&#x5728;&#x5B9E;&#x8DF5;&#x4E2D;&#x591A;&#x4F7F;&#x7528;&#x5982;&#x4E0B;&#x683C;&#x5F0F;</p>
+<pre class="language-"><code class="lang-go"><span class="token keyword">var</span> variableName <span class="token operator">=</span> InitExpression
+</code></pre>
+<p>&#x5982;&#x679C;&#x60F3;&#x8981;&#x663E;&#x5F0F;&#x4E3A;&#x5305;&#x7EA7;&#x53D8;&#x91CF;&#x6307;&#x5B9A;&#x7C7B;&#x578B;&#xFF0C;Go &#x8BED;&#x8A00;&#x5B98;&#x65B9;&#x66F4;&#x63A8;&#x8350;&#x4E0B;&#x9762;&#x7684;&#x7B2C;&#x4E8C;&#x79CD;&#x65B9;&#x5F0F;&#xFF1A;</p>
+<pre class="language-"><code class="lang-go"><span class="token comment">// &#x7B2C;&#x4E00;&#x79CD;</span>
+<span class="token keyword">var</span> a <span class="token builtin">int32</span> <span class="token operator">=</span> <span class="token number">17</span>
+<span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token function">int32</span><span class="token punctuation">(</span><span class="token number">17</span><span class="token punctuation">)</span>
+</code></pre>
+<h2 id="&#x58F0;&#x660E;&#x4F46;&#x5EF6;&#x8FDF;&#x521D;&#x59CB;&#x5316;"><a name="&#x58F0;&#x660E;&#x4F46;&#x5EF6;&#x8FDF;&#x521D;&#x59CB;&#x5316;" class="anchor-navigation-ex-anchor" href="#&#x58F0;&#x660E;&#x4F46;&#x5EF6;&#x8FDF;&#x521D;&#x59CB;&#x5316;"><i class="fa fa-link" aria-hidden="true"></i></a>1.2. &#x58F0;&#x660E;&#x4F46;&#x5EF6;&#x8FDF;&#x521D;&#x59CB;&#x5316;</h2>
+<p>&#x5BF9;&#x4E8E;&#x58F0;&#x660E;&#x65F6;&#x5E76;&#x4E0D;&#x663E;&#x5F0F;&#x521D;&#x59CB;&#x5316;&#x7684;&#x5305;&#x7EA7;&#x53D8;&#x91CF;&#xFF0C;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x6700;&#x57FA;&#x672C;&#x7684;&#x58F0;&#x660E;&#x5F62;&#x5F0F;&#xFF1A;</p>
+<pre class="language-"><code class="lang-go"><span class="token keyword">var</span> a <span class="token builtin">int</span> <span class="token number">32</span>
+</code></pre>
+<h2 id="&#x58F0;&#x660E;&#x805A;&#x7C7B;&#x4E0E;&#x5C31;&#x8FD1;&#x539F;&#x5219;"><a name="&#x58F0;&#x660E;&#x805A;&#x7C7B;&#x4E0E;&#x5C31;&#x8FD1;&#x539F;&#x5219;" class="anchor-navigation-ex-anchor" href="#&#x58F0;&#x660E;&#x805A;&#x7C7B;&#x4E0E;&#x5C31;&#x8FD1;&#x539F;&#x5219;"><i class="fa fa-link" aria-hidden="true"></i></a>1.3. &#x58F0;&#x660E;&#x805A;&#x7C7B;&#x4E0E;&#x5C31;&#x8FD1;&#x539F;&#x5219;</h2>
+<blockquote>
+<p>&#x63A8;&#x8350;&#x5C06;&#x540C;&#x4E00;&#x7C7B;&#x7684;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x653E;&#x5728;&#x4E00;&#x4E2A; var &#x5757;&#x4E2D;&#xFF1B;&#x6216;&#x8005;&#x5C06;&#x5EF6;&#x8FDF;&#x521D;&#x59CB;&#x5316;&#x7684;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x653E;&#x5728;&#x4E00;&#x4E2A; var &#x5757;&#x4E2D;</p>
+</blockquote>
+<pre class="language-"><code class="lang-go"><span class="token comment">// $GOROOT/src/net/http/server.go</span>
+<span class="token keyword">var</span> <span class="token punctuation">(</span>
+    bufioReaderPool sync<span class="token punctuation">.</span>Pool
+    bufioWriter2kPool sync<span class="token punctuation">.</span>Pool
+    bufioWriter4kPool sync<span class="token punctuation">.</span>Pool
+<span class="token punctuation">)</span>
+<span class="token keyword">var</span> copyBufPool <span class="token operator">=</span> sync<span class="token punctuation">.</span>Pool <span class="token punctuation">{</span>
+    New<span class="token punctuation">:</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token punctuation">{</span>
+        b <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token operator">*</span><span class="token number">1024</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token operator">&amp;</span>b
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+<span class="token operator">...</span>
+<span class="token comment">// $GOROOT/src/net/net.go</span>
+<span class="token keyword">var</span> <span class="token punctuation">(</span>
+    aLongTimeAgo <span class="token operator">=</span> time<span class="token punctuation">.</span><span class="token function">Unix</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    noDeadline <span class="token operator">=</span> time<span class="token punctuation">.</span>Time<span class="token punctuation">{</span><span class="token punctuation">}</span>
+    noCancel <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token keyword">struct</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token boolean">nil</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+<span class="token keyword">var</span> threadLimit <span class="token keyword">chan</span> <span class="token keyword">struct</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token operator">...</span>
+</code></pre>
+<blockquote>
+<ul>
+<li>&#x5728;&#x5B9E;&#x8DF5;&#x4E2D;&#xFF0C;&#x662F;&#x5426;&#x5E94;&#x5F53;&#x5C06;&#x5305;&#x7EA7;&#x53D8;&#x91CF;&#x7684;&#x58F0;&#x660E;&#x5168;&#x90E8;&#x96C6;&#x4E2D;&#x4E8E;&#x6E90;&#x6587;&#x4EF6;&#x5934;&#x90E8;&#x5462;&#xFF1F;&#x6216;&#x8005;&#x9075;&#x5B88; <u><strong>&#x5C31;&#x8FD1;&#x539F;&#x5219;</strong></u> &#xFF0C;&#x5C3D;&#x53EF;&#x80FD;&#x5728;&#x9760;&#x8FD1;&#x7B2C;&#x4E00;&#x6B21;&#x4F7F;&#x7528;&#x53D8;&#x91CF;&#x7684;&#x4F4D;&#x7F6E;&#x58F0;&#x660E;&#x8BE5;&#x53D8;&#x91CF;</li>
+<li>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x5305;&#x7EA7;&#x53D8;&#x91CF;&#x4EC5;&#x5728;&#x4E00;&#x5904;&#x4F7F;&#x7528;&#xFF0C;&#x5219;&#x9075;&#x5B88;&#x5C31;&#x8FD1;&#x539F;&#x5219;&#xFF1B;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x5305;&#x7EA7;&#x53D8;&#x91CF;&#x5728;&#x5305;&#x5185;&#x90E8;&#x88AB;&#x591A;&#x5904;&#x4F7F;&#x7528;&#xFF0C;&#x5219;&#x653E;&#x5728;&#x6E90;&#x6587;&#x4EF6;&#x5934;&#x90E8;&#x66F4;&#x597D;</li>
+</ul>
+</blockquote>
+<h1 id="&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x7684;&#x58F0;&#x660E;&#x5F62;&#x5F0F;"><a name="&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x7684;&#x58F0;&#x660E;&#x5F62;&#x5F0F;" class="anchor-navigation-ex-anchor" href="#&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x7684;&#x58F0;&#x660E;&#x5F62;&#x5F0F;"><i class="fa fa-link" aria-hidden="true"></i></a>2. &#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x7684;&#x58F0;&#x660E;&#x5F62;&#x5F0F;</h1>
+<blockquote>
+<p>&#x76F8;&#x6BD4;&#x4E8E;&#x5305;&#x7EA7;&#x53D8;&#x91CF;&#xFF0C;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x591A;&#x4E86;&#x4E00;&#x79CD;&#x77ED;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x5F62;&#x5F0F;&#x3002;</p>
+</blockquote>
+<h2 id="&#x5EF6;&#x8FDF;&#x521D;&#x59CB;&#x5316;&#x7684;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x58F0;&#x660E;"><a name="&#x5EF6;&#x8FDF;&#x521D;&#x59CB;&#x5316;&#x7684;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x58F0;&#x660E;" class="anchor-navigation-ex-anchor" href="#&#x5EF6;&#x8FDF;&#x521D;&#x59CB;&#x5316;&#x7684;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x58F0;&#x660E;"><i class="fa fa-link" aria-hidden="true"></i></a>2.1. &#x5EF6;&#x8FDF;&#x521D;&#x59CB;&#x5316;&#x7684;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x58F0;&#x660E;</h2>
+<blockquote>
+<p>&#x91C7;&#x7528;&#x5E26;&#x6709; var &#x5173;&#x952E;&#x5B57;&#x7684;&#x58F0;&#x660E;&#x5F62;&#x5F0F;</p>
+</blockquote>
+<pre class="language-"><code class="lang-go"><span class="token comment">// $GOROOT/src/strings/replace.go</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>r <span class="token operator">*</span>byteReplacer<span class="token punctuation">)</span> <span class="token function">Replace</span><span class="token punctuation">(</span>s <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> buf <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span> <span class="token comment">// &#x5EF6;&#x8FDF;&#x5206;&#x914D;</span>
+    <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+        b <span class="token operator">:=</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        <span class="token keyword">if</span> r<span class="token punctuation">[</span>b<span class="token punctuation">]</span> <span class="token operator">!=</span> b <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> buf <span class="token operator">==</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+                buf <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token function">byte</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+            buf<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> r<span class="token punctuation">[</span>b<span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> buf <span class="token operator">==</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> s
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token function">string</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="&#x58F0;&#x660E;&#x4E14;&#x663E;&#x5F0F;&#x521D;&#x59CB;&#x5316;&#x7684;&#x5C40;&#x90E8;&#x53D8;&#x91CF;"><a name="&#x58F0;&#x660E;&#x4E14;&#x663E;&#x5F0F;&#x521D;&#x59CB;&#x5316;&#x7684;&#x5C40;&#x90E8;&#x53D8;&#x91CF;" class="anchor-navigation-ex-anchor" href="#&#x58F0;&#x660E;&#x4E14;&#x663E;&#x5F0F;&#x521D;&#x59CB;&#x5316;&#x7684;&#x5C40;&#x90E8;&#x53D8;&#x91CF;"><i class="fa fa-link" aria-hidden="true"></i></a>2.2. &#x58F0;&#x660E;&#x4E14;&#x663E;&#x5F0F;&#x521D;&#x59CB;&#x5316;&#x7684;&#x5C40;&#x90E8;&#x53D8;&#x91CF;</h2>
+<blockquote>
+<p>&#x5EFA;&#x8BAE;&#x4F7F;&#x7528;&#x77ED;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x5F62;&#x5F0F;</p>
+</blockquote>
+<pre class="language-"><code class="lang-go">a <span class="token operator">:=</span> <span class="token function">int32</span><span class="token punctuation">(</span><span class="token number">17</span><span class="token punctuation">)</span>
+f <span class="token operator">:=</span> <span class="token function">float32</span><span class="token punctuation">(</span><span class="token number">3.14</span><span class="token punctuation">)</span>
+s <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token function">byte</span><span class="token punctuation">(</span><span class="token string">&quot;hello, gopher!&quot;</span><span class="token punctuation">)</span>
+</code></pre>
+<h2 id="&#x5C3D;&#x91CF;&#x5728;&#x5206;&#x652F;&#x63A7;&#x5236;&#x5904;&#x5E94;&#x7528;&#x77ED;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x5F62;&#x5F0F;"><a name="&#x5C3D;&#x91CF;&#x5728;&#x5206;&#x652F;&#x63A7;&#x5236;&#x5904;&#x5E94;&#x7528;&#x77ED;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x5F62;&#x5F0F;" class="anchor-navigation-ex-anchor" href="#&#x5C3D;&#x91CF;&#x5728;&#x5206;&#x652F;&#x63A7;&#x5236;&#x5904;&#x5E94;&#x7528;&#x77ED;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x5F62;&#x5F0F;"><i class="fa fa-link" aria-hidden="true"></i></a>2.3. &#x5C3D;&#x91CF;&#x5728;&#x5206;&#x652F;&#x63A7;&#x5236;&#x5904;&#x5E94;&#x7528;&#x77ED;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x5F62;&#x5F0F;</h2>
+<pre class="language-"><code class="lang-go"><span class="token comment">// $GOROOT/src/net/net.go</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>v <span class="token operator">*</span>Buffers<span class="token punctuation">)</span> <span class="token function">WriteTo</span><span class="token punctuation">(</span>w io<span class="token punctuation">.</span>Writer<span class="token punctuation">)</span> <span class="token punctuation">(</span>n <span class="token builtin">int64</span><span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// &#x7B14;&#x8005;&#x6CE8;&#xFF1A;&#x5728;if&#x5FAA;&#x73AF;&#x63A7;&#x5236;&#x8BED;&#x53E5;&#x4E2D;&#x4F7F;&#x7528;&#x77ED;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x5F62;&#x5F0F;</span>
+    <span class="token keyword">if</span> wv<span class="token punctuation">,</span> ok <span class="token operator">:=</span> w<span class="token punctuation">.</span><span class="token punctuation">(</span>buffersWriter<span class="token punctuation">)</span><span class="token punctuation">;</span> ok <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> wv<span class="token punctuation">.</span><span class="token function">writeBuffers</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// &#x7B14;&#x8005;&#x6CE8;&#xFF1A;&#x5728;for&#x6761;&#x4EF6;&#x63A7;&#x5236;&#x8BED;&#x53E5;&#x4E2D;&#x4F7F;&#x7528;&#x77ED;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x5F62;&#x5F0F;</span>
+    <span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> b <span class="token operator">:=</span> <span class="token keyword">range</span> <span class="token operator">*</span>v <span class="token punctuation">{</span>
+        nb<span class="token punctuation">,</span> err <span class="token operator">:=</span> w<span class="token punctuation">.</span><span class="token function">Write</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span>
+        n <span class="token operator">+=</span> <span class="token function">int64</span><span class="token punctuation">(</span>nb<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+            v<span class="token punctuation">.</span><span class="token function">consume</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span>
+            <span class="token keyword">return</span> n<span class="token punctuation">,</span> err
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    v<span class="token punctuation">.</span><span class="token function">consume</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> n<span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h1 id="&#x5C0F;&#x7ED3;"><a name="&#x5C0F;&#x7ED3;" class="anchor-navigation-ex-anchor" href="#&#x5C0F;&#x7ED3;"><i class="fa fa-link" aria-hidden="true"></i></a>3. &#x5C0F;&#x7ED3;</h1>
+<p><img src="images/image-20231003162235531.png" alt="image-20231003162235531" style="zoom:67%;"></p>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/poker-svg" target="_blank">YangXin Xu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-10-03 21:31:42 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="第7条-使用Go命名惯例对标识符进行命名.html" class="navigation navigation-prev " aria-label="Previous page: 第7条-使用Go命名惯例对标识符进行命名">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="第9条-使用无类型常量简化代码.html" class="navigation navigation-next " aria-label="Next page: 第9条-使用无类型常量简化代码">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"第8条-使用一致的变量声明形式","level":"1.9","depth":1,"next":{"title":"第9条-使用无类型常量简化代码","level":"1.10","depth":1,"path":"第9条-使用无类型常量简化代码.md","ref":"第9条-使用无类型常量简化代码.md","articles":[]},"previous":{"title":"第7条-使用Go命名惯例对标识符进行命名","level":"1.8","depth":1,"path":"第7条-使用Go命名惯例对标识符进行命名.md","ref":"第7条-使用Go命名惯例对标识符进行命名.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","-lunr","-search","search-pro","-sharing","splitter","hide-element","insert-logo","code","livereload"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"livereload":{},"page-footer-ex":{"copyright":"By [YangXin Xu](https://github.com/poker-svg)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"expandable-chapters-small":{},"copy-code-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"style":"background: none; max-height: 120px; min-height: 120px","url":"./images/icon.png"},"expandable-chapters":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"深入理解Java虚拟机","gitbook":"*"},"file":{"path":"第8条-使用一致的变量声明形式.md","mtime":"2023-10-03T13:31:42.763Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-10-03T16:41:45.032Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-hide-element/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-insert-logo/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

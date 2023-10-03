@@ -85,6 +85,8 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
+    <link rel="next" href="第8条-使用一致的变量声明形式.html" />
+    
     
     <link rel="prev" href="第6条-提交前使用gofmt格式化源码.html" />
     
@@ -219,6 +221,97 @@
             
         </li>
     
+        <li class="chapter " data-level="1.9" data-path="第8条-使用一致的变量声明形式.html">
+            
+                <a href="第8条-使用一致的变量声明形式.html">
+            
+                    
+                    第8条-使用一致的变量声明形式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="第9条-使用无类型常量简化代码.html">
+            
+                <a href="第9条-使用无类型常量简化代码.html">
+            
+                    
+                    第9条-使用无类型常量简化代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="第10条-使用iota实现枚举常量.html">
+            
+                <a href="第10条-使用iota实现枚举常量.html">
+            
+                    
+                    第10条-使用iota实现枚举常量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="第11条-尽量定义零值可用的类型.html">
+            
+                <a href="第11条-尽量定义零值可用的类型.html">
+            
+                    
+                    第11条-尽量定义零值可用的类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="第12条-使用复合字面值作为初值构造器.html">
+            
+                <a href="第12条-使用复合字面值作为初值构造器.html">
+            
+                    
+                    第12条-使用复合字面值作为初值构造器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="第13条-了解切片实现原理并高效使用.html">
+            
+                <a href="第13条-了解切片实现原理并高效使用.html">
+            
+                    
+                    第13条-了解切片实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="第14条-了解map实现原理并高效使用.html">
+            
+                <a href="第14条-了解map实现原理并高效使用.html">
+            
+                    
+                    第14条-了解map实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
 
@@ -266,24 +359,24 @@
                                 
                                 <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#&#x7B80;&#x5355;&#x4E14;&#x4E00;&#x81F4;"><b>1. </b>&#x7B80;&#x5355;&#x4E14;&#x4E00;&#x81F4;</a></li><ul><li><span class="title-icon "></span><a href="#&#x5305;"><b>1.1. </b>&#x5305;</a></li><li><span class="title-icon "></span><a href="#&#x53D8;&#x91CF;&#x3001;&#x7C7B;&#x578B;&#x3001;&#x51FD;&#x6570;&#x548C;&#x65B9;&#x6CD5;"><b>1.2. </b>&#x53D8;&#x91CF;&#x3001;&#x7C7B;&#x578B;&#x3001;&#x51FD;&#x6570;&#x548C;&#x65B9;&#x6CD5;</a></li><li><span class="title-icon "></span><a href="#&#x5E38;&#x91CF;"><b>1.3. </b>&#x5E38;&#x91CF;</a></li><li><span class="title-icon "></span><a href="#&#x63A5;&#x53E3;"><b>1.4. </b>&#x63A5;&#x53E3;</a></li></ul><li><span class="title-icon "></span><a href="#&#x5229;&#x7528;&#x4E0A;&#x4E0B;&#x2F42;&#x73AF;&#x5883;&#xFF0C;&#x8BA9;&#x6700;&#x77ED;&#x7684;&#x540D;&#x5B57;&#x643A;&#x5E26;&#x8DB3;&#x591F;&#x591A;&#x7684;&#x4FE1;&#x606F;"><b>2. </b>&#x5229;&#x7528;&#x4E0A;&#x4E0B;&#x2F42;&#x73AF;&#x5883;&#xFF0C;&#x8BA9;&#x6700;&#x77ED;&#x7684;&#x540D;&#x5B57;&#x643A;&#x5E26;&#x8DB3;&#x591F;&#x591A;&#x7684;&#x4FE1;&#x606F;</a></li></ul></div><a href="#&#x7B80;&#x5355;&#x4E14;&#x4E00;&#x81F4;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><blockquote>
 <p>&#x8BA1;&#x7B97;&#x673A;&#x79D1;&#x5B66;&#x4E2D;&#x53EA;&#x6709;&#x4E24;&#x4EF6;&#x96BE;&#x4E8B;&#xFF1A;&#x7F13;&#x5B58;&#x5931;&#x6548;&#x548C;&#x547D;&#x540D;&#x3002;</p>
-<p>&#x2014;&#x2014;Phil Karlton&#xFF0C;Netscape&#x67B6;&#x6784;&#x5E08;</p>
+<p>&#x2014;&#x2014;Phil Karlton&#xFF0C;Netscape &#x67B6;&#x6784;&#x5E08;</p>
 </blockquote>
 <ul>
-<li>Go&#x7684;&#x8BBE;&#x8BA1;&#x54F2;&#x5B66;&#x4E4B;&#x4E00;&#x5C31;&#x662F;&#x8FFD;&#x6C42;&#x7B80;&#x5355;&#xFF0C;&#x5B83;&#x5728;&#x547D;&#x540D;&#x4E0A;&#x4E00;&#x6837;&#x79C9;&#x627F;&#x7740;&#x7B80;&#x5355;&#x7684;&#x603B;&#x4F53;&#x539F;&#x5219;&#x3002;</li>
-<li>&#x4F46;&#x7B80;&#x5355;&#x5E76;&#x4E0D;&#x610F;&#x5473;&#x7740;&#x4E00;&#x5473;&#x5730;&#x4E3A;&#x6807;&#x8BC6;&#x7B26;&#x9009;&#x62E9;&#x77ED;&#x5C0F;&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x800C;&#x662F;&#x8981;&#x9009;&#x62E9;&#x90A3;&#x79CD;&#x53EF;&#x4EE5;&#x5728;&#x6807;&#x8BC6;&#x7B26;&#x6240;&#x5728;&#x4E0A;&#x4E0B;&#x6587;&#x4E2D;&#x4FDD;&#x6301;&#x5176;&#x7528;&#x9014;&#x6E05;&#x6670;&#x660E;&#x786E;&#x7684;&#x540D;&#x5B57;&#x3002; </li>
-<li>Go&#x53CA;&#x5176;&#x6807;&#x51C6;&#x5E93;&#x7684;&#x5B9E;&#x73B0;&#x662F;Go&#x547D;&#x540D;&#x60EF;&#x4F8B;&#x5F62;&#x6210;&#x7684;&#x6E90;&#x5934;&#xFF0C;&#x56E0;&#x6B64;&#x5982;&#x679C;&#x8981;&#x5BFB;&#x627E;&#x826F;&#x597D; &#x547D;&#x540D;&#x7684;&#x793A;&#x8303;&#xFF0C;Go&#x6807;&#x51C6;&#x5E93;&#x662F;&#x4E00;&#x4E2A;&#x4E0D;&#x9519;&#x7684;&#x5730;&#x65B9;&#x3002;</li>
+<li>Go &#x7684;&#x8BBE;&#x8BA1;&#x54F2;&#x5B66;&#x4E4B;&#x4E00;&#x5C31;&#x662F;&#x8FFD;&#x6C42;&#x7B80;&#x5355;&#xFF0C;&#x5B83;&#x5728;&#x547D;&#x540D;&#x4E0A;&#x4E00;&#x6837;&#x79C9;&#x627F;&#x7740;&#x7B80;&#x5355;&#x7684;&#x603B;&#x4F53;&#x539F;&#x5219;&#x3002;</li>
+<li>&#x4F46;&#x7B80;&#x5355;&#x5E76;&#x4E0D;&#x610F;&#x5473;&#x7740;&#x4E00;&#x5473;&#x5730;&#x4E3A;&#x6807;&#x8BC6;&#x7B26;&#x9009;&#x62E9;&#x77ED;&#x5C0F;&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x800C;&#x662F;&#x8981;&#x9009;&#x62E9;&#x90A3;&#x79CD;&#x53EF;&#x4EE5;&#x5728;&#x6807;&#x8BC6;&#x7B26;&#x6240;&#x5728;&#x4E0A;&#x4E0B;&#x6587;&#x4E2D;&#x4FDD;&#x6301;&#x5176;&#x7528;&#x9014;&#x6E05;&#x6670;&#x660E;&#x786E;&#x7684;&#x540D;&#x5B57;&#x3002;</li>
+<li>Go &#x53CA;&#x5176;&#x6807;&#x51C6;&#x5E93;&#x7684;&#x5B9E;&#x73B0;&#x662F; Go &#x547D;&#x540D;&#x60EF;&#x4F8B;&#x5F62;&#x6210;&#x7684;&#x6E90;&#x5934;&#xFF0C;&#x56E0;&#x6B64;&#x5982;&#x679C;&#x8981;&#x5BFB;&#x627E;&#x826F;&#x597D; &#x547D;&#x540D;&#x7684;&#x793A;&#x8303;&#xFF0C;Go &#x6807;&#x51C6;&#x5E93;&#x662F;&#x4E00;&#x4E2A;&#x4E0D;&#x9519;&#x7684;&#x5730;&#x65B9;&#x3002;</li>
 </ul>
 <h1 id="&#x7B80;&#x5355;&#x4E14;&#x4E00;&#x81F4;"><a name="&#x7B80;&#x5355;&#x4E14;&#x4E00;&#x81F4;" class="anchor-navigation-ex-anchor" href="#&#x7B80;&#x5355;&#x4E14;&#x4E00;&#x81F4;"><i class="fa fa-link" aria-hidden="true"></i></a>1. &#x7B80;&#x5355;&#x4E14;&#x4E00;&#x81F4;</h1>
 <h2 id="&#x5305;"><a name="&#x5305;" class="anchor-navigation-ex-anchor" href="#&#x5305;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1. &#x5305;</h2>
 <ul>
-<li>&#x5BF9;&#x4E8E;Go&#x4E2D;&#x7684;&#x5305;&#xFF0C;&#x4E00;&#x822C;&#x5EFA;&#x8BAE;&#x4EE5;&#x5C0F;&#x5199;&#x5F62;&#x5F0F;&#x7684;&#x5355;&#x4E2A;&#x5355;&#x8BCD;&#x547D;&#x540D;&#xFF1B;</li>
-<li>&#x6211;&#x4EEC;&#x5728;&#x7ED9;&#x5305;&#x547D;&#x540D;&#x65F6;&#x4E0D;&#x8981;&#x6709;&#x662F;&#x5426;&#x4E0E;&#x5176;&#x4ED6;&#x5305;&#x91CD;&#x540D;&#x7684;&#x987E;&#x8651;&#xFF0C;&#x56E0;&#x4E3A;&#x5728;Go&#x4E2D;&#xFF0C;&#x5305;&#x540D;&#x53EF;&#x4EE5;&#x4E0D;&#x552F;&#x4E00;&#xFF1B;</li>
-<li>Go&#x8BED;&#x2F94;&#x5EFA;&#x8BAE;&#xFF0C;&#x5305;&#x540D;&#x5E94;&#x5C3D;&#x91CF;&#x4E0E;&#x5305;&#x5BFC;&#x5165;&#x8DEF;&#x5F84;&#x7684;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x8DEF;&#x5F84;&#x5206;&#x6BB5;&#x4FDD;&#x6301;&#x4E00;&#x81F4;&#xFF1B;</li>
+<li>&#x5BF9;&#x4E8E; Go &#x4E2D;&#x7684;&#x5305;&#xFF0C;&#x4E00;&#x822C;&#x5EFA;&#x8BAE;&#x4EE5;&#x5C0F;&#x5199;&#x5F62;&#x5F0F;&#x7684;&#x5355;&#x4E2A;&#x5355;&#x8BCD;&#x547D;&#x540D;&#xFF1B;</li>
+<li>&#x6211;&#x4EEC;&#x5728;&#x7ED9;&#x5305;&#x547D;&#x540D;&#x65F6;&#x4E0D;&#x8981;&#x6709;&#x662F;&#x5426;&#x4E0E;&#x5176;&#x4ED6;&#x5305;&#x91CD;&#x540D;&#x7684;&#x987E;&#x8651;&#xFF0C;&#x56E0;&#x4E3A;&#x5728; Go &#x4E2D;&#xFF0C;&#x5305;&#x540D;&#x53EF;&#x4EE5;&#x4E0D;&#x552F;&#x4E00;&#xFF1B;</li>
+<li>Go &#x8BED;&#x8A00;&#x5EFA;&#x8BAE;&#xFF0C;&#x5305;&#x540D;&#x5E94;&#x5C3D;&#x91CF;&#x4E0E;&#x5305;&#x5BFC;&#x5165;&#x8DEF;&#x5F84;&#x7684;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x8DEF;&#x5F84;&#x5206;&#x6BB5;&#x4FDD;&#x6301;&#x4E00;&#x81F4;&#xFF1B;</li>
 <li>&#x6211;&#x4EEC;&#x5728;&#x7ED9;&#x5305;&#x547D;&#x540D;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4E0D;&#x4EC5;&#x8981;&#x8003;&#x8651;&#x5305;&#x81EA;&#x8EAB;&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x8FD8;&#x8981;&#x517C;&#x987E;&#x8BE5;&#x5305;&#x5BFC;&#x51FA;&#x7684;&#x6807;&#x8BC6;&#x7B26;&#xFF08;&#x5982;&#x53D8;&#x91CF;&#x3001;&#x5E38;&#x91CF;&#x3001;&#x7C7B;&#x578B;&#x3001;&#x51FD;&#x6570;&#x7B49;&#xFF09;&#x7684;&#x547D;&#x540D;&#xFF1B;</li>
 </ul>
 <h2 id="&#x53D8;&#x91CF;&#x3001;&#x7C7B;&#x578B;&#x3001;&#x51FD;&#x6570;&#x548C;&#x65B9;&#x6CD5;"><a name="&#x53D8;&#x91CF;&#x3001;&#x7C7B;&#x578B;&#x3001;&#x51FD;&#x6570;&#x548C;&#x65B9;&#x6CD5;" class="anchor-navigation-ex-anchor" href="#&#x53D8;&#x91CF;&#x3001;&#x7C7B;&#x578B;&#x3001;&#x51FD;&#x6570;&#x548C;&#x65B9;&#x6CD5;"><i class="fa fa-link" aria-hidden="true"></i></a>1.2. &#x53D8;&#x91CF;&#x3001;&#x7C7B;&#x578B;&#x3001;&#x51FD;&#x6570;&#x548C;&#x65B9;&#x6CD5;</h2>
 <ul>
-<li>Go&#x8BED;&#x8A00;&#x5B98;&#x65B9;&#x8981;&#x6C42;&#x6807;&#x8BC6;&#x7B26;&#x547D;&#x540D;&#x91C7;&#x7528;&#x9A7C;&#x5CF0;&#x547D;&#x540D;&#x6CD5;&#xFF1A;&#x975E;&#x516C;&#x5F00;&#x7684;&#x4F7F;&#x7528;&#x5C0F;&#x9A7C;&#x5CF0;&#xFF0C;&#x516C;&#x5F00;&#x7684;&#x4F7F;&#x7528;&#x5927;&#x9A7C;&#x5CF0;&#xFF1B;</li>
+<li>Go &#x8BED;&#x8A00;&#x5B98;&#x65B9;&#x8981;&#x6C42;&#x6807;&#x8BC6;&#x7B26;&#x547D;&#x540D;&#x91C7;&#x7528;&#x9A7C;&#x5CF0;&#x547D;&#x540D;&#x6CD5;&#xFF1A;&#x975E;&#x516C;&#x5F00;&#x7684;&#x4F7F;&#x7528;&#x5C0F;&#x9A7C;&#x5CF0;&#xFF0C;&#x516C;&#x5F00;&#x7684;&#x4F7F;&#x7528;&#x5927;&#x9A7C;&#x5CF0;&#xFF1B;</li>
 <li>&#x5FAA;&#x73AF;&#x548C;&#x6761;&#x4EF6;&#x53D8;&#x91CF;&#x591A;&#x91C7;&#x7528;&#x5355;&#x4E2A;&#x5B57;&#x6BCD;&#x547D;&#x540D;&#xFF08;&#x5177;&#x4F53;&#x89C1;&#x4E0A;&#x2FAF;&#x7684;&#x7EDF;&#x8BA1;&#x6570;&#x636E;&#xFF09;&#xFF1B;</li>
 <li>&#x51FD;&#x6570;/&#x65B9;&#x6CD5;&#x7684;&#x53C2;&#x6570;&#x548C;&#x8FD4;&#x56DE;&#x503C;&#x53D8;&#x91CF;&#x4EE5;&#x5355;&#x4E2A;&#x5355;&#x8BCD;&#x6216;&#x5355;&#x4E2A;&#x5B57;&#x6BCD;&#x4E3A;&#x4E3B;&#xFF1B;</li>
 <li>&#x7531;&#x4E8E;&#x65B9;&#x6CD5;&#x5728;&#x8C03;&#x7528;&#x65F6;&#x4F1A;&#x7ED1;&#x5B9A;&#x7C7B;&#x578B;&#x4FE1;&#x606F;&#xFF0C;&#x56E0;&#x6B64;&#x65B9;&#x6CD5;&#x7684;&#x547D;&#x540D;&#x4EE5;&#x5355;&#x4E2A;&#x5355;&#x8BCD;&#x4E3A;&#x4E3B;&#xFF1B;</li>
@@ -294,14 +387,14 @@
 </ul>
 <h2 id="&#x5E38;&#x91CF;"><a name="&#x5E38;&#x91CF;" class="anchor-navigation-ex-anchor" href="#&#x5E38;&#x91CF;"><i class="fa fa-link" aria-hidden="true"></i></a>1.3. &#x5E38;&#x91CF;</h2>
 <ul>
-<li>&#x4F46;&#x5728;Go&#x8BED;&#x2F94;&#x4E2D;&#xFF0C;&#x5E38;&#x91CF;&#x5728;&#x547D;&#x540D;&#x65B9;&#x5F0F;&#x4E0A;&#x4E0E;&#x53D8;&#x91CF;&#x5E76;&#x65E0;&#x8F83;&#x5927;&#x5DEE;&#x522B;&#xFF0C;&#x5E76;&#x4E0D;&#x8981;&#x6C42;&#x5168;&#x90E8;&#x5927;&#x5199;&#xFF1B;</li>
+<li>&#x4F46;&#x5728; Go &#x8BED;&#x8A00;&#x4E2D;&#xFF0C;&#x5E38;&#x91CF;&#x5728;&#x547D;&#x540D;&#x65B9;&#x5F0F;&#x4E0A;&#x4E0E;&#x53D8;&#x91CF;&#x5E76;&#x65E0;&#x8F83;&#x5927;&#x5DEE;&#x522B;&#xFF0C;&#x5E76;&#x4E0D;&#x8981;&#x6C42;&#x5168;&#x90E8;&#x5927;&#x5199;&#xFF1B;</li>
 <li>&#x53EA;&#x662F;&#x8003;&#x8651;&#x5176;&#x542B;&#x4E49;&#x7684;&#x51C6;&#x786E;&#x4F20;&#x9012;&#xFF0C;&#x5E38;&#x91CF;&#x591A;&#x4F7F;&#x7528;&#x591A;&#x5355;&#x8BCD;&#x7EC4;&#x5408;&#x7684;&#x65B9;&#x5F0F;&#x547D;&#x540D;&#xFF1B;</li>
 <li>&#x53EF;&#x4EE5;&#x5BF9;&#x540D;&#x79F0;&#x672C;&#x8EAB;&#x5C31;&#x662F;&#x5168;&#x5927;&#x5199;&#x7684;&#x7279;&#x5B9A;&#x5E38;&#x91CF;&#x4F7F;&#x7528;&#x5168;&#x5927;&#x5199;&#x7684;&#x540D;&#x5B57;&#xFF1B;</li>
 </ul>
 <h2 id="&#x63A5;&#x53E3;"><a name="&#x63A5;&#x53E3;" class="anchor-navigation-ex-anchor" href="#&#x63A5;&#x53E3;"><i class="fa fa-link" aria-hidden="true"></i></a>1.4. &#x63A5;&#x53E3;</h2>
 <ul>
-<li>&#x5728;Go&#x8BED;&#x2F94;&#x4E2D;&#xFF0C;&#x5BF9;&#x4E8E;&#x63A5;&#x53E3;&#x7C7B;&#x578B;&#x4F18;&#x5148;&#x4EE5;&#x5355;&#x4E2A;&#x5355;&#x8BCD;&#x547D;&#x540D;&#xFF1B;</li>
-<li>&#x5BF9;&#x4E8E;&#x62E5;&#x6709;&#x552F;&#x4E00;&#x2F45;&#x6CD5;&#x6216;&#x901A;&#x8FC7;&#x591A;&#x4E2A;&#x62E5;&#x6709;&#x552F;&#x4E00;&#x65B9;&#x6CD5;&#x7684;&#x63A5;&#x53E3;&#x7EC4;&#x5408;&#x800C;&#x6210;&#x7684;&#x63A5;&#x53E3;&#xFF0C; Go&#x8BED;&#x8A00;&#x7684;&#x60EF;&#x4F8B;&#x662F;&#x7528;&#x201C;&#x65B9;&#x6CD5;&#x540D;+er&#x201D;&#x547D;&#x540D;</li>
+<li>&#x5728; Go &#x8BED;&#x8A00;&#x4E2D;&#xFF0C;&#x5BF9;&#x4E8E;&#x63A5;&#x53E3;&#x7C7B;&#x578B;&#x4F18;&#x5148;&#x4EE5;&#x5355;&#x4E2A;&#x5355;&#x8BCD;&#x547D;&#x540D;&#xFF1B;</li>
+<li>&#x5BF9;&#x4E8E;&#x62E5;&#x6709;&#x552F;&#x4E00;&#x2F45;&#x6CD5;&#x6216;&#x901A;&#x8FC7;&#x591A;&#x4E2A;&#x62E5;&#x6709;&#x552F;&#x4E00;&#x65B9;&#x6CD5;&#x7684;&#x63A5;&#x53E3;&#x7EC4;&#x5408;&#x800C;&#x6210;&#x7684;&#x63A5;&#x53E3;&#xFF0C; Go &#x8BED;&#x8A00;&#x7684;&#x60EF;&#x4F8B;&#x662F;&#x7528;&#x201C;&#x65B9;&#x6CD5;&#x540D;+er&#x201D;&#x547D;&#x540D;</li>
 </ul>
 <h1 id="&#x5229;&#x7528;&#x4E0A;&#x4E0B;&#x2F42;&#x73AF;&#x5883;&#xFF0C;&#x8BA9;&#x6700;&#x77ED;&#x7684;&#x540D;&#x5B57;&#x643A;&#x5E26;&#x8DB3;&#x591F;&#x591A;&#x7684;&#x4FE1;&#x606F;"><a name="&#x5229;&#x7528;&#x4E0A;&#x4E0B;&#x2F42;&#x73AF;&#x5883;&#xFF0C;&#x8BA9;&#x6700;&#x77ED;&#x7684;&#x540D;&#x5B57;&#x643A;&#x5E26;&#x8DB3;&#x591F;&#x591A;&#x7684;&#x4FE1;&#x606F;" class="anchor-navigation-ex-anchor" href="#&#x5229;&#x7528;&#x4E0A;&#x4E0B;&#x2F42;&#x73AF;&#x5883;&#xFF0C;&#x8BA9;&#x6700;&#x77ED;&#x7684;&#x540D;&#x5B57;&#x643A;&#x5E26;&#x8DB3;&#x591F;&#x591A;&#x7684;&#x4FE1;&#x606F;"><i class="fa fa-link" aria-hidden="true"></i></a>2. &#x5229;&#x7528;&#x4E0A;&#x4E0B;&#x2F42;&#x73AF;&#x5883;&#xFF0C;&#x8BA9;&#x6700;&#x77ED;&#x7684;&#x540D;&#x5B57;&#x643A;&#x5E26;&#x8DB3;&#x591F;&#x591A;&#x7684;&#x4FE1;&#x606F;</h1>
 <blockquote>
@@ -314,7 +407,7 @@
         <span class="token keyword">if</span> buffer<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">&lt;</span> RuneSelf <span class="token punctuation">{</span>
             index<span class="token operator">++</span>
         <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-            <span class="token boolean">_</span><span class="token punctuation">,</span> size <span class="token operator">:=</span> <span class="token function">DecodeRune</span><span class="token punctuation">(</span>buffer<span class="token punctuation">[</span>index<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span> 
+            <span class="token boolean">_</span><span class="token punctuation">,</span> size <span class="token operator">:=</span> <span class="token function">DecodeRune</span><span class="token punctuation">(</span>buffer<span class="token punctuation">[</span>index<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
             index <span class="token operator">+=</span> size
 
         <span class="token punctuation">}</span>
@@ -330,14 +423,14 @@
             i<span class="token operator">++</span>
         <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
             <span class="token boolean">_</span><span class="token punctuation">,</span> n <span class="token operator">:=</span> <span class="token function">DecodeRune</span><span class="token punctuation">(</span>b<span class="token punctuation">[</span>i<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-            i <span class="token operator">+=</span> 
+            i <span class="token operator">+=</span>
         <span class="token punctuation">}</span>
         count<span class="token operator">++</span>
     <span class="token punctuation">}</span>
  <span class="token keyword">return</span> count
 <span class="token punctuation">}</span>
 </code></pre>
-<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/poker-svg" target="_blank">YangXin Xu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-10-03 15:28:35 </span> </footer>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/poker-svg" target="_blank">YangXin Xu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-10-03 21:31:20 </span> </footer>
                                 
                                 </section>
                             
@@ -364,10 +457,14 @@
 
             
                 
-                <a href="第6条-提交前使用gofmt格式化源码.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 第6条-提交前使用gofmt格式化源码">
+                <a href="第6条-提交前使用gofmt格式化源码.html" class="navigation navigation-prev " aria-label="Previous page: 第6条-提交前使用gofmt格式化源码">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
+                
+                <a href="第8条-使用一致的变量声明形式.html" class="navigation navigation-next " aria-label="Next page: 第8条-使用一致的变量声明形式">
+                    <i class="fa fa-angle-right"></i>
+                </a>
                 
             
         
@@ -376,7 +473,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"第7条-使用Go命名惯例对标识符进行命名","level":"1.8","depth":1,"previous":{"title":"第6条-提交前使用gofmt格式化源码","level":"1.7","depth":1,"path":"第6条-提交前使用gofmt格式化源码.md","ref":"第6条-提交前使用gofmt格式化源码.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","-lunr","-search","search-pro","-sharing","splitter","hide-element","insert-logo","code","livereload"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"livereload":{},"page-footer-ex":{"copyright":"By [YangXin Xu](https://github.com/poker-svg)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"expandable-chapters-small":{},"copy-code-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"style":"background: none; max-height: 120px; min-height: 120px","url":"./images/icon.png"},"expandable-chapters":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"深入理解Java虚拟机","gitbook":"*"},"file":{"path":"第7条-使用Go命名惯例对标识符进行命名.md","mtime":"2023-10-03T07:28:35.137Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-10-03T07:34:10.604Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"第7条-使用Go命名惯例对标识符进行命名","level":"1.8","depth":1,"next":{"title":"第8条-使用一致的变量声明形式","level":"1.9","depth":1,"path":"第8条-使用一致的变量声明形式.md","ref":"第8条-使用一致的变量声明形式.md","articles":[]},"previous":{"title":"第6条-提交前使用gofmt格式化源码","level":"1.7","depth":1,"path":"第6条-提交前使用gofmt格式化源码.md","ref":"第6条-提交前使用gofmt格式化源码.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","-lunr","-search","search-pro","-sharing","splitter","hide-element","insert-logo","code","livereload"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"livereload":{},"page-footer-ex":{"copyright":"By [YangXin Xu](https://github.com/poker-svg)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"expandable-chapters-small":{},"copy-code-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"style":"background: none; max-height: 120px; min-height: 120px","url":"./images/icon.png"},"expandable-chapters":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"深入理解Java虚拟机","gitbook":"*"},"file":{"path":"第7条-使用Go命名惯例对标识符进行命名.md","mtime":"2023-10-03T13:31:20.123Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-10-03T16:41:45.032Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
