@@ -1,0 +1,450 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>第4条-使用Go语言原生编程思维来写Go代码 · 深入理解Java虚拟机</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-insert-logo/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="第5条-使用得到工人且广泛使用的项目结构.html" />
+    
+    
+    <link rel="prev" href="第3条-理解Go语言的设计哲学.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="第1条-了解Go语言的诞生和演进.html">
+            
+                <a href="第1条-了解Go语言的诞生和演进.html">
+            
+                    
+                    第1条-了解Go语言的诞生和演进
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="第2条-选择适当的Go语言版本.html">
+            
+                <a href="第2条-选择适当的Go语言版本.html">
+            
+                    
+                    第2条-选择适当的Go语言版本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="第3条-理解Go语言的设计哲学.html">
+            
+                <a href="第3条-理解Go语言的设计哲学.html">
+            
+                    
+                    第3条-理解Go语言的设计哲学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.5" data-path="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                <a href="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                    
+                    第4条-使用Go语言原生编程思维来写Go代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                <a href="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                    
+                    第5条-使用得到工人且广泛使用的项目结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="第6条-提交前使用gofmt格式化源码.html">
+            
+                <a href="第6条-提交前使用gofmt格式化源码.html">
+            
+                    
+                    第6条-提交前使用gofmt格式化源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                <a href="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                    
+                    第7条-使用Go命名惯例对标识符进行命名
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >第4条-使用Go语言原生编程思维来写Go代码</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#&#x8BED;&#x8A00;&#x4E0E;&#x601D;&#x7EF4;"><b>1. </b>&#x8BED;&#x8A00;&#x4E0E;&#x601D;&#x7EF4;</a></li><li><span class="title-icon "></span><a href="#&#x73B0;&#x5B9E;&#x7684;&#x6295;&#x5F71;"><b>2. </b>&#x73B0;&#x5B9E;&#x7684;&#x6295;&#x5F71;</a></li><ul><li><span class="title-icon "></span><a href="#c&#x8BED;&#x8A00;&#x7248;&#x672C;"><b>2.1. </b>C&#x8BED;&#x8A00;&#x7248;&#x672C;</a></li><li><span class="title-icon "></span><a href="#haskell&#x7248;&#x672C;"><b>2.2. </b>Haskell&#x7248;&#x672C;</a></li><li><span class="title-icon "></span><a href="#go&#x8BED;&#x8A00;&#x7248;&#x672C;"><b>2.3. </b>Go&#x8BED;&#x8A00;&#x7248;&#x672C;</a></li></ul><li><span class="title-icon "></span><a href="#go&#x8BED;&#x8A00;&#x539F;&#x751F;&#x7F16;&#x7A0B;&#x601D;&#x7EF4;"><b>3. </b>Go&#x8BED;&#x8A00;&#x539F;&#x751F;&#x7F16;&#x7A0B;&#x601D;&#x7EF4;</a></li></ul></div><a href="#&#x8BED;&#x8A00;&#x4E0E;&#x601D;&#x7EF4;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="&#x8BED;&#x8A00;&#x4E0E;&#x601D;&#x7EF4;"><a name="&#x8BED;&#x8A00;&#x4E0E;&#x601D;&#x7EF4;" class="anchor-navigation-ex-anchor" href="#&#x8BED;&#x8A00;&#x4E0E;&#x601D;&#x7EF4;"><i class="fa fa-link" aria-hidden="true"></i></a>1. &#x8BED;&#x8A00;&#x4E0E;&#x601D;&#x7EF4;</h1>
+<p>&#x5728;&#x4EBA;&#x7C7B;&#x81EA;&#x7136;&#x8BED;&#x8A00;&#x5B66;&#x754C;&#x6709;&#x2F00;&#x4E2A;&#x5F88;&#x8457;&#x540D;&#x7684;&#x5047;&#x8BF4;&#x2014;&#x2014;&#x201C;&#x8428;&#x4E15;&#x5C14;-&#x6C83;&#x592B;&#x5047;&#x8BF4;&#x201D;&#xFF0C;&#x8FD9;&#x4E2A;&#x5047;&#x8BF4;&#x7684;&#x5185;&#x5BB9;&#x662F;&#x8FD9;&#x6837;&#x7684;&#xFF1A;&#x201C;&#x8BED;&#x8A00;&#x5F71;&#x54CD;&#x6216;&#x51B3;&#x5B9A;&#x4EBA;&#x7C7B;&#x7684;&#x601D;&#x7EF4;&#x65B9;&#x5F0F;&#x3002;&#x201D;</p>
+<h1 id="&#x73B0;&#x5B9E;&#x7684;&#x6295;&#x5F71;"><a name="&#x73B0;&#x5B9E;&#x7684;&#x6295;&#x5F71;" class="anchor-navigation-ex-anchor" href="#&#x73B0;&#x5B9E;&#x7684;&#x6295;&#x5F71;"><i class="fa fa-link" aria-hidden="true"></i></a>2. &#x73B0;&#x5B9E;&#x7684;&#x6295;&#x5F71;</h1>
+<p>&#x57C3;&#x62C9;&#x6258;&#x65AF;&#x7279;&#x5C3C;&#x7D20;&#x6570;&#x7B5B;&#x7B97;&#x6CD5;&#x7684;&#x4E0D;&#x540C;&#x8BED;&#x8A00;&#x5B9E;&#x73B0;</p>
+<h2 id="c&#x8BED;&#x8A00;&#x7248;&#x672C;"><a name="c&#x8BED;&#x8A00;&#x7248;&#x672C;" class="anchor-navigation-ex-anchor" href="#c&#x8BED;&#x8A00;&#x7248;&#x672C;"><i class="fa fa-link" aria-hidden="true"></i></a>2.1. C&#x8BED;&#x8A00;&#x7248;&#x672C;</h2>
+<pre class="language-"><code class="lang-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">LIMIT</span> <span class="token expression"><span class="token number">50</span></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">PRIMES</span> <span class="token expression"><span class="token number">10</span></span></span>
+<span class="token keyword">void</span> <span class="token function">sieve</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> c<span class="token punctuation">,</span> i<span class="token punctuation">,</span>j<span class="token punctuation">,</span>numbers<span class="token punctuation">[</span>LIMIT<span class="token punctuation">]</span><span class="token punctuation">,</span> primes<span class="token punctuation">[</span>PRIMES<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>LIMIT<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        numbers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>i<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">;</span> <span class="token comment">/*fill the array with natural numbers*/</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>LIMIT<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>numbers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">!=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span>j<span class="token operator">=</span><span class="token number">2</span><span class="token operator">*</span>numbers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>LIMIT<span class="token punctuation">;</span>j<span class="token operator">+=</span>numbers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                numbers<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">/* &#x7B5B;&#x9664;&#x2FAE;&#x7D20;&#x6570; */</span>
+
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    c <span class="token operator">=</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>LIMIT<span class="token operator">&amp;&amp;</span>j<span class="token operator">&lt;</span>PRIMES<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>numbers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">!=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            primes<span class="token punctuation">[</span>j<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> numbers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">/*transfer the primes to
+their own array*/</span>
+            c<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>c<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;%d\n&quot;</span><span class="token punctuation">,</span>primes<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>C&#x7248;&#x672C;&#x7684;&#x7D20;&#x6570;&#x7B5B;&#x7A0B;&#x5E8F;&#x662F;&#x2F00;&#x4E2A;&#x5E38;&#x89C4;&#x5B9E;&#x73B0;&#x3002;&#x5B83;&#x5B9A;&#x4E49;&#x4E86;&#x4E24;&#x4E2A;&#x6570;&#x7EC4;numbers &#x548C;primes&#xFF0C;&#x201C;&#x7B5B;&#x201D;&#x7684;&#x8FC7;&#x7A0B;&#x5728;numbers&#x8FD9;&#x4E2A;&#x6570;&#x7EC4;&#x4E2D;&#x8FDB;&#x884C;&#xFF08;&#x57FA;&#x4E8E;&#x7EAF;&#x5185;&#x5B58;&#x4FEE;&#x6539;&#xFF09;&#xFF0C;&#x975E;&#x7D20;&#x6570;&#x7684;&#x6570;&#x7EC4;&#x5143;&#x7D20;&#x88AB;&#x8BBE;&#x7F6E;&#x4E3A;-1&#xFF0C;&#x4FBF;&#x4E8E;&#x540E;&#x7EED;&#x63D0;&#x53D6;&#x3002;</p>
+</blockquote>
+<h2 id="haskell&#x7248;&#x672C;"><a name="haskell&#x7248;&#x672C;" class="anchor-navigation-ex-anchor" href="#haskell&#x7248;&#x672C;"><i class="fa fa-link" aria-hidden="true"></i></a>2.2. Haskell&#x7248;&#x672C;</h2>
+<pre class="language-"><code class="lang-haskell"><span class="token hvariable">sieve</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token hvariable">sieve</span> <span class="token punctuation">(</span><span class="token hvariable">x</span><span class="token operator">:</span><span class="token hvariable">xs</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token hvariable">x</span> <span class="token operator">:</span> <span class="token hvariable">sieve</span> <span class="token punctuation">(</span><span class="token builtin">filter</span> <span class="token punctuation">(</span><span class="token operator">\</span><span class="token hvariable">a</span> <span class="token operator">-&gt;</span> <span class="token builtin">not</span> <span class="token operator">$</span> <span class="token hvariable">a</span> <span class="token operator">`mod`</span> <span class="token hvariable">x</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token hvariable">xs</span><span class="token punctuation">)</span>
+<span class="token hvariable">n</span> <span class="token operator">=</span> <span class="token number">100</span>
+<span class="token hvariable">main</span> <span class="token operator">=</span> <span class="token builtin">print</span> <span class="token operator">$</span> <span class="token hvariable">sieve</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token operator">..</span><span class="token hvariable">n</span><span class="token punctuation">]</span>
+</code></pre>
+<blockquote>
+<p>Haskell&#x7248;&#x672C;&#x91C7;&#x2F64;&#x4E86;&#x51FD;&#x6570;&#x9012;&#x5F52;&#x7684;&#x601D;&#x8DEF;&#xFF0C;&#x901A;&#x8FC7;&#x201C;filter&#x64CD;&#x4F5C;&#x96C6;&#x5408;&#x201D;&#xFF0C;&#x7528;&#x8C13;&#x8BCD;&#xFF08;&#x8FC7;&#x6EE4;&#x6761;&#x4EF6;&#xFF09;\a -&gt; not $ a `mod` x == 0&#x7B5B;&#x9664;&#x7D20;&#x6570;&#x7684;&#x500D;&#x6570;&#xFF0C;&#x5C06;&#x672A;&#x7B5B;&#x9664;&#x7684;&#x6570;&#x7684;&#x96C6;&#x5408;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x4F20;&#x9012;&#x5F52;&#x9012;&#x7ED9;&#x4E0B;&#x53BB;&#x3002;</p>
+</blockquote>
+<h2 id="go&#x8BED;&#x8A00;&#x7248;&#x672C;"><a name="go&#x8BED;&#x8A00;&#x7248;&#x672C;" class="anchor-navigation-ex-anchor" href="#go&#x8BED;&#x8A00;&#x7248;&#x672C;"><i class="fa fa-link" aria-hidden="true"></i></a>2.3. Go&#x8BED;&#x8A00;&#x7248;&#x672C;</h2>
+<pre class="language-"><code class="lang-go"><span class="token keyword">func</span> <span class="token function">Generate</span><span class="token punctuation">(</span>ch <span class="token keyword">chan</span><span class="token operator">&lt;-</span> <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">2</span><span class="token punctuation">;</span> <span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+        ch <span class="token operator">&lt;-</span> i
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">Filter</span><span class="token punctuation">(</span>in <span class="token operator">&lt;-</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">,</span> out <span class="token keyword">chan</span><span class="token operator">&lt;-</span> <span class="token builtin">int</span><span class="token punctuation">,</span> prime <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">{</span>
+        i <span class="token operator">:=</span> <span class="token operator">&lt;-</span>in
+        <span class="token keyword">if</span> i<span class="token operator">%</span>prime <span class="token operator">!=</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+            out <span class="token operator">&lt;-</span> i
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ch <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">)</span>
+    <span class="token keyword">go</span> <span class="token function">Generate</span><span class="token punctuation">(</span>ch<span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+        prime <span class="token operator">:=</span> <span class="token operator">&lt;-</span>ch
+        <span class="token function">print</span><span class="token punctuation">(</span>prime<span class="token punctuation">,</span> <span class="token string">&quot;\n&quot;</span><span class="token punctuation">)</span>
+        ch1 <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">)</span>
+        <span class="token keyword">go</span> <span class="token function">Filter</span><span class="token punctuation">(</span>ch<span class="token punctuation">,</span> ch1<span class="token punctuation">,</span> prime<span class="token punctuation">)</span>
+        ch <span class="token operator">=</span> ch1
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>Go&#x7248;&#x672C;&#x7A0B;&#x5E8F;&#x5B9E;&#x73B0;&#x4E86;&#x2F00;&#x4E2A;&#x5E76;&#x53D1;&#x7D20;&#x6570;&#x7B5B;&#xFF0C;&#x5B83;&#x91C7;&#x2F64;&#x7684;&#x662F;goroutine&#x7684;&#x5E76;&#x53D1;&#x7EC4;&#x5408;&#x3002;&#x7A0B;&#x5E8F;&#x4ECE;&#x7D20;&#x6570;2&#x5F00;&#x59CB;&#xFF0C;&#x4F9D;&#x6B21;&#x4E3A;&#x6BCF;&#x4E2A;&#x7D20;&#x6570;&#x5EFA;&#x2F74;&#x2F00;&#x4E2A;goroutine&#xFF0C;&#x2F64; &#x4E8E;&#x4F5C;&#x4E3A;&#x7B5B;&#x9664;&#x8BE5;&#x7D20;&#x6570;&#x7684;&#x500D;&#x6570;&#x3002;</p>
+</blockquote>
+<h1 id="go&#x8BED;&#x8A00;&#x539F;&#x751F;&#x7F16;&#x7A0B;&#x601D;&#x7EF4;"><a name="go&#x8BED;&#x8A00;&#x539F;&#x751F;&#x7F16;&#x7A0B;&#x601D;&#x7EF4;" class="anchor-navigation-ex-anchor" href="#go&#x8BED;&#x8A00;&#x539F;&#x751F;&#x7F16;&#x7A0B;&#x601D;&#x7EF4;"><i class="fa fa-link" aria-hidden="true"></i></a>3. Go&#x8BED;&#x8A00;&#x539F;&#x751F;&#x7F16;&#x7A0B;&#x601D;&#x7EF4;</h1>
+<blockquote>
+<p>&#x7F16;&#x7A0B;&#x8BED;&#x8A00;&#x5F71;&#x54CD;&#x7F16;&#x7A0B;&#x601D;&#x7EF4;&#xFF0C;&#x6BCF;&#x79CD;&#x7F16;&#x7A0B;&#x8BED;&#x8A00;&#x90FD;&#x6709;&#x5C5E;&#x4E8E;&#x81EA;&#x5DF1;&#x7684;&#x539F;&#x751F;&#x7F16;&#x7A0B;&#x601D;&#x7EF4;&#xFF1A;</p>
+</blockquote>
+<ol>
+<li>C&#x8BED;&#x8A00;&#x76F8;&#x4FE1;&#x7A0B;&#x5E8F;&#x5458;&#xFF0C;&#x63D0;&#x4F9B;&#x6307;&#x9488;&#x548C;&#x6307;&#x9488;&#x8FD0;&#x7B97;&#xFF0C;&#x8BA9;C&#x7A0B;&#x5E8F;&#x5458;&#x5929;&#x9A6C;&#x884C;&#x7A7A;&#x5730;&#x81EA;&#x7531;&#x53D1;&#x6325;&#xFF0C;&#x63A5;&#x8FD1;&#x63D0;&#x51FA;&#x7684;&#x76F4;&#x63A5;&#x5185;&#x5B58;&#x64CD;&#x4F5C;&#x8BA9;C&#x7A0B;&#x5E8F;&#x62E5;&#x6709;&#x5F88;&#x9AD8;&#x7684;&#x6027;&#x80FD;</li>
+<li>C++&#x652F;&#x6301;&#x591A;&#x8303;&#x5F0F;&#xFF08;&#x547D;&#x4EE4;&#x5F0F;&#x3001;OO&#x3001;&#x6CDB;&#x578B;&#xFF09;&#xFF0C;&#x63A8;&#x8350;&#x4F7F;&#x7528;&#x6700;&#x65B0;&#x4EE3;&#x8868;&#x73B0;&#x4EE3;&#x8BED;&#x8A00;&#x53D1;&#x5C55;&#x7279;&#x8272;&#x7684;&#x6CDB;&#x578B;&#x7B49;&#x9AD8;&#x7EA7;&#x8303;&#x5F0F;</li>
+<li>Python&#x8BED;&#x8A00;&#x66F4;&#x662F;&#x5F62;&#x6210;&#x4E86;Pythonic&#x89C4;&#x5219;&#x6765;&#x6307;&#x5BFC;Python&#x7A0B;&#x5E8F;&#x5458;&#x5199;&#x51FA;&#x7B26;&#x5408;Python&#x601D;&#x7EF4;&#x6216;&#x60EF;&#x7528;&#x6CD5;&#x7684;&#x4EE3;&#x7801;</li>
+</ol>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/poker-svg" target="_blank">YangXin Xu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-10-03 14:43:08 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="第3条-理解Go语言的设计哲学.html" class="navigation navigation-prev " aria-label="Previous page: 第3条-理解Go语言的设计哲学">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="第5条-使用得到工人且广泛使用的项目结构.html" class="navigation navigation-next " aria-label="Next page: 第5条-使用得到工人且广泛使用的项目结构">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"第4条-使用Go语言原生编程思维来写Go代码","level":"1.5","depth":1,"next":{"title":"第5条-使用得到工人且广泛使用的项目结构","level":"1.6","depth":1,"path":"第5条-使用得到工人且广泛使用的项目结构.md","ref":"第5条-使用得到工人且广泛使用的项目结构.md","articles":[]},"previous":{"title":"第3条-理解Go语言的设计哲学","level":"1.4","depth":1,"path":"第3条-理解Go语言的设计哲学.md","ref":"第3条-理解Go语言的设计哲学.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","-lunr","-search","search-pro","-sharing","splitter","hide-element","insert-logo","code","livereload"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"livereload":{},"page-footer-ex":{"copyright":"By [YangXin Xu](https://github.com/poker-svg)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"expandable-chapters-small":{},"copy-code-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"style":"background: none; max-height: 120px; min-height: 120px","url":"./images/icon.png"},"expandable-chapters":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"深入理解Java虚拟机","gitbook":"*"},"file":{"path":"第4条-使用Go语言原生编程思维来写Go代码.md","mtime":"2023-10-03T06:43:08.677Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-10-03T07:34:10.604Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-hide-element/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-insert-logo/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
