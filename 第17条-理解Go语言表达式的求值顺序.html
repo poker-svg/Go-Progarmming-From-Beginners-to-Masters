@@ -1,0 +1,583 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>第17条-理解Go语言表达式的求值顺序 · 深入理解Java虚拟机</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-insert-logo/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="第18条-理解Go语言代码块与作用域.html" />
+    
+    
+    <link rel="prev" href="第16条-理解Go语言的包导入.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="第1条-了解Go语言的诞生和演进.html">
+            
+                <a href="第1条-了解Go语言的诞生和演进.html">
+            
+                    
+                    第1条-了解Go语言的诞生和演进
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="第2条-选择适当的Go语言版本.html">
+            
+                <a href="第2条-选择适当的Go语言版本.html">
+            
+                    
+                    第2条-选择适当的Go语言版本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="第3条-理解Go语言的设计哲学.html">
+            
+                <a href="第3条-理解Go语言的设计哲学.html">
+            
+                    
+                    第3条-理解Go语言的设计哲学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                <a href="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                    
+                    第4条-使用Go语言原生编程思维来写Go代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                <a href="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                    
+                    第5条-使用得到工人且广泛使用的项目结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="第6条-提交前使用gofmt格式化源码.html">
+            
+                <a href="第6条-提交前使用gofmt格式化源码.html">
+            
+                    
+                    第6条-提交前使用gofmt格式化源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                <a href="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                    
+                    第7条-使用Go命名惯例对标识符进行命名
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="第8条-使用一致的变量声明形式.html">
+            
+                <a href="第8条-使用一致的变量声明形式.html">
+            
+                    
+                    第8条-使用一致的变量声明形式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="第9条-使用无类型常量简化代码.html">
+            
+                <a href="第9条-使用无类型常量简化代码.html">
+            
+                    
+                    第9条-使用无类型常量简化代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="第10条-使用iota实现枚举常量.html">
+            
+                <a href="第10条-使用iota实现枚举常量.html">
+            
+                    
+                    第10条-使用iota实现枚举常量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="第11条-尽量定义零值可用的类型.html">
+            
+                <a href="第11条-尽量定义零值可用的类型.html">
+            
+                    
+                    第11条-尽量定义零值可用的类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="第12条-使用复合字面值作为初值构造器.html">
+            
+                <a href="第12条-使用复合字面值作为初值构造器.html">
+            
+                    
+                    第12条-使用复合字面值作为初值构造器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="第13条-了解切片实现原理并高效使用.html">
+            
+                <a href="第13条-了解切片实现原理并高效使用.html">
+            
+                    
+                    第13条-了解切片实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="第14条-了解map实现原理并高效使用.html">
+            
+                <a href="第14条-了解map实现原理并高效使用.html">
+            
+                    
+                    第14条-了解map实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="第15条-了解string实现原理并高效使用.html">
+            
+                <a href="第15条-了解string实现原理并高效使用.html">
+            
+                    
+                    第15条-了解string实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="第16条-理解Go语言的包导入.html">
+            
+                <a href="第16条-理解Go语言的包导入.html">
+            
+                    
+                    第16条-理解Go语言的包导入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.18" data-path="第17条-理解Go语言表达式的求值顺序.html">
+            
+                <a href="第17条-理解Go语言表达式的求值顺序.html">
+            
+                    
+                    第17条-理解Go语言表达式的求值顺序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="第18条-理解Go语言代码块与作用域.html">
+            
+                <a href="第18条-理解Go语言代码块与作用域.html">
+            
+                    
+                    第18条-理解Go语言代码块与作用域
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="第19条-了解Go语言控制语句惯用法及使用注意事项.html">
+            
+                <a href="第19条-了解Go语言控制语句惯用法及使用注意事项.html">
+            
+                    
+                    第19条-了解Go语言控制语句惯用法及使用注意事项
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="第20条-在init函数中检查包级变量的初始状态.html">
+            
+                <a href="第20条-在init函数中检查包级变量的初始状态.html">
+            
+                    
+                    第20条-在init函数中检查包级变量的初始状态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="第21条-让自己习惯于函数是“一等公民”.html">
+            
+                <a href="第21条-让自己习惯于函数是“一等公民”.html">
+            
+                    
+                    第21条-让自己习惯于函数是“一等公民”
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >第17条-理解Go语言表达式的求值顺序</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#&#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x987A;&#x5E8F;"><b>1. </b>&#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x987A;&#x5E8F;</a></li><li><span class="title-icon "></span><a href="#&#x666E;&#x901A;&#x6C42;&#x503C;&#x987A;&#x5E8F;"><b>2. </b>&#x666E;&#x901A;&#x6C42;&#x503C;&#x987A;&#x5E8F;</a></li><li><span class="title-icon "></span><a href="#&#x8D4B;&#x503C;&#x8BED;&#x53E5;&#x7684;&#x6C42;&#x503C;"><b>3. </b>&#x8D4B;&#x503C;&#x8BED;&#x53E5;&#x7684;&#x6C42;&#x503C;</a></li><li><span class="title-icon "></span><a href="#switchselect&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;"><b>4. </b>switch/select&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;</a></li><ul><li><span class="title-icon "></span><a href="#switch-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;"><b>4.1. </b>switch-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;</a></li><li><span class="title-icon "></span><a href="#select-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;"><b>4.2. </b>select-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;</a></li></ul></ul></div><a href="#&#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x987A;&#x5E8F;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="&#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x987A;&#x5E8F;"><a name="&#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x987A;&#x5E8F;" class="anchor-navigation-ex-anchor" href="#&#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x987A;&#x5E8F;"><i class="fa fa-link" aria-hidden="true"></i></a>1. &#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x987A;&#x5E8F;</h1>
+<p>&#x5728;&#x4E00;&#x4E2A;Go&#x5305;&#x5185;&#x90E8;&#xFF0C;&#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x8BED;&#x53E5;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x987A;&#x5E8F;&#x662F;&#x7531; <strong><u>&#x521D;&#x59CB;&#x5316;&#x4F9D;&#x8D56;&#x89C4;&#x5219;</u></strong> &#x51B3;&#x5B9A;&#x7684;&#xFF1A;</p>
+<ol>
+<li>&#x5728;Go&#x5305;&#x4E2D;&#xFF0C;&#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x7684;&#x521D;&#x59CB;&#x5316;&#x6309;&#x7167;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x7684;&#x5148;&#x540E;&#x987A;&#x5E8F;&#x8FDB;&#x884C;&#xFF1B;</li>
+<li>&#x5982;&#x679C;&#x67D0;&#x4E2A;&#x53D8;&#x91CF;&#xFF08;&#x5982;&#x53D8;&#x91CF;a&#xFF09;&#x7684;&#x521D;&#x59CB;&#x5316;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x76F4;&#x63A5;&#x6216;&#x95F4;&#x63A5;&#x4F9D;&#x8D56;&#x5176;&#x4ED6;&#x53D8;&#x91CF;&#xFF08;&#x5982;&#x53D8;&#x91CF;b&#xFF09;&#xFF0C;&#x90A3;&#x4E48;&#x53D8;&#x91CF;a&#x7684;&#x521D;&#x59CB;&#x5316;&#x987A;&#x5E8F;&#x6392;&#x5728;&#x53D8;&#x91CF;b&#x540E;&#x9762;&#xFF1B;</li>
+<li>&#x672A;&#x521D;&#x59CB;&#x5316;&#x7684;&#x4E14;&#x4E0D;&#x542B;&#x6709;&#x5BF9;&#x5E94;&#x521D;&#x59CB;&#x5316;&#x8868;&#x8FBE;&#x5F0F;&#x6216;&#x521D;&#x59CB;&#x5316;&#x8868;&#x8FBE;&#x5F0F;&#x4E0D;&#x4F9D;&#x8D56;&#x4EFB;&#x4F55;&#x672A;&#x521D;&#x59CB;&#x5316;&#x53D8;&#x91CF;&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x6211;&#x4EEC;&#x79F0;&#x4E4B;&#x4E3A; <strong><u>&#x201C;ready for initialization&#x201D;&#x53D8;&#x91CF;</u></strong> &#xFF1B;</li>
+<li>&#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x7684;&#x521D;&#x59CB;&#x5316;&#x662F;&#x9010;&#x6B65;&#x8FDB;&#x884C;&#x7684;&#xFF0C;&#x6BCF;&#x4E00;&#x6B65;&#x5C31;&#x662F;&#x6309;&#x7167;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x987A;&#x5E8F;&#x627E;&#x5230;&#x4E0B;&#x4E00;&#x4E2A;&#x201C;ready for initialization&#x201D;&#x53D8;&#x91CF;&#x5E76;&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#x7684;&#x8FC7;&#x7A0B;&#x3002;&#x53CD;&#x590D;&#x91CD;&#x590D;&#x8FD9;&#x4E00;&#x6B65;&#x9AA4;&#xFF0C;&#x76F4;&#x5230;&#x6CA1;&#x6709;&#x201C;ready for initialization&#x201D;&#x53D8;&#x91CF;&#x4E3A;&#x6B62;&#xFF1B;</li>
+<li>&#x4F4D;&#x4E8E;&#x540C;&#x4E00;&#x5305;&#x5185;&#x4F46;&#x4E0D;&#x540C;&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x53D8;&#x91CF;&#x7684;&#x58F0;&#x660E;&#x987A;&#x5E8F;&#x4F9D;&#x8D56;&#x7F16;&#x8BD1;&#x5668;&#x5904;&#x7406;&#x6587;&#x4EF6;&#x7684;&#x987A;&#x5E8F;&#xFF1A;&#x5148;&#x5904;&#x7406;&#x7684;&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x53D8;&#x91CF;&#x7684;&#x58F0;&#x660E;&#x987A;&#x5E8F;&#x5148;&#x4E8E;&#x540E;&#x5904;&#x7406;&#x7684;&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x53D8;&#x91CF;&#xFF1B;</li>
+</ol>
+<h1 id="&#x666E;&#x901A;&#x6C42;&#x503C;&#x987A;&#x5E8F;"><a name="&#x666E;&#x901A;&#x6C42;&#x503C;&#x987A;&#x5E8F;" class="anchor-navigation-ex-anchor" href="#&#x666E;&#x901A;&#x6C42;&#x503C;&#x987A;&#x5E8F;"><i class="fa fa-link" aria-hidden="true"></i></a>2. &#x666E;&#x901A;&#x6C42;&#x503C;&#x987A;&#x5E8F;</h1>
+<p>Go&#x89C4;&#x5B9A;&#x8868;&#x8FBE;&#x5F0F;&#x64CD;&#x4F5C;&#x6570;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x51FD;&#x6570;&#x3001;&#x65B9;&#x6CD5;&#x4EE5;&#x53CA;channel&#x64CD;&#x4F5C;&#x5B89;&#x88C5;&#x4ECE;&#x5DE6;&#x5230;&#x53F3;&#x7684;&#x6B21;&#x5E8F;&#x8FDB;&#x884C;&#x6C42;&#x503C;</p>
+<h1 id="&#x8D4B;&#x503C;&#x8BED;&#x53E5;&#x7684;&#x6C42;&#x503C;"><a name="&#x8D4B;&#x503C;&#x8BED;&#x53E5;&#x7684;&#x6C42;&#x503C;" class="anchor-navigation-ex-anchor" href="#&#x8D4B;&#x503C;&#x8BED;&#x53E5;&#x7684;&#x6C42;&#x503C;"><i class="fa fa-link" aria-hidden="true"></i></a>3. &#x8D4B;&#x503C;&#x8BED;&#x53E5;&#x7684;&#x6C42;&#x503C;</h1>
+<p>Go&#x8BED;&#x8A00;&#x89C4;&#x5B9A;&#xFF0C;&#x8D4B;&#x503C;&#x8BED;&#x53E5;&#x6C42;&#x503C;&#x5206;&#x4E3A;&#x4E24;&#x4E2A;&#x9636;&#x6BB5;&#xFF1A; </p>
+<ol>
+<li>&#x7B2C;&#x4E00;&#x9636;&#x6BB5;&#xFF0C;&#x5BF9;&#x4E8E;&#x7B49;&#x53F7;&#x5DE6;&#x8FB9;&#x7684;&#x4E0B;&#x6807;&#x8868;&#x8FBE;&#x5F0F;&#x3001;&#x6307;&#x9488;&#x89E3;&#x5F15;&#x7528;&#x8868;&#x8FBE;&#x5F0F;&#x548C;&#x7B49;&#x53F7;&#x53F3;&#x8FB9;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x7684;&#x64CD;&#x4F5C;&#x6570;&#xFF0C;&#x6309;&#x7167;&#x666E;&#x901A;&#x6C42;&#x503C;&#x89C4;&#x5219;&#x4ECE;&#x5DE6;&#x5230;&#x53F3;&#x8FDB;&#x884C;&#x6C42;&#x503C;&#xFF1B;</li>
+<li>&#x7B2C;&#x2F06;&#x9636;&#x6BB5;&#xFF0C;&#x6309;&#x4ECE;&#x5DE6;&#x5230;&#x53F3;&#x7684;&#x987A;&#x5E8F;&#x5BF9;&#x53D8;&#x91CF;&#x8FDB;&#x884C;&#x8D4B;&#x503C;&#xFF1B;</li>
+</ol>
+<h1 id="switchselect&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;"><a name="switchselect&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;" class="anchor-navigation-ex-anchor" href="#switchselect&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;"><i class="fa fa-link" aria-hidden="true"></i></a>4. switch/select&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;</h1>
+<h2 id="switch-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;"><a name="switch-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;" class="anchor-navigation-ex-anchor" href="#switch-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;"><i class="fa fa-link" aria-hidden="true"></i></a>4.1. switch-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;</h2>
+<p>&#x8FD9;&#x7C7B;&#x6C42;&#x503C;&#x5C5E;&#x4E8E;&#x201C;&#x60F0;&#x6027;&#x6C42;&#x503C;&#x201D;&#x7684;&#x8303;&#x7574;</p>
+<blockquote>
+<p>&#x60F0;&#x6027;&#x6C42;&#x503C;&#xFF1A;&#x53EA;&#x5728;&#x9700;&#x8981;&#x6C42;&#x503C;&#x65F6;&#x624D;&#x4F1A;&#x5BF9;&#x8868;&#x8FBE;&#x5F0F;&#x8FDB;&#x884C;&#x6C42;&#x503C;&#xFF0C;&#x76EE;&#x7684;&#x662F;&#x8BA9;&#x8BA1;&#x7B97;&#x673A;&#x5C11;&#x505A;&#x4E8B;&#xFF0C;&#x4ECE;&#x800C;&#x964D;&#x4F4E;&#x7A0B;&#x5E8F;&#x7684;&#x6D88;&#x8017;</p>
+</blockquote>
+<ol>
+<li>&#x5BF9;&#x4E8E;switch-case&#x8BED;&#x53E5;&#x800C;&#x8A00;&#xFF0C;&#x9996;&#x5148;&#x8FDB;&#x884C;&#x6C42;&#x503C;&#x7684;&#x662F;switch&#x540E;&#x9762;&#x7684;&#x8868;&#x8FBE;&#xFF1B;</li>
+<li>&#x63A5;&#x4E0B;&#x6765;&#x5C06;&#x6309;&#x7167;&#x4ECE;&#x4E0A;&#x5230;&#x4E0B;&#x3001;&#x4ECE;&#x5DE6;&#x5230;&#x53F3;&#x7684;&#x987A;&#x5E8F;&#x5BF9;case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x8FDB;&#x884C;&#x6C42;&#x503C;&#x3002;&#x5982;&#x679C;&#x67D0;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x7ED3;&#x679C;&#x4E0E;switch&#x8868;&#x8FBE;&#x5F0F;&#x7ED3;&#x679C;&#x4E00;&#x81F4;&#xFF0C;&#x90A3;&#x4E48;&#x6C42;&#x503C;&#x505C;&#x6B62;&#xFF0C;&#x540E;&#x9762;&#x672A;&#x6C42;&#x503C;&#x7684;case&#x8868;&#x8FBE;&#x5F0F;&#x5C06;&#x88AB;&#x5FFD;&#x7565;&#xFF1B;</li>
+</ol>
+<h2 id="select-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;"><a name="select-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;" class="anchor-navigation-ex-anchor" href="#select-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;"><i class="fa fa-link" aria-hidden="true"></i></a>4.2. select-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;</h2>
+<p>Go&#x8BED;&#x8A00;&#x4E2D;&#x7684;select&#x4E3A;&#x6211;&#x4EEC;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x79CD;&#x5728;&#x591A;&#x4E2A;channel&#x95F4;&#x5B9E;&#x73B0;&#x201C;&#x591A;&#x8DEF;&#x590D;&#x7528;&#x201D;&#x7684;&#x673A;&#x5236;&#xFF0C;&#x662F;&#x7F16;&#x5199;Go&#x5E76;&#x53D1;&#x7A0B;&#x5E8F;&#x6700;&#x5E38;&#x7528;&#x7684;&#x5E76;&#x53D1;&#x539F;&#x8BED;&#x4E4B;&#x4E00;</p>
+<ol>
+<li>select&#x6267;&#x884C;&#x5F00;&#x59CB;&#x65F6;&#xFF0C;&#x9996;&#x5148;&#x6240;&#x6709;case&#x8868;&#x8FBE;&#x5F0F;&#x90FD;&#x4F1A;&#x88AB;&#x6309;&#x51FA;&#x73B0;&#x7684;&#x5148;&#x540E;&#x987A;&#x5E8F;&#x6C42;&#x503C;&#x4E00;&#x904D;&#xFF1B;</li>
+<li>&#x5982;&#x679C;&#x9009;&#x62E9;&#x8981;&#x6267;&#x884C;&#x7684;&#x662F;&#x4E00;&#x4E2A;&#x4ECE;channel&#x63A5;&#x6536;&#x6570;&#x636E;&#x7684;case&#xFF0C;&#x90A3;&#x4E48;&#x8BE5;case&#x7B49;&#x53F7;&#x5DE6;&#x8FB9;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x5728;&#x63A5;&#x6536;&#x524D;&#x624D;&#x4F1A;&#x88AB;&#x6C42;&#x503C;&#xFF1B;</li>
+</ol>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/poker-svg" target="_blank">YangXin Xu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-10-04 16:01:10 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="第16条-理解Go语言的包导入.html" class="navigation navigation-prev " aria-label="Previous page: 第16条-理解Go语言的包导入">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="第18条-理解Go语言代码块与作用域.html" class="navigation navigation-next " aria-label="Next page: 第18条-理解Go语言代码块与作用域">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"第17条-理解Go语言表达式的求值顺序","level":"1.18","depth":1,"next":{"title":"第18条-理解Go语言代码块与作用域","level":"1.19","depth":1,"path":"第18条-理解Go语言代码块与作用域.md","ref":"第18条-理解Go语言代码块与作用域.md","articles":[]},"previous":{"title":"第16条-理解Go语言的包导入","level":"1.17","depth":1,"path":"第16条-理解Go语言的包导入.md","ref":"第16条-理解Go语言的包导入.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","-lunr","-search","search-pro","-sharing","splitter","hide-element","insert-logo","code","livereload"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"livereload":{},"page-footer-ex":{"copyright":"By [YangXin Xu](https://github.com/poker-svg)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"expandable-chapters-small":{},"copy-code-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"style":"background: none; max-height: 120px; min-height: 120px","url":"./images/icon.png"},"expandable-chapters":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"深入理解Java虚拟机","gitbook":"*"},"file":{"path":"第17条-理解Go语言表达式的求值顺序.md","mtime":"2023-10-04T08:01:10.174Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-10-04T14:57:09.819Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-hide-element/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-insert-logo/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
