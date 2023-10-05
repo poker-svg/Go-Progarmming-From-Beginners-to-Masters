@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Introduction · Go语言精进之路</title>
+        <title>第30条-使用接口提高代码的可测试性 · Go语言精进之路</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -85,8 +85,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="第1条-了解Go语言的诞生和演进.html" />
+    <link rel="next" href="第31条-优先考虑并发设计.html" />
     
+    
+    <link rel="prev" href="第29条-使用接口作为程序水平组合的连接点.html" />
     
 
     </head>
@@ -115,7 +117,7 @@
         
         
     
-        <li class="chapter active" data-level="1.1" data-path="./">
+        <li class="chapter " data-level="1.1" data-path="./">
             
                 <a href="./">
             
@@ -505,7 +507,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.31" data-path="第30条-使用接口提高代码的可测试性.html">
+        <li class="chapter active" data-level="1.31" data-path="第30条-使用接口提高代码的可测试性.html">
             
                 <a href="第30条-使用接口提高代码的可测试性.html">
             
@@ -574,7 +576,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Introduction</a>
+        <a href="." >第30条-使用接口提高代码的可测试性</a>
     </h1>
 </div>
 
@@ -589,9 +591,12 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#introduction"><b>1. </b>Introduction</a></li></ul></div><a href="#introduction" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="introduction"><a name="introduction" class="anchor-navigation-ex-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>1. Introduction</h1>
-<p>&#x8FD9;&#x662F;&#x6211;&#x7684;&#x300A;Go&#x8BED;&#x8A00;&#x7CBE;&#x8FDB;&#x4E4B;&#x8DEF;&#x300B;&#x7684;&#x8BFB;&#x4E66;&#x7B14;&#x8BB0;&#x7684;gitbook&#xFF0C;&#x4F1A;&#x65F6;&#x4E0D;&#x65F6;&#x66F4;&#x65B0;&#x3002;</p>
-<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/poker-svg" target="_blank">YangXin Xu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-10-03 15:33:39 </span> </footer>
+                                <p>&#xFF08;&#x7565;&#xFF09;</p>
+<ul>
+<li>Go&#x8BED;&#x8A00;&#x6709;&#x4E00;&#x4E2A;&#x60EF;&#x4F8B;&#x662F;&#x8BA9;&#x5355;&#x5143;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#x65F6;&#x523B;&#x4F34;&#x968F;&#x7740;&#x4F60;&#x7F16;&#x5199;&#x7684;Go&#x4EE3;&#x7801;&#x3002;</li>
+<li>&#x9002;&#x5F53;&#x62BD;&#x53D6;&#x63A5;&#x53E3;&#xFF0C;&#x8BA9;&#x63A5;&#x53E3;&#x6210;&#x4E3A;&#x597D;&#x4EE3;&#x7801;&#x4E0E;&#x5355;&#x5143;&#x6D4B;&#x8BD5;&#x4E4B;&#x95F4;&#x7684;&#x6865;&#x6881;&#x662F;Go&#x8BED;&#x8A00;&#x7684;&#x4E00;&#x79CD;&#x6700;&#x4F73;&#x5B9E;&#x8DF5;&#x3002;</li>
+</ul>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/poker-svg" target="_blank">YangXin Xu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-10-05 22:04:20 </span> </footer>
                                 
                                 </section>
                             
@@ -618,8 +623,12 @@
 
             
                 
+                <a href="第29条-使用接口作为程序水平组合的连接点.html" class="navigation navigation-prev " aria-label="Previous page: 第29条-使用接口作为程序水平组合的连接点">
+                    <i class="fa fa-angle-left"></i>
+                </a>
                 
-                <a href="第1条-了解Go语言的诞生和演进.html" class="navigation navigation-next navigation-unique" aria-label="Next page: 第1条-了解Go语言的诞生和演进">
+                
+                <a href="第31条-优先考虑并发设计.html" class="navigation navigation-next " aria-label="Next page: 第31条-优先考虑并发设计">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -630,7 +639,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"第1条-了解Go语言的诞生和演进","level":"1.2","depth":1,"path":"第1条-了解Go语言的诞生和演进.md","ref":"第1条-了解Go语言的诞生和演进.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","-lunr","-search","search-pro","-sharing","splitter","hide-element","insert-logo","code","livereload"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"livereload":{},"page-footer-ex":{"copyright":"By [YangXin Xu](https://github.com/poker-svg)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"expandable-chapters-small":{},"copy-code-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"style":"background: none; max-height: 120px; min-height: 120px","url":"./images/icon.png"},"expandable-chapters":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Go语言精进之路","gitbook":"*"},"file":{"path":"README.md","mtime":"2023-10-03T07:33:39.376Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-10-05T16:11:10.518Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"第30条-使用接口提高代码的可测试性","level":"1.31","depth":1,"next":{"title":"第31条-优先考虑并发设计","level":"1.32","depth":1,"path":"第31条-优先考虑并发设计.md","ref":"第31条-优先考虑并发设计.md","articles":[]},"previous":{"title":"第29条-使用接口作为程序水平组合的连接点","level":"1.30","depth":1,"path":"第29条-使用接口作为程序水平组合的连接点.md","ref":"第29条-使用接口作为程序水平组合的连接点.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","-lunr","-search","search-pro","-sharing","splitter","hide-element","insert-logo","code","livereload"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"livereload":{},"page-footer-ex":{"copyright":"By [YangXin Xu](https://github.com/poker-svg)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"expandable-chapters-small":{},"copy-code-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"style":"background: none; max-height: 120px; min-height: 120px","url":"./images/icon.png"},"expandable-chapters":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Go语言精进之路","gitbook":"*"},"file":{"path":"第30条-使用接口提高代码的可测试性.md","mtime":"2023-10-05T14:04:20.985Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-10-05T16:11:10.518Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
