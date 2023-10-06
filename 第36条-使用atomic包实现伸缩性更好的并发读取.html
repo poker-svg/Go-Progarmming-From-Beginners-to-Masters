@@ -1,0 +1,1037 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>第36条-使用atomic包实现伸缩性更好的并发读取 · Go语言精进之路</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-insert-logo/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="第37条-了解错误处理的4种策略.html" />
+    
+    
+    <link rel="prev" href="第35条-了解sync包的正确用法.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="第1条-了解Go语言的诞生和演进.html">
+            
+                <a href="第1条-了解Go语言的诞生和演进.html">
+            
+                    
+                    第1条-了解Go语言的诞生和演进
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="第2条-选择适当的Go语言版本.html">
+            
+                <a href="第2条-选择适当的Go语言版本.html">
+            
+                    
+                    第2条-选择适当的Go语言版本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="第3条-理解Go语言的设计哲学.html">
+            
+                <a href="第3条-理解Go语言的设计哲学.html">
+            
+                    
+                    第3条-理解Go语言的设计哲学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                <a href="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                    
+                    第4条-使用Go语言原生编程思维来写Go代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                <a href="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                    
+                    第5条-使用得到工人且广泛使用的项目结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="第6条-提交前使用gofmt格式化源码.html">
+            
+                <a href="第6条-提交前使用gofmt格式化源码.html">
+            
+                    
+                    第6条-提交前使用gofmt格式化源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                <a href="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                    
+                    第7条-使用Go命名惯例对标识符进行命名
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="第8条-使用一致的变量声明形式.html">
+            
+                <a href="第8条-使用一致的变量声明形式.html">
+            
+                    
+                    第8条-使用一致的变量声明形式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="第9条-使用无类型常量简化代码.html">
+            
+                <a href="第9条-使用无类型常量简化代码.html">
+            
+                    
+                    第9条-使用无类型常量简化代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="第10条-使用iota实现枚举常量.html">
+            
+                <a href="第10条-使用iota实现枚举常量.html">
+            
+                    
+                    第10条-使用iota实现枚举常量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="第11条-尽量定义零值可用的类型.html">
+            
+                <a href="第11条-尽量定义零值可用的类型.html">
+            
+                    
+                    第11条-尽量定义零值可用的类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="第12条-使用复合字面值作为初值构造器.html">
+            
+                <a href="第12条-使用复合字面值作为初值构造器.html">
+            
+                    
+                    第12条-使用复合字面值作为初值构造器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="第13条-了解切片实现原理并高效使用.html">
+            
+                <a href="第13条-了解切片实现原理并高效使用.html">
+            
+                    
+                    第13条-了解切片实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="第14条-了解map实现原理并高效使用.html">
+            
+                <a href="第14条-了解map实现原理并高效使用.html">
+            
+                    
+                    第14条-了解map实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="第15条-了解string实现原理并高效使用.html">
+            
+                <a href="第15条-了解string实现原理并高效使用.html">
+            
+                    
+                    第15条-了解string实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="第16条-理解Go语言的包导入.html">
+            
+                <a href="第16条-理解Go语言的包导入.html">
+            
+                    
+                    第16条-理解Go语言的包导入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="第17条-理解Go语言表达式的求值顺序.html">
+            
+                <a href="第17条-理解Go语言表达式的求值顺序.html">
+            
+                    
+                    第17条-理解Go语言表达式的求值顺序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="第18条-理解Go语言代码块与作用域.html">
+            
+                <a href="第18条-理解Go语言代码块与作用域.html">
+            
+                    
+                    第18条-理解Go语言代码块与作用域
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="第19条-了解Go语言控制语句惯用法及使用注意事项.html">
+            
+                <a href="第19条-了解Go语言控制语句惯用法及使用注意事项.html">
+            
+                    
+                    第19条-了解Go语言控制语句惯用法及使用注意事项
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="第20条-在init函数中检查包级变量的初始状态.html">
+            
+                <a href="第20条-在init函数中检查包级变量的初始状态.html">
+            
+                    
+                    第20条-在init函数中检查包级变量的初始状态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="第21条-让自己习惯于函数是“一等公民”.html">
+            
+                <a href="第21条-让自己习惯于函数是“一等公民”.html">
+            
+                    
+                    第21条-让自己习惯于函数是“一等公民”
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="第22条-使用defer让函数更简洁、更健壮.html">
+            
+                <a href="第22条-使用defer让函数更简洁、更健壮.html">
+            
+                    
+                    第22条-使用defer让函数更简洁、更健壮
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="第23条-理解方法的本质以选择正确的receiver类型.html">
+            
+                <a href="第23条-理解方法的本质以选择正确的receiver类型.html">
+            
+                    
+                    第23条-理解方法的本质以选择正确的receiver类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="第24条-方法集合决定接口实现.html">
+            
+                <a href="第24条-方法集合决定接口实现.html">
+            
+                    
+                    第24条-方法集合决定接口实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="第25条-了解变长参数函数的妙用.html">
+            
+                <a href="第25条-了解变长参数函数的妙用.html">
+            
+                    
+                    第25条-了解变长参数函数的妙用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="第26条-了解接口类型变量的内部表示.html">
+            
+                <a href="第26条-了解接口类型变量的内部表示.html">
+            
+                    
+                    第26条-了解接口类型变量的内部表示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="第27条-尽量定义小接口.html">
+            
+                <a href="第27条-尽量定义小接口.html">
+            
+                    
+                    第27条-尽量定义小接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="第28条-尽量避免使用空接口作为函数参数类型.html">
+            
+                <a href="第28条-尽量避免使用空接口作为函数参数类型.html">
+            
+                    
+                    第28条-尽量避免使用空接口作为函数参数类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="第29条-使用接口作为程序水平组合的连接点.html">
+            
+                <a href="第29条-使用接口作为程序水平组合的连接点.html">
+            
+                    
+                    第29条-使用接口作为程序水平组合的连接点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="第30条-使用接口提高代码的可测试性.html">
+            
+                <a href="第30条-使用接口提高代码的可测试性.html">
+            
+                    
+                    第30条-使用接口提高代码的可测试性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="第31条-优先考虑并发设计.html">
+            
+                <a href="第31条-优先考虑并发设计.html">
+            
+                    
+                    第31条-优先考虑并发设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="第32条-了解goroutine的调度原理.html">
+            
+                <a href="第32条-了解goroutine的调度原理.html">
+            
+                    
+                    第32条-了解goroutine的调度原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="第33条-掌握Go并发模型和常见并发模式.html">
+            
+                <a href="第33条-掌握Go并发模型和常见并发模式.html">
+            
+                    
+                    第33条-掌握Go并发模型和常见并发模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="第34条-了解channel的妙用.html">
+            
+                <a href="第34条-了解channel的妙用.html">
+            
+                    
+                    第34条-了解channel的妙用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="第35条-了解sync包的正确用法.html">
+            
+                <a href="第35条-了解sync包的正确用法.html">
+            
+                    
+                    第35条-了解sync包的正确用法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.37" data-path="第36条-使用atomic包实现伸缩性更好的并发读取.html">
+            
+                <a href="第36条-使用atomic包实现伸缩性更好的并发读取.html">
+            
+                    
+                    第36条-使用atomic包实现伸缩性更好的并发读取
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="第37条-了解错误处理的4种策略.html">
+            
+                <a href="第37条-了解错误处理的4种策略.html">
+            
+                    
+                    第37条-了解错误处理的4种策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="第38条-尽量优化反复出现的if%20err != nil.md">
+            
+                <span>
+            
+                    
+                    第38条-尽量优化反复出现的if err != nil
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="第39条-不要使用panic进行正常的错误处理.html">
+            
+                <a href="第39条-不要使用panic进行正常的错误处理.html">
+            
+                    
+                    第39条-不要使用panic进行正常的错误处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >第36条-使用atomic包实现伸缩性更好的并发读取</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#atomic&#x5305;&#x4E0E;&#x539F;&#x5B50;&#x64CD;&#x4F5C;"><b>1. </b>atomic&#x5305;&#x4E0E;&#x539F;&#x5B50;&#x64CD;&#x4F5C;</a></li><li><span class="title-icon "></span><a href="#&#x5BF9;&#x5171;&#x4EAB;&#x6574;&#x578B;&#x53D8;&#x91CF;&#x7684;&#x65E0;&#x9501;&#x8BFB;&#x5199;"><b>2. </b>&#x5BF9;&#x5171;&#x4EAB;&#x6574;&#x578B;&#x53D8;&#x91CF;&#x7684;&#x65E0;&#x9501;&#x8BFB;&#x5199;</a></li><li><span class="title-icon "></span><a href="#&#x5BF9;&#x5171;&#x4EAB;&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;&#x578B;&#x53D8;&#x91CF;&#x7684;&#x65E0;&#x9501;&#x8BFB;&#x5199;"><b>3. </b>&#x5BF9;&#x5171;&#x4EAB;&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;&#x578B;&#x53D8;&#x91CF;&#x7684;&#x65E0;&#x9501;&#x8BFB;&#x5199;</a></li><li><span class="title-icon "></span><a href="#&#x5C0F;&#x7ED3;"><b>4. </b>&#x5C0F;&#x7ED3;</a></li></ul></div><a href="#atomic&#x5305;&#x4E0E;&#x539F;&#x5B50;&#x64CD;&#x4F5C;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><blockquote>
+<p>&#x9762;&#x5411;CSP&#x5E76;&#x53D1;&#x6A21;&#x578B;&#x7684;channel&#x539F;&#x8BED;&#x548C;&#x9762;&#x5411;&#x4F20;&#x7EDF;&#x5171;&#x4EAB;&#x5185;&#x5B58;&#x5E76;&#x53D1;&#x6A21;&#x578B;&#x7684;sync&#x5305;&#x63D0;&#x4F9B;&#x7684;&#x539F;&#x8BED;&#x5DF2;&#x7ECF;&#x8DB3;&#x4EE5;&#x6EE1;&#x8DB3;Go&#x8BED;&#x2F94;&#x5E94;&#x7528;&#x5E76;&#x53D1;&#x8BBE;&#x8BA1;&#x4E2D;99.9%&#x7684;&#x5E76;&#x53D1;&#x540C;&#x6B65;&#x9700;&#x6C42;&#x4E86;&#xFF0C;&#x800C;&#x5269;&#x4F59;&#x90A3;0.1%&#x7684;&#x9700;&#x6C42;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;Go&#x6807;&#x51C6;&#x5E93;&#x63D0;&#x4F9B;&#x7684;atomic&#x5305;&#x6765;&#x5B9E;&#x73B0;&#x3002;</p>
+</blockquote>
+<h1 id="atomic&#x5305;&#x4E0E;&#x539F;&#x5B50;&#x64CD;&#x4F5C;"><a name="atomic&#x5305;&#x4E0E;&#x539F;&#x5B50;&#x64CD;&#x4F5C;" class="anchor-navigation-ex-anchor" href="#atomic&#x5305;&#x4E0E;&#x539F;&#x5B50;&#x64CD;&#x4F5C;"><i class="fa fa-link" aria-hidden="true"></i></a>1. atomic&#x5305;&#x4E0E;&#x539F;&#x5B50;&#x64CD;&#x4F5C;</h1>
+<ul>
+<li>atomic&#x5305;&#x662F;Go&#x8BED;&#x8A00;&#x63D0;&#x4F9B;&#x7684;&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#x539F;&#x8BED;&#x7684;&#x76F8;&#x5173;&#x63A5;&#x53E3;&#xFF1B;</li>
+<li>&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#x7684;&#x6307;&#x4EE4;&#x662F;&#x4E0D;&#x53EF;&#x4E2D;&#x65AD;&#x7684;&#xFF0C;&#x8981;&#x4E48;&#x4E0D;&#x6267;&#x884C;&#xFF0C;&#x4E00;&#x65E6;&#x6267;&#x884C;&#x5C31;&#x4E00;&#x6B21;&#x6027;&#x5168;&#x90E8;&#x6267;&#x884C;&#x5B8C;&#x6BD5;&#xFF0C;&#x4E0D;&#x53EF;&#x5206;&#x5272;&#xFF1B;</li>
+<li>&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#x7531;&#x5E95;&#x5C42;&#x786C;&#x4EF6;&#x76F4;&#x63A5;&#x63D0;&#x4F9B;&#x652F;&#x6301;&#xFF0C;&#x662F;&#x4E00;&#x79CD;&#x786C;&#x4EF6;&#x5B9E;&#x73B0;&#x7684;&#x6307;&#x4EE4;&#x7EA7;&#x201C;&#x4E8B;&#x52A1;&#x201D;&#xFF0C;&#x76F8;&#x6BD4;&#x4E8E;<u>&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x5C42;&#x9762;&#x7684;sync&#x5305;</u>&#x3001;<u>Go&#x8FD0;&#x884C;&#x65F6;&#x5C42;&#x9762;&#x7684;channel</u>&#xFF0C;&#x5B83;&#x66F4;&#x4E3A;&#x539F;&#x59CB;&#xFF1B;</li>
+<li>atomic&#x5305;&#x5C01;&#x88C5;&#x4E86;CPU&#x5B9E;&#x73B0;&#x7684;&#x90E8;&#x5206;&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#x6307;&#x4EE4;&#xFF0C;&#x4E3A;&#x7528;&#x6237;&#x5C42;&#x63D0;&#x4F9B;&#x4F53;&#x9A8C;&#x826F;&#x597D;&#x7684;&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#x51FD;&#x6570;</li>
+</ul>
+<hr>
+<p>&#x4EE5;atomic.SwapInt64&#x51FD;&#x6570;&#x5728;x86_64&#x5E73;&#x53F0;&#x4E0A;&#x7684;&#x5B9E;&#x73B0;&#x4E3A;&#x4F8B;&#xFF1A;</p>
+<pre class="language-"><code class="lang-go"><span class="token comment">// $GOROOT/src/sync/atomic/doc.go</span>
+<span class="token keyword">func</span> <span class="token function">SwapInt64</span><span class="token punctuation">(</span>addr <span class="token operator">*</span><span class="token builtin">int64</span><span class="token punctuation">,</span> <span class="token builtin">new</span> <span class="token builtin">int64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>old <span class="token builtin">int64</span><span class="token punctuation">)</span>
+<span class="token comment">// $GOROOT/src/sync/atomic/asm.s</span>
+TEXT &#xB7;<span class="token function">SwapInt64</span><span class="token punctuation">(</span>SB<span class="token punctuation">)</span><span class="token punctuation">,</span>NOSPLIT<span class="token punctuation">,</span>$<span class="token number">0</span>
+    JMP runtime&#x2215;internal&#x2215;atomic&#xB7;<span class="token function">Xchg64</span><span class="token punctuation">(</span>SB<span class="token punctuation">)</span>
+<span class="token comment">// $GOROOT/src/runtime/internal/asm_amd64.s</span>
+TEXT runtime&#x2215;internal&#x2215;atomic&#xB7;<span class="token function">Xchg64</span><span class="token punctuation">(</span>SB<span class="token punctuation">)</span><span class="token punctuation">,</span> NOSPLIT<span class="token punctuation">,</span> $<span class="token number">0</span><span class="token operator">-</span><span class="token number">24</span>
+    MOVQ ptr<span class="token operator">+</span><span class="token function">0</span><span class="token punctuation">(</span>FP<span class="token punctuation">)</span><span class="token punctuation">,</span> BX
+     MOVQ <span class="token builtin">new</span><span class="token operator">+</span><span class="token function">8</span><span class="token punctuation">(</span>FP<span class="token punctuation">)</span><span class="token punctuation">,</span> AX
+     XCHGQ AX<span class="token punctuation">,</span> <span class="token function">0</span><span class="token punctuation">(</span>BX<span class="token punctuation">)</span>
+     MOVQ AX<span class="token punctuation">,</span> ret<span class="token operator">+</span><span class="token function">16</span><span class="token punctuation">(</span>FP<span class="token punctuation">)</span>
+     RET
+</code></pre>
+<blockquote>
+<p>SwapInt64&#x57FA;&#x672C;&#x4E0A;&#x5C31;&#x662F;&#x5BF9; x86_64 CPU&#x5B9E;&#x73B0;&#x7684;&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#x6307;&#x4EE4; XCHGQ &#x7684;&#x76F4;&#x63A5;&#x5C01;&#x88C5;</p>
+</blockquote>
+<h1 id="&#x5BF9;&#x5171;&#x4EAB;&#x6574;&#x578B;&#x53D8;&#x91CF;&#x7684;&#x65E0;&#x9501;&#x8BFB;&#x5199;"><a name="&#x5BF9;&#x5171;&#x4EAB;&#x6574;&#x578B;&#x53D8;&#x91CF;&#x7684;&#x65E0;&#x9501;&#x8BFB;&#x5199;" class="anchor-navigation-ex-anchor" href="#&#x5BF9;&#x5171;&#x4EAB;&#x6574;&#x578B;&#x53D8;&#x91CF;&#x7684;&#x65E0;&#x9501;&#x8BFB;&#x5199;"><i class="fa fa-link" aria-hidden="true"></i></a>2. &#x5BF9;&#x5171;&#x4EAB;&#x6574;&#x578B;&#x53D8;&#x91CF;&#x7684;&#x65E0;&#x9501;&#x8BFB;&#x5199;</h1>
+<blockquote>
+<p>atomic&#x5305;&#x63D0;&#x4F9B;&#x4E86;&#x4E24;&#x5927;&#x7C7B;&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#x63A5;&#x53E3;&#xFF1A;&#x4E00;&#x7C7B;&#x662F;&#x9488;&#x5BF9;&#x6574;&#x578B;&#x53D8;&#x91CF;&#x7684;&#xFF0C;&#x5305;&#x62EC;&#x6709;&#x7B26;&#x53F7;&#x6574;&#x578B;&#x3001;&#x65E0;&#x7B26;&#x53F7;&#x6574;&#x578B;&#x4EE5;&#x53CA;&#x5BF9;&#x5E94;&#x7684;&#x6307;&#x9488;&#x7C7B;&#x578B;&#xFF1B;&#x53E6;&#x4E00;&#x7C7B;&#x662F;&#x9488;&#x5BF9;&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;&#x578B;&#x7684;&#x3002;</p>
+</blockquote>
+<pre class="language-"><code class="lang-go"><span class="token comment">// chapter6/sources/go-atomic-package-1_test.go</span>
+<span class="token keyword">var</span> n1 <span class="token builtin">int64</span>
+
+<span class="token keyword">func</span> <span class="token function">addSyncByAtomic</span><span class="token punctuation">(</span>delta <span class="token builtin">int64</span><span class="token punctuation">)</span> <span class="token builtin">int64</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> atomic<span class="token punctuation">.</span><span class="token function">AddInt64</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>n1<span class="token punctuation">,</span> delta<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">readSyncByAtomic</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int64</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> atomic<span class="token punctuation">.</span><span class="token function">LoadInt64</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>n1<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> n2 <span class="token builtin">int64</span>
+<span class="token keyword">var</span> rwmu sync<span class="token punctuation">.</span>RWMutex
+
+<span class="token keyword">func</span> <span class="token function">addSyncByRWMutex</span><span class="token punctuation">(</span>delta <span class="token builtin">int64</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    rwmu<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    n2 <span class="token operator">+=</span> delta
+    rwmu<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">readSyncByRWMutex</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int64</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> n <span class="token builtin">int64</span>
+    rwmu<span class="token punctuation">.</span><span class="token function">RLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    n <span class="token operator">=</span> n2
+    rwmu<span class="token punctuation">.</span><span class="token function">RUnlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> n
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">BenchmarkAddSyncByAtomic</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    b<span class="token punctuation">.</span><span class="token function">RunParallel</span><span class="token punctuation">(</span><span class="token keyword">func</span><span class="token punctuation">(</span>pb <span class="token operator">*</span>testing<span class="token punctuation">.</span>PB<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> pb<span class="token punctuation">.</span><span class="token function">Next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">addSyncByAtomic</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">BenchmarkReadSyncByAtomic</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    b<span class="token punctuation">.</span><span class="token function">RunParallel</span><span class="token punctuation">(</span><span class="token keyword">func</span><span class="token punctuation">(</span>pb <span class="token operator">*</span>testing<span class="token punctuation">.</span>PB<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> pb<span class="token punctuation">.</span><span class="token function">Next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">readSyncByAtomic</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">BenchmarkAddSyncByRWMutex</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    b<span class="token punctuation">.</span><span class="token function">RunParallel</span><span class="token punctuation">(</span><span class="token keyword">func</span><span class="token punctuation">(</span>pb <span class="token operator">*</span>testing<span class="token punctuation">.</span>PB<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> pb<span class="token punctuation">.</span><span class="token function">Next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">addSyncByRWMutex</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">BenchmarkReadSyncByRWMutex</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    b<span class="token punctuation">.</span><span class="token function">RunParallel</span><span class="token punctuation">(</span><span class="token keyword">func</span><span class="token punctuation">(</span>pb <span class="token operator">*</span>testing<span class="token punctuation">.</span>PB<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> pb<span class="token punctuation">.</span><span class="token function">Next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">readSyncByRWMutex</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class="language-"><code class="lang-bash"><span class="token variable">$go</span> <span class="token builtin class-name">test</span> <span class="token parameter variable">-bench</span> <span class="token builtin class-name">.</span> go-atomic-package-1_test.go <span class="token parameter variable">-cpu</span> <span class="token number">2</span> 
+goos: darwin
+goarch: amd64
+BenchmarkAddSyncByAtomic-2 <span class="token number">56360716</span> <span class="token number">20.4</span>
+ns/op
+BenchmarkReadSyncByAtomic-2 <span class="token number">1000000000</span> <span class="token number">0.729</span>
+ns/op
+BenchmarkAddSyncByRWMutex-2 <span class="token number">41799388</span> <span class="token number">28.9</span>
+ns/op
+BenchmarkReadSyncByRWMutex-2 <span class="token number">35381282</span> <span class="token number">32.6</span>
+ns/op
+PASS
+<span class="token variable">$go</span> <span class="token builtin class-name">test</span> <span class="token parameter variable">-bench</span> <span class="token builtin class-name">.</span> go-atomic-package-1_test.go <span class="token parameter variable">-cpu</span> <span class="token number">8</span>
+goos: darwin
+goarch: amd64
+BenchmarkAddSyncByAtomic-8 <span class="token number">58224580</span> <span class="token number">20.5</span>
+ns/op
+BenchmarkReadSyncByAtomic-8 <span class="token number">1000000000</span> <span class="token number">0.234</span>
+ns/op
+BenchmarkAddSyncByRWMutex-8 <span class="token number">18438339</span> <span class="token number">64.2</span>
+ns/op
+BenchmarkReadSyncByRWMutex-8 <span class="token number">29445268</span> <span class="token number">40.8</span>
+ns/op
+PASS
+<span class="token variable">$go</span> <span class="token builtin class-name">test</span> <span class="token parameter variable">-bench</span> <span class="token builtin class-name">.</span> go-atomic-package-1_test.go <span class="token parameter variable">-cpu</span> <span class="token number">16</span>
+goos: darwin
+goarch: amd64
+BenchmarkAddSyncByAtomic-16 <span class="token number">58500958</span> <span class="token number">20.4</span>
+ns/op
+BenchmarkReadSyncByAtomic-16 <span class="token number">1000000000</span> <span class="token number">0.238</span>
+ns/op
+BenchmarkAddSyncByRWMutex-16 <span class="token number">16669366</span> <span class="token number">71.8</span>
+ns/op
+BenchmarkReadSyncByRWMutex-16 <span class="token number">29137915</span> <span class="token number">41.2</span>
+ns/op
+PASS
+<span class="token variable">$go</span> <span class="token builtin class-name">test</span> <span class="token parameter variable">-bench</span> <span class="token builtin class-name">.</span> go-atomic-package-1_test.go <span class="token parameter variable">-cpu</span> <span class="token number">32</span>
+goos: darwin
+goarch: amd64
+BenchmarkAddSyncByAtomic-32 <span class="token number">58587633</span> <span class="token number">20.4</span>
+ns/op
+BenchmarkReadSyncByAtomic-32 <span class="token number">1000000000</span> <span class="token number">0.231</span>
+ns/op
+BenchmarkAddSyncByRWMutex-32 <span class="token number">14315090</span> <span class="token number">81.8</span>
+ns/op
+BenchmarkReadSyncByRWMutex-32 <span class="token number">29164032</span> <span class="token number">41.1</span>
+ns/op
+PASS
+</code></pre>
+<ul>
+<li>&#x8BFB;&#x5199;&#x9501;&#x7684;&#x6027;&#x80FD;&#x968F;&#x7740;&#x5E76;&#x53D1;&#x91CF;&#x589E;&#x5927;&#x7684;&#x53D8;&#x5316;&#x60C5;&#x51B5;&#x4E0E;&#x524D;&#x9762;&#x8BB2;&#x89E3;sync.RWMutex&#x65F6;&#x7684;&#x4E00;&#x81F4;&#xFF1B;</li>
+<li>&#x5229;&#x7528;&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#x7684;&#x65E0;&#x9501;&#x5E76;&#x53D1;&#x5199;&#x7684;&#x6027;&#x80FD;&#x968F;&#x7740;&#x5E76;&#x53D1;&#x91CF;&#x589E;&#x5927;&#x51E0;&#x4E4E;&#x4FDD;&#x6301;&#x6052;&#x5B9A;&#xFF1B;</li>
+<li>&#x5229;&#x7528;&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#x7684;&#x65E0;&#x9501;&#x5E76;&#x53D1;&#x8BFB;&#x7684;&#x6027;&#x80FD;&#x968F;&#x7740;&#x5E76;&#x53D1;&#x91CF;&#x589E;&#x5927;&#x6709;&#x6301;&#x7EED;&#x63D0;&#x5347;&#x7684;&#x8D8B;&#x52BF;&#xFF0C;&#x5E76;&#x4E14;&#x6027;&#x80FD;&#x7EA6;&#x4E3A;&#x8BFB;&#x9501;&#x7684;200&#x500D;&#xFF1B;</li>
+</ul>
+<h1 id="&#x5BF9;&#x5171;&#x4EAB;&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;&#x578B;&#x53D8;&#x91CF;&#x7684;&#x65E0;&#x9501;&#x8BFB;&#x5199;"><a name="&#x5BF9;&#x5171;&#x4EAB;&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;&#x578B;&#x53D8;&#x91CF;&#x7684;&#x65E0;&#x9501;&#x8BFB;&#x5199;" class="anchor-navigation-ex-anchor" href="#&#x5BF9;&#x5171;&#x4EAB;&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;&#x578B;&#x53D8;&#x91CF;&#x7684;&#x65E0;&#x9501;&#x8BFB;&#x5199;"><i class="fa fa-link" aria-hidden="true"></i></a>3. &#x5BF9;&#x5171;&#x4EAB;&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;&#x578B;&#x53D8;&#x91CF;&#x7684;&#x65E0;&#x9501;&#x8BFB;&#x5199;</h1>
+<blockquote>
+<p>atomic&#x901A;&#x8FC7;Value&#x7C7B;&#x578B;&#x7684;&#x88C5;&#x62C6;&#x7BB1;&#x64CD;&#x4F5C;&#x5B9E;&#x73B0;&#x4E86;&#x5BF9;&#x4EFB;&#x610F;&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;&#x578B;&#x7684;&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#xFF08;Load &#x548C;Store&#xFF09;&#xFF0C;&#x4ECE;&#x800C;&#x5B9E;&#x73B0;&#x5BF9;&#x5171;&#x4EAB;&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;&#x578B;&#x53D8;&#x91CF;&#x65E0;&#x9501;&#x8BFB;&#x5199;&#x7684;&#x652F;&#x6301;&#x3002;</p>
+</blockquote>
+<p><img src="images/image-20231006150628688.png" alt="image-20231006150628688" style="zoom:50%;"></p>
+<pre class="language-"><code class="lang-go"><span class="token comment">// chapter6/sources/go-atomic-package-2_test.go</span>
+<span class="token keyword">type</span> Config <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    sync<span class="token punctuation">.</span>RWMutex
+    data <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">BenchmarkRWMutexSet</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    config <span class="token operator">:=</span> Config<span class="token punctuation">{</span><span class="token punctuation">}</span>
+    b<span class="token punctuation">.</span><span class="token function">ReportAllocs</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    b<span class="token punctuation">.</span><span class="token function">RunParallel</span><span class="token punctuation">(</span><span class="token keyword">func</span><span class="token punctuation">(</span>pb <span class="token operator">*</span>testing<span class="token punctuation">.</span>PB<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> pb<span class="token punctuation">.</span><span class="token function">Next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            config<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            config<span class="token punctuation">.</span>data <span class="token operator">=</span> <span class="token string">&quot;hello&quot;</span>
+            config<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">BenchmarkRWMutexGet</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    config <span class="token operator">:=</span> Config<span class="token punctuation">{</span>data<span class="token punctuation">:</span> <span class="token string">&quot;hello&quot;</span><span class="token punctuation">}</span>
+    b<span class="token punctuation">.</span><span class="token function">ReportAllocs</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    b<span class="token punctuation">.</span><span class="token function">RunParallel</span><span class="token punctuation">(</span><span class="token keyword">func</span><span class="token punctuation">(</span>pb <span class="token operator">*</span>testing<span class="token punctuation">.</span>PB<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> pb<span class="token punctuation">.</span><span class="token function">Next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            config<span class="token punctuation">.</span><span class="token function">RLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token boolean">_</span> <span class="token operator">=</span> config<span class="token punctuation">.</span>data
+            config<span class="token punctuation">.</span><span class="token function">RUnlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">BenchmarkAtomicSet</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> config atomic<span class="token punctuation">.</span>Value
+    c <span class="token operator">:=</span> Config<span class="token punctuation">{</span>data<span class="token punctuation">:</span> <span class="token string">&quot;hello&quot;</span><span class="token punctuation">}</span>
+    b<span class="token punctuation">.</span><span class="token function">ReportAllocs</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    b<span class="token punctuation">.</span><span class="token function">RunParallel</span><span class="token punctuation">(</span><span class="token keyword">func</span><span class="token punctuation">(</span>pb <span class="token operator">*</span>testing<span class="token punctuation">.</span>PB<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> pb<span class="token punctuation">.</span><span class="token function">Next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            config<span class="token punctuation">.</span><span class="token function">Store</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">BenchmarkAtomicGet</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> config atomic<span class="token punctuation">.</span>Value
+    config<span class="token punctuation">.</span><span class="token function">Store</span><span class="token punctuation">(</span>Config<span class="token punctuation">{</span>data<span class="token punctuation">:</span> <span class="token string">&quot;hello&quot;</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    b<span class="token punctuation">.</span><span class="token function">ReportAllocs</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    b<span class="token punctuation">.</span><span class="token function">RunParallel</span><span class="token punctuation">(</span><span class="token keyword">func</span><span class="token punctuation">(</span>pb <span class="token operator">*</span>testing<span class="token punctuation">.</span>PB<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> pb<span class="token punctuation">.</span><span class="token function">Next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token boolean">_</span> <span class="token operator">=</span> config<span class="token punctuation">.</span><span class="token function">Load</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token punctuation">(</span>Config<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class="language-"><code class="lang-bash"><span class="token variable">$go</span> <span class="token builtin class-name">test</span> <span class="token parameter variable">-bench</span> <span class="token builtin class-name">.</span> go-atomic-package-2_test.go <span class="token parameter variable">-cpu</span><span class="token operator">=</span><span class="token number">2</span>
+goos: darwin
+goarch: amd64
+BenchmarkRWMutexSet-2 <span class="token number">40097684</span> <span class="token number">29.3</span> ns/op <span class="token number">0</span> B/op 
+<span class="token number">0</span> allocs/op
+BenchmarkRWMutexGet-2 <span class="token number">37523130</span> <span class="token number">34.7</span> ns/op <span class="token number">0</span> B/op 
+<span class="token number">0</span> allocs/op
+BenchmarkAtomicSet-2 <span class="token number">26030662</span> <span class="token number">44.4</span> ns/op <span class="token number">48</span> B/op 
+<span class="token number">1</span> allocs/op
+BenchmarkAtomicGet-2 <span class="token number">1000000000</span> <span class="token number">0.677</span> ns/op <span class="token number">0</span> B/op 
+<span class="token number">0</span> allocs/op
+PASS
+<span class="token variable">$go</span> <span class="token builtin class-name">test</span> <span class="token parameter variable">-bench</span> <span class="token builtin class-name">.</span> go-atomic-package-2_test.go <span class="token parameter variable">-cpu</span><span class="token operator">=</span><span class="token number">8</span>
+goos: darwin
+goarch: amd64
+BenchmarkRWMutexSet-8 <span class="token number">18696680</span> <span class="token number">63.2</span> ns/op <span class="token number">0</span> B/op 
+<span class="token number">0</span> allocs/op
+BenchmarkRWMutexGet-8 <span class="token number">29149304</span> <span class="token number">41.0</span> ns/op <span class="token number">0</span> B/op 
+<span class="token number">0</span> allocs/op
+BenchmarkAtomicSet-8 <span class="token number">42793735</span> <span class="token number">29.1</span> ns/op <span class="token number">48</span> B/op 
+<span class="token number">1</span> allocs/op
+BenchmarkAtomicGet-8 <span class="token number">1000000000</span> <span class="token number">0.346</span> ns/op <span class="token number">0</span> B/op 
+<span class="token number">0</span> allocs/op
+PASS
+<span class="token variable">$go</span> <span class="token builtin class-name">test</span> <span class="token parameter variable">-bench</span> <span class="token builtin class-name">.</span> go-atomic-package-2_test.go <span class="token parameter variable">-cpu</span><span class="token operator">=</span><span class="token number">16</span>
+goos: darwin
+goarch: amd64
+BenchmarkRWMutexSet-16 <span class="token number">17499681</span> <span class="token number">68.9</span> ns/op <span class="token number">0</span> B/op 
+<span class="token number">0</span> allocs/op
+BenchmarkRWMutexGet-16 <span class="token number">29048467</span> <span class="token number">41.4</span> ns/op <span class="token number">0</span> B/op 
+<span class="token number">0</span> allocs/op
+BenchmarkAtomicSet-16 <span class="token number">36774126</span> <span class="token number">31.8</span> ns/op <span class="token number">48</span> B/op 
+<span class="token number">1</span> allocs/op
+BenchmarkAtomicGet-16 <span class="token number">1000000000</span> <span class="token number">0.356</span> ns/op <span class="token number">0</span> B/op 
+<span class="token number">0</span> allocs/op
+PASS
+<span class="token variable">$go</span> <span class="token builtin class-name">test</span> <span class="token parameter variable">-bench</span> <span class="token builtin class-name">.</span> go-atomic-package-2_test.go <span class="token parameter variable">-cpu</span><span class="token operator">=</span><span class="token number">32</span>
+goos: darwin
+goarch: amd64
+BenchmarkRWMutexSet-32 <span class="token number">17546760</span> <span class="token number">75.9</span> ns/op <span class="token number">0</span> B/op 
+<span class="token number">0</span> allocs/op
+BenchmarkRWMutexGet-32 <span class="token number">34059410</span> <span class="token number">35.3</span> ns/op <span class="token number">0</span> B/op 
+<span class="token number">0</span> allocs/op
+BenchmarkAtomicSet-32 <span class="token number">36702122</span> <span class="token number">33.3</span> ns/op <span class="token number">48</span> B/op 
+<span class="token number">1</span> allocs/op
+BenchmarkAtomicGet-32 <span class="token number">1000000000</span> <span class="token number">0.351</span> ns/op <span class="token number">0</span> B/op 
+<span class="token number">0</span> allocs/op
+PASS
+</code></pre>
+<ul>
+<li>&#x5229;&#x7528;&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#x7684;&#x65E0;&#x9501;&#x5E76;&#x53D1;&#x5199;&#x7684;&#x6027;&#x80FD;&#x968F;&#x7740;&#x5E76;&#x53D1;&#x91CF;&#x7684;&#x589E;&#x5927;&#x800C;&#x5C0F;&#x5E45;&#x4E0B;&#x964D;&#xFF1B;</li>
+<li>&#x5229;&#x7528;&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#x7684;&#x65E0;&#x9501;&#x5E76;&#x53D1;&#x8BFB;&#x7684;&#x6027;&#x80FD;&#x968F;&#x7740;&#x5E76;&#x53D1;&#x91CF;&#x589E;&#x5927;&#x6709;&#x6301;&#x7EED;&#x63D0;&#x5347;&#x7684;&#x8D8B;&#x52BF;&#xFF0C;&#x5E76;&#x4E14;&#x6027;&#x80FD;&#x7EA6;&#x4E3A;&#x8BFB;&#x9501;&#x7684;100&#x500D;&#xFF1B;</li>
+</ul>
+<h1 id="&#x5C0F;&#x7ED3;"><a name="&#x5C0F;&#x7ED3;" class="anchor-navigation-ex-anchor" href="#&#x5C0F;&#x7ED3;"><i class="fa fa-link" aria-hidden="true"></i></a>4. &#x5C0F;&#x7ED3;</h1>
+<ul>
+<li>&#x968F;&#x7740;&#x5E76;&#x53D1;&#x91CF;&#x63D0;&#x5347;&#xFF0C;&#x4F7F;&#x7528;atomic&#x5B9E;&#x73B0;&#x7684;&#x5171;&#x4EAB;&#x53D8;&#x91CF;&#x7684;&#x5E76;&#x53D1;&#x8BFB;&#x5199;&#x6027;&#x80FD;&#x8868;&#x73B0;&#x66F4;&#x4E3A;&#x7A33;&#x5B9A;&#xFF0C;&#x5C24;&#x5176;&#x662F;&#x539F;&#x5B50;&#x8BFB;&#x64CD;&#x4F5C;&#xFF0C;&#x8FD9;&#x8BA9;atomic&#x4E0E;sync&#x5305;&#x4E2D;&#x7684;&#x539F;&#x8BED;&#x6BD4;&#x8D77;&#x6765;&#x8868;&#x73B0;&#x51FA;&#x66F4;&#x597D;&#x7684;&#x4F38;&#x7F29;&#x6027;&#x548C;&#x66F4;&#x9AD8;&#x7684;&#x6027;&#x80FD;&#x3002;</li>
+<li>&#x7531;&#x6B64;&#x53EF;&#x4EE5;&#x770B;&#x51FA;atomic&#x5305;&#x66F4;&#x9002;&#x5408;&#x4E00;&#x4E9B;&#x5BF9;&#x6027;&#x80FD;&#x5341;&#x5206;&#x654F;&#x611F;&#x3001;&#x5E76;&#x53D1;&#x91CF;&#x8F83;&#x5927;&#x4E14;&#x8BFB;&#x591A;&#x5199;&#x5C11;&#x7684;&#x573A;&#x5408;&#x3002;</li>
+<li>&#x4F46;atomic&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#x53EF;&#x7528;&#x6765;&#x540C;&#x6B65;&#x7684;&#x8303;&#x56F4;&#x6709;&#x8F83;&#x5927;&#x9650;&#x5236;&#xFF0C;&#x4EC5;&#x662F;&#x4E00;&#x4E2A;&#x6574;&#x578B;&#x53D8;&#x91CF;&#x6216;&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;&#x578B;&#x53D8;&#x91CF;&#x3002;&#x5982;&#x679C;&#x8981;&#x5BF9;&#x4E00;&#x4E2A;&#x590D;&#x6742;&#x7684;&#x4E34;&#x754C;&#x533A;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x540C;&#x6B65;&#xFF0C; &#x90A3;&#x4E48;&#x9996;&#x9009;&#x4F9D;&#x65E7;&#x662F;sync&#x5305;&#x4E2D;&#x7684;&#x539F;&#x8BED;&#x3002;</li>
+</ul>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/poker-svg" target="_blank">YangXin Xu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-10-06 15:15:36 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="第35条-了解sync包的正确用法.html" class="navigation navigation-prev " aria-label="Previous page: 第35条-了解sync包的正确用法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="第37条-了解错误处理的4种策略.html" class="navigation navigation-next " aria-label="Next page: 第37条-了解错误处理的4种策略">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"第36条-使用atomic包实现伸缩性更好的并发读取","level":"1.37","depth":1,"next":{"title":"第37条-了解错误处理的4种策略","level":"1.38","depth":1,"path":"第37条-了解错误处理的4种策略.md","ref":"第37条-了解错误处理的4种策略.md","articles":[]},"previous":{"title":"第35条-了解sync包的正确用法","level":"1.36","depth":1,"path":"第35条-了解sync包的正确用法.md","ref":"第35条-了解sync包的正确用法.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","-lunr","-search","search-pro","-sharing","splitter","hide-element","insert-logo","code","livereload"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"livereload":{},"page-footer-ex":{"copyright":"By [YangXin Xu](https://github.com/poker-svg)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"expandable-chapters-small":{},"copy-code-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"style":"background: none; max-height: 120px; min-height: 120px","url":"./images/icon.png"},"expandable-chapters":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Go语言精进之路","gitbook":"*"},"file":{"path":"第36条-使用atomic包实现伸缩性更好的并发读取.md","mtime":"2023-10-06T07:15:36.251Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-10-06T13:46:14.437Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-hide-element/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-insert-logo/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

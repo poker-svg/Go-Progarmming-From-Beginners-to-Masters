@@ -1,0 +1,1324 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>第33条-掌握Go并发模型和常见并发模式 · Go语言精进之路</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-insert-logo/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="第34条-了解channel的妙用.html" />
+    
+    
+    <link rel="prev" href="第32条-了解goroutine的调度原理.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="第1条-了解Go语言的诞生和演进.html">
+            
+                <a href="第1条-了解Go语言的诞生和演进.html">
+            
+                    
+                    第1条-了解Go语言的诞生和演进
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="第2条-选择适当的Go语言版本.html">
+            
+                <a href="第2条-选择适当的Go语言版本.html">
+            
+                    
+                    第2条-选择适当的Go语言版本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="第3条-理解Go语言的设计哲学.html">
+            
+                <a href="第3条-理解Go语言的设计哲学.html">
+            
+                    
+                    第3条-理解Go语言的设计哲学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                <a href="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                    
+                    第4条-使用Go语言原生编程思维来写Go代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                <a href="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                    
+                    第5条-使用得到工人且广泛使用的项目结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="第6条-提交前使用gofmt格式化源码.html">
+            
+                <a href="第6条-提交前使用gofmt格式化源码.html">
+            
+                    
+                    第6条-提交前使用gofmt格式化源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                <a href="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                    
+                    第7条-使用Go命名惯例对标识符进行命名
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="第8条-使用一致的变量声明形式.html">
+            
+                <a href="第8条-使用一致的变量声明形式.html">
+            
+                    
+                    第8条-使用一致的变量声明形式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="第9条-使用无类型常量简化代码.html">
+            
+                <a href="第9条-使用无类型常量简化代码.html">
+            
+                    
+                    第9条-使用无类型常量简化代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="第10条-使用iota实现枚举常量.html">
+            
+                <a href="第10条-使用iota实现枚举常量.html">
+            
+                    
+                    第10条-使用iota实现枚举常量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="第11条-尽量定义零值可用的类型.html">
+            
+                <a href="第11条-尽量定义零值可用的类型.html">
+            
+                    
+                    第11条-尽量定义零值可用的类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="第12条-使用复合字面值作为初值构造器.html">
+            
+                <a href="第12条-使用复合字面值作为初值构造器.html">
+            
+                    
+                    第12条-使用复合字面值作为初值构造器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="第13条-了解切片实现原理并高效使用.html">
+            
+                <a href="第13条-了解切片实现原理并高效使用.html">
+            
+                    
+                    第13条-了解切片实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="第14条-了解map实现原理并高效使用.html">
+            
+                <a href="第14条-了解map实现原理并高效使用.html">
+            
+                    
+                    第14条-了解map实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="第15条-了解string实现原理并高效使用.html">
+            
+                <a href="第15条-了解string实现原理并高效使用.html">
+            
+                    
+                    第15条-了解string实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="第16条-理解Go语言的包导入.html">
+            
+                <a href="第16条-理解Go语言的包导入.html">
+            
+                    
+                    第16条-理解Go语言的包导入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="第17条-理解Go语言表达式的求值顺序.html">
+            
+                <a href="第17条-理解Go语言表达式的求值顺序.html">
+            
+                    
+                    第17条-理解Go语言表达式的求值顺序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="第18条-理解Go语言代码块与作用域.html">
+            
+                <a href="第18条-理解Go语言代码块与作用域.html">
+            
+                    
+                    第18条-理解Go语言代码块与作用域
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="第19条-了解Go语言控制语句惯用法及使用注意事项.html">
+            
+                <a href="第19条-了解Go语言控制语句惯用法及使用注意事项.html">
+            
+                    
+                    第19条-了解Go语言控制语句惯用法及使用注意事项
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="第20条-在init函数中检查包级变量的初始状态.html">
+            
+                <a href="第20条-在init函数中检查包级变量的初始状态.html">
+            
+                    
+                    第20条-在init函数中检查包级变量的初始状态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="第21条-让自己习惯于函数是“一等公民”.html">
+            
+                <a href="第21条-让自己习惯于函数是“一等公民”.html">
+            
+                    
+                    第21条-让自己习惯于函数是“一等公民”
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="第22条-使用defer让函数更简洁、更健壮.html">
+            
+                <a href="第22条-使用defer让函数更简洁、更健壮.html">
+            
+                    
+                    第22条-使用defer让函数更简洁、更健壮
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="第23条-理解方法的本质以选择正确的receiver类型.html">
+            
+                <a href="第23条-理解方法的本质以选择正确的receiver类型.html">
+            
+                    
+                    第23条-理解方法的本质以选择正确的receiver类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="第24条-方法集合决定接口实现.html">
+            
+                <a href="第24条-方法集合决定接口实现.html">
+            
+                    
+                    第24条-方法集合决定接口实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="第25条-了解变长参数函数的妙用.html">
+            
+                <a href="第25条-了解变长参数函数的妙用.html">
+            
+                    
+                    第25条-了解变长参数函数的妙用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="第26条-了解接口类型变量的内部表示.html">
+            
+                <a href="第26条-了解接口类型变量的内部表示.html">
+            
+                    
+                    第26条-了解接口类型变量的内部表示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="第27条-尽量定义小接口.html">
+            
+                <a href="第27条-尽量定义小接口.html">
+            
+                    
+                    第27条-尽量定义小接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="第28条-尽量避免使用空接口作为函数参数类型.html">
+            
+                <a href="第28条-尽量避免使用空接口作为函数参数类型.html">
+            
+                    
+                    第28条-尽量避免使用空接口作为函数参数类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="第29条-使用接口作为程序水平组合的连接点.html">
+            
+                <a href="第29条-使用接口作为程序水平组合的连接点.html">
+            
+                    
+                    第29条-使用接口作为程序水平组合的连接点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="第30条-使用接口提高代码的可测试性.html">
+            
+                <a href="第30条-使用接口提高代码的可测试性.html">
+            
+                    
+                    第30条-使用接口提高代码的可测试性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="第31条-优先考虑并发设计.html">
+            
+                <a href="第31条-优先考虑并发设计.html">
+            
+                    
+                    第31条-优先考虑并发设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="第32条-了解goroutine的调度原理.html">
+            
+                <a href="第32条-了解goroutine的调度原理.html">
+            
+                    
+                    第32条-了解goroutine的调度原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.34" data-path="第33条-掌握Go并发模型和常见并发模式.html">
+            
+                <a href="第33条-掌握Go并发模型和常见并发模式.html">
+            
+                    
+                    第33条-掌握Go并发模型和常见并发模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="第34条-了解channel的妙用.html">
+            
+                <a href="第34条-了解channel的妙用.html">
+            
+                    
+                    第34条-了解channel的妙用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="第35条-了解sync包的正确用法.html">
+            
+                <a href="第35条-了解sync包的正确用法.html">
+            
+                    
+                    第35条-了解sync包的正确用法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="第36条-使用atomic包实现伸缩性更好的并发读取.html">
+            
+                <a href="第36条-使用atomic包实现伸缩性更好的并发读取.html">
+            
+                    
+                    第36条-使用atomic包实现伸缩性更好的并发读取
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="第37条-了解错误处理的4种策略.html">
+            
+                <a href="第37条-了解错误处理的4种策略.html">
+            
+                    
+                    第37条-了解错误处理的4种策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="第38条-尽量优化反复出现的if%20err != nil.md">
+            
+                <span>
+            
+                    
+                    第38条-尽量优化反复出现的if err != nil
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="第39条-不要使用panic进行正常的错误处理.html">
+            
+                <a href="第39条-不要使用panic进行正常的错误处理.html">
+            
+                    
+                    第39条-不要使用panic进行正常的错误处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >第33条-掌握Go并发模型和常见并发模式</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#go&#x5E76;&#x53D1;&#x6A21;&#x578B;"><b>1. </b>Go&#x5E76;&#x53D1;&#x6A21;&#x578B;</a></li><li><span class="title-icon "></span><a href="#go&#x5E38;&#x89C1;&#x7684;&#x5E76;&#x53D1;&#x6A21;&#x578B;"><b>2. </b>Go&#x5E38;&#x89C1;&#x7684;&#x5E76;&#x53D1;&#x6A21;&#x578B;</a></li><ul><li><span class="title-icon "></span><a href="#&#x521B;&#x5EFA;&#x6A21;&#x5F0F;"><b>2.1. </b>&#x521B;&#x5EFA;&#x6A21;&#x5F0F;</a></li><li><span class="title-icon "></span><a href="#&#x9000;&#x51FA;&#x6A21;&#x5F0F;"><b>2.2. </b>&#x9000;&#x51FA;&#x6A21;&#x5F0F;</a></li><ul><li><span class="title-icon "></span><a href="#&#x5206;&#x79BB;&#x6A21;&#x5F0F;"><b>2.2.1. </b>&#x5206;&#x79BB;&#x6A21;&#x5F0F;</a></li><li><span class="title-icon "></span><a href="#join&#x6A21;&#x5F0F;"><b>2.2.2. </b>join&#x6A21;&#x5F0F;</a></li><li><span class="title-icon "></span><a href="#notify-and-wait&#x6A21;&#x5F0F;"><b>2.2.3. </b>notify-and-wait&#x6A21;&#x5F0F;</a></li><li><span class="title-icon "></span><a href="#&#x9000;&#x51FA;&#x6A21;&#x5F0F;&#x7684;&#x5E94;&#x7528;"><b>2.2.4. </b>&#x9000;&#x51FA;&#x6A21;&#x5F0F;&#x7684;&#x5E94;&#x7528;</a></li></ul><li><span class="title-icon "></span><a href="#&#x7BA1;&#x9053;&#x6A21;&#x5F0F;"><b>2.3. </b>&#x7BA1;&#x9053;&#x6A21;&#x5F0F;</a></li><li><span class="title-icon "></span><a href="#&#x6247;&#x51FA;&#x548C;&#x6247;&#x5165;&#x6A21;&#x5F0F;"><b>2.4. </b>&#x6247;&#x51FA;&#x548C;&#x6247;&#x5165;&#x6A21;&#x5F0F;</a></li><li><span class="title-icon "></span><a href="#&#x8D85;&#x65F6;&#x4E0E;&#x53D6;&#x6D88;&#x6A21;&#x5F0F;"><b>2.5. </b>&#x8D85;&#x65F6;&#x4E0E;&#x53D6;&#x6D88;&#x6A21;&#x5F0F;</a></li></ul></ul></div><a href="#go&#x5E76;&#x53D1;&#x6A21;&#x578B;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><blockquote>
+<p>&#x4E0D;&#x8981;&#x901A;&#x8FC7;&#x5171;&#x4EAB;&#x5185;&#x5B58;&#x6765;&#x901A;&#x4FE1;&#xFF0C;&#x800C;&#x5E94;&#x8BE5;&#x901A;&#x8FC7;&#x901A;&#x4FE1;&#x6765;&#x5171;&#x4EAB;&#x5185;&#x5B58;&#x3002;</p>
+<p>&#x2014;&#x2014;Rob Pike&#xFF0C;Go&#x8BED;&#x8A00;&#x4E4B;&#x7236;</p>
+</blockquote>
+<h1 id="go&#x5E76;&#x53D1;&#x6A21;&#x578B;"><a name="go&#x5E76;&#x53D1;&#x6A21;&#x578B;" class="anchor-navigation-ex-anchor" href="#go&#x5E76;&#x53D1;&#x6A21;&#x578B;"><i class="fa fa-link" aria-hidden="true"></i></a>1. Go&#x5E76;&#x53D1;&#x6A21;&#x578B;</h1>
+<ul>
+<li>&#x4F20;&#x7EDF;&#x8BED;&#x8A00;&#x7684;&#x5E76;&#x53D1;&#x6A21;&#x578B;&#x662F;&#x57FA;&#x4E8E;&#x5171;&#x4EAB;&#x5185;&#x5B58;&#x7684;&#x6A21;&#x578B;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#x3002;&#x8FD9;&#x79CD;&#x6A21;&#x578B;&#x96BE;&#x7528;&#x4E14;&#x6613;&#x9519;&#xFF1A;</li>
+</ul>
+<p><img src="images/image-20231006100337083.png" alt="image-20231006100337083" style="zoom:67%;"></p>
+<ul>
+<li>Go&#x8BED;&#x8A00;&#x5728;&#x65B0;&#x5E76;&#x53D1;&#x6A21;&#x578B;&#x8BBE;&#x8BA1;&#x4E2D;&#x501F;&#x9274;&#x4E86;&#x8457;&#x540D;&#x8BA1;&#x7B97;&#x673A;&#x79D1;&#x5B66;&#x5BB6;Tony Hoare&#x63D0;&#x51FA;&#x7684; <strong><u>CSP&#xFF08;Communicating Sequential Process&#xFF0C;&#x901A;&#x4FE1;&#x987A;&#x5E8F;&#x8FDB;&#x7A0B;&#xFF09;&#x6A21;&#x578B;</u></strong> &#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</li>
+</ul>
+<p><img src="images/image-20231006100704966.png" alt="image-20231006100704966" style="zoom: 50%;"></p>
+<ol>
+<li>CSP&#x6A21;&#x578B;&#x65E8;&#x5728;&#x7B80;&#x5316;&#x5E76;&#x53D1;&#x7A0B;&#x5E8F;&#x7684;&#x7F16;&#x5199;&#xFF0C;&#x8BA9;&#x5E76;&#x53D1;&#x7A0B;&#x5E8F;&#x7684;&#x7F16;&#x5199;&#x4E0E;&#x7F16;&#x5199;&#x987A;&#x5E8F;&#x7A0B;&#x5E8F;&#x4E00;&#x6837;&#x7B80;&#x5355;&#x3002;</li>
+<li>CSP&#x7406;&#x8BBA;&#x4E2D;&#x7684;P&#xFF08;Process&#xFF0C;&#x8FDB;&#x7A0B;&#xFF09;&#x662F;&#x4E2A;&#x62BD;&#x8C61;&#x6982;&#x5FF5;&#xFF0C;&#x5B83;&#x4EE3;&#x8868;&#x4EFB;&#x4F55;&#x987A;&#x5E8F;&#x5904;&#x7406;&#x903B;&#x8F91;&#x7684;&#x5C01;&#x88C5;&#xFF0C;&#x5B83;&#x83B7;&#x53D6;&#x8F93;&#x5165;&#x6570;&#x636E;&#xFF08;&#x6216;&#x4ECE;&#x5176;&#x4ED6;P&#x7684;&#x8F93;&#x51FA;&#x83B7;&#x53D6;&#xFF09;&#xFF0C;&#x5E76;&#x751F;&#x4EA7;&#x53EF;&#x4EE5;&#x88AB;&#x5176;&#x4ED6;P&#x6D88;&#x8D39;&#x7684;&#x8F93;&#x51FA;&#x6570;&#x636E;&#x3002;</li>
+<li>&#x56E0;&#x6B64;&#xFF0C;&#x5728;Tony Hoare&#x773C;&#x4E2D;&#xFF0C;&#x4E00;&#x4E2A;&#x7B26;&#x5408;CSP&#x6A21;&#x578B;&#x7684;&#x5E76;&#x53D1;&#x7A0B;&#x5E8F;&#x5E94;&#x8BE5;&#x662F;&#x4E00;&#x7EC4;&#x901A;&#x8FC7;&#x8F93;&#x5165;/&#x8F93;&#x51FA;&#x539F; &#x8BED;&#x8FDE;&#x63A5;&#x8D77;&#x6765;&#x7684;P&#x7684;&#x96C6;&#x5408;&#x3002;</li>
+</ol>
+<hr>
+<ul>
+<li><p>&#x4E3A;&#x4E86;&#x5B9E;&#x73B0;CSP&#x6A21;&#x578B;&#x4E2D;&#x7684;&#x8F93;&#x5165;/&#x8F93;&#x51FA;&#x539F;&#x8BED;&#xFF0C;Go&#x5F15;&#x5165;&#x4E86;goroutine&#xFF08;P&#xFF09;&#x4E4B;&#x95F4;&#x7684;&#x901A;&#x4FE1;&#x539F;&#x8BED;channel&#x3002;</p>
+</li>
+<li><p>goroutine&#x53EF;&#x4EE5;&#x4ECE;channel&#x83B7;&#x53D6;&#x8F93;&#x5165;&#x6570;&#x636E;&#xFF0C;&#x518D;&#x5C06;&#x5904;&#x7406;&#x540E;&#x5F97;&#x5230;&#x7684;&#x7ED3;&#x679C;&#x6570;&#x636E;&#x901A;&#x8FC7;channel&#x8F93;&#x51FA;&#x3002;</p>
+</li>
+<li>&#x867D;&#x7136;CSP&#x6A21;&#x578B;&#x5DF2;&#x7ECF;&#x6210;&#x4E3A;Go&#x8BED;&#x8A00;&#x652F;&#x6301;&#x7684;&#x4E3B;&#x6D41;&#x5E76;&#x53D1;&#x6A21;&#x578B;&#xFF0C;&#x4F46;Go&#x4E5F;&#x652F;&#x6301;&#x4F20;&#x7EDF;&#x7684;&#x57FA;&#x4E8E;&#x5171;&#x4EAB;&#x5185;&#x5B58;&#x7684;&#x5E76;&#x53D1;&#x6A21;&#x578B;&#xFF0C;&#x5E76;&#x63D0;&#x4F9B;&#x57FA;&#x672C;&#x7684;&#x4F4E;&#x7EA7;&#x540C;&#x6B65;&#x539F;&#x8BED;&#xFF08;&#x4E3B;&#x8981;&#x662F;sync&#x5305;&#x4E2D;&#x7684;&#x4E92;&#x65A5;&#x9501;&#x3001;&#x6761;&#x4EF6;&#x53D8;&#x91CF;&#x3001;&#x8BFB;&#x5199;&#x9501;&#x3001;&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#x7B49;&#xFF09;&#x3002;</li>
+<li>&#x4F46;&#x662F;Go&#x59CB;&#x7EC8;&#x63A8;&#x8350;&#x4EE5;CSP&#x6A21;&#x578B;&#x98CE;&#x683C;&#x6784;&#x5EFA;&#x5E76;&#x53D1;&#x7A0B;&#x5E8F;&#x3002;&#x4E0D;&#x8FC7;&#x5BF9;&#x4E8E;&#x5C40;&#x90E8;&#x60C5;&#x51B5;&#xFF0C;&#x6BD4;&#x5982;&#x6D89;&#x53CA;&#x6027;&#x80FD;&#x654F;&#x611F;&#x7684;&#x533A;&#x57DF;&#x6216;&#x9700;&#x8981;&#x4FDD;&#x62A4;&#x7684;&#x7ED3;&#x6784;&#x4F53;&#x6570;&#x636E;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x66F4;&#x4E3A;&#x9AD8;&#x6548;&#x7684;&#x4F4E;&#x7EA7;&#x540C;&#x6B65;&#x539F;&#x8BED;&#xFF08;&#x5982;sync.Mutex&#xFF09;&#x3002;</li>
+</ul>
+<h1 id="go&#x5E38;&#x89C1;&#x7684;&#x5E76;&#x53D1;&#x6A21;&#x578B;"><a name="go&#x5E38;&#x89C1;&#x7684;&#x5E76;&#x53D1;&#x6A21;&#x578B;" class="anchor-navigation-ex-anchor" href="#go&#x5E38;&#x89C1;&#x7684;&#x5E76;&#x53D1;&#x6A21;&#x578B;"><i class="fa fa-link" aria-hidden="true"></i></a>2. Go&#x5E38;&#x89C1;&#x7684;&#x5E76;&#x53D1;&#x6A21;&#x578B;</h1>
+<p>&#x5728;&#x8BED;&#x8A00;&#x5C42;&#x9762;&#xFF0C;Go&#x9488;&#x5BF9;CSP&#x6A21;&#x578B;&#x63D0;&#x4F9B;&#x4E86;&#x4E09;&#x79CD;&#x5E76;&#x53D1;&#x539F;&#x8BED;&#xFF1A;</p>
+<ol>
+<li><strong><u>goroutine</u></strong>&#xFF1A;&#x5BF9;&#x5E94;CSP&#x6A21;&#x578B;&#x4E2D;&#x7684;P&#xFF0C;&#x5C01;&#x88C5;&#x4E86;&#x6570;&#x636E;&#x7684;&#x5904;&#x7406;&#x903B;&#x8F91;&#xFF0C;&#x662F;Go&#x8FD0;&#x884C;&#x65F6;&#x8C03;&#x5EA6;&#x7684;&#x57FA;&#x672C;&#x6267;&#x884C;&#x5355;&#x5143;&#x3002; </li>
+<li><strong><u>channel</u></strong>&#xFF1A;&#x5BF9;&#x5E94;CSP&#x6A21;&#x578B;&#x4E2D;&#x7684;&#x8F93;&#x5165;/&#x8F93;&#x51FA;&#x539F;&#x8BED;&#xFF0C;&#x7528;&#x4E8E;goroutine&#x4E4B;&#x95F4;&#x7684;&#x901A;&#x4FE1;&#x548C;&#x540C;&#x6B65;&#x3002; </li>
+<li><strong><u>select</u></strong>&#xFF1A;&#x7528;&#x4E8E;&#x5E94;&#x5BF9;&#x591A;&#x8DEF;&#x8F93;&#x5165;/&#x8F93;&#x51FA;&#xFF0C;&#x53EF;&#x4EE5;&#x8BA9;goroutine&#x540C;&#x65F6;&#x534F;&#x8C03;&#x5904;&#x7406;&#x591A;&#x4E2A;channel&#x64CD;&#x4F5C;&#x3002;</li>
+</ol>
+<h2 id="&#x521B;&#x5EFA;&#x6A21;&#x5F0F;"><a name="&#x521B;&#x5EFA;&#x6A21;&#x5F0F;" class="anchor-navigation-ex-anchor" href="#&#x521B;&#x5EFA;&#x6A21;&#x5F0F;"><i class="fa fa-link" aria-hidden="true"></i></a>2.1. &#x521B;&#x5EFA;&#x6A21;&#x5F0F;</h2>
+<pre class="language-"><code class="lang-go"><span class="token keyword">type</span> T <span class="token keyword">struct</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">spawn</span><span class="token punctuation">(</span>f <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">chan</span> T <span class="token punctuation">{</span>
+    c <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> T<span class="token punctuation">)</span>
+    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// &#x4F7F;&#x7528;channel&#x53D8;&#x91CF;c(&#x901A;&#x8FC7;&#x95ED;&#x5305;&#x2F45;&#x5F0F;)&#x4E0E;&#x8C03;&#x7528;spawn&#x7684;goroutine&#x901A;&#x4FE1;</span>
+        <span class="token operator">...</span>
+        <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token operator">...</span>
+    <span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> c
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    c <span class="token operator">:=</span> <span class="token function">spawn</span><span class="token punctuation">(</span><span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token comment">// &#x4F7F;&#x7528;channel&#x53D8;&#x91CF;c&#x4E0E;&#x65B0;&#x521B;&#x5EFA;&#x7684;goroutine&#x901A;&#x4FE1;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>&#x4EE5;&#x4E0A;&#x65B9;&#x5F0F;&#x5728;&#x5185;&#x90E8;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;goroutine&#x5E76;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;channel&#x7C7B;&#x578B;&#x53D8;&#x91CF;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x8FD9;&#x662F;Go&#x4E2D;&#x6700;&#x5E38;&#x89C1;&#x7684;goroutine&#x521B;&#x5EFA;&#x6A21;&#x5F0F;&#x3002;</p>
+</blockquote>
+<h2 id="&#x9000;&#x51FA;&#x6A21;&#x5F0F;"><a name="&#x9000;&#x51FA;&#x6A21;&#x5F0F;" class="anchor-navigation-ex-anchor" href="#&#x9000;&#x51FA;&#x6A21;&#x5F0F;"><i class="fa fa-link" aria-hidden="true"></i></a>2.2. &#x9000;&#x51FA;&#x6A21;&#x5F0F;</h2>
+<blockquote>
+<p>&#x5728;&#x591A;&#x6570;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6211;&#x4EEC;&#x65E0;&#x987B;&#x8003;&#x8651;&#x5BF9;goroutine&#x7684;&#x9000;&#x51FA;&#x8FDB;&#x884C;&#x63A7;&#x5236;&#xFF1A;goroutine&#x7684;&#x6267;&#x884C;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#xFF0C;&#x5373;&#x610F;&#x5473;&#x7740;goroutine&#x9000;&#x51FA;&#x3002;&#x4F46;&#x4E00;&#x4E9B;&#x5E38;&#x9A7B;&#x7684;&#x540E;&#x53F0;&#x670D;&#x52A1;&#x7A0B;&#x5E8F;&#x53EF;&#x80FD;&#x4F1A;&#x5BF9;goroutine&#x6709;&#x7740;&#x4F18;&#x96C5;&#x9000;&#x51FA;&#x7684;&#x8981;&#x6C42;&#xFF0C;&#x5728;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x5C31;&#x5206;&#x7C7B;&#x8BF4;&#x660E;&#x4E00;&#x4E0B;goroutine&#x7684;&#x51E0;&#x79CD;&#x9000;&#x51FA;&#x6A21;&#x5F0F;&#xFF1A;</p>
+</blockquote>
+<h3 id="&#x5206;&#x79BB;&#x6A21;&#x5F0F;"><a name="&#x5206;&#x79BB;&#x6A21;&#x5F0F;" class="anchor-navigation-ex-anchor" href="#&#x5206;&#x79BB;&#x6A21;&#x5F0F;"><i class="fa fa-link" aria-hidden="true"></i></a>2.2.1. &#x5206;&#x79BB;&#x6A21;&#x5F0F;</h3>
+<blockquote>
+<p>&#x5BF9;&#x4E8E;&#x5206;&#x79BB;&#x7684;goroutine&#xFF0C;&#x521B;&#x5EFA;&#x5B83;&#x7684;goroutine&#x4E0D;&#x9700;&#x8981;&#x5173;&#x5FC3;&#x5B83;&#x7684;&#x9000;&#x51FA;&#x3002;&#x8FD9;&#x7C7B;goroutine&#x5728;&#x542F;&#x52A8;&#x540E;&#x5373;&#x4E0E;&#x5176;&#x521B;&#x5EFA;&#x8005;&#x5F7B;&#x5E95;&#x5206;&#x79BB;&#xFF0C;&#x5176;&#x751F;&#x547D;&#x5468;&#x671F;&#x4E0E;&#x5176;&#x6267;&#x884C;&#x7684;&#x4E3B;&#x51FD;&#x6570;&#x76F8;&#x5173;&#xFF0C;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x5373;goroutine&#x9000;&#x51FA;&#xFF1A;</p>
+</blockquote>
+<ol>
+<li><strong><u>&#x4E00;&#x6B21;&#x6027;&#x4EFB;&#x52A1;</u></strong>&#xFF1A;&#x65B0;&#x521B;&#x5EFA;&#x7684;goroutine&#x7528;&#x6765;&#x6267;&#x884C;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x4EFB;&#x52A1;&#xFF0C;&#x6267;&#x884C;&#x540E;&#x5373;&#x9000;&#x51FA;&#xFF1A;</li>
+</ol>
+<pre class="language-"><code class="lang-go"><span class="token comment">// $GOROOT/src/net/dial.go</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>d <span class="token operator">*</span>Dialer<span class="token punctuation">)</span> <span class="token function">DialContext</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> network<span class="token punctuation">,</span> address <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>Conn<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token operator">...</span>
+    <span class="token keyword">if</span> oldCancel <span class="token operator">:=</span> d<span class="token punctuation">.</span>Cancel<span class="token punctuation">;</span> oldCancel <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+        subCtx<span class="token punctuation">,</span> cancel <span class="token operator">:=</span> context<span class="token punctuation">.</span><span class="token function">WithCancel</span><span class="token punctuation">(</span>ctx<span class="token punctuation">)</span>
+        <span class="token keyword">defer</span> <span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">select</span> <span class="token punctuation">{</span>
+                <span class="token keyword">case</span> <span class="token operator">&lt;-</span>oldCancel<span class="token punctuation">:</span>
+                <span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token keyword">case</span> <span class="token operator">&lt;-</span>subCtx<span class="token punctuation">.</span><span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        ctx <span class="token operator">=</span> subCtx
+    <span class="token punctuation">}</span>
+    <span class="token operator">...</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ol>
+<li><strong><u>&#x5E38;&#x9A7B;&#x540E;&#x53F0;&#x4EFB;&#x52A1;</u></strong>&#xFF1A;&#x5176;&#x5B9E;&#x73B0;&#x901A;&#x5E38;&#x91C7;&#x7528; <u>for {...}</u> &#x6216; <u>for { select { ... } }</u> &#x4EE3;&#x7801;&#x6BB5;&#x5F62;&#x5F0F;&#xFF0C;&#x5E76;&#x591A;&#x4EE5;&#x5B9A;&#x65F6;&#x5668;&#x6216;&#x4E8B;&#x4EF6;&#x9A71;&#x52A8;&#x6267;&#x884C;&#x3002;</li>
+</ol>
+<pre class="language-"><code class="lang-go"><span class="token comment">// $GOROOT/src/runtime/mgc.go</span>
+<span class="token keyword">func</span> <span class="token function">gcBgMarkStartWorkers</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// &#x6BCF;&#x4E2A;P&#x90FD;&#x6709;&#x4E00;&#x4E2A;&#x8FD0;&#x884C;&#x5728;&#x540E;&#x53F0;&#x7684;&#x7528;&#x4E8E;&#x6807;&#x8BB0;&#x7684;G</span>
+    <span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> p <span class="token operator">:=</span> <span class="token keyword">range</span> allp <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> p<span class="token punctuation">.</span>gcBgMarkWorker <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+            <span class="token keyword">go</span> <span class="token function">gcBgMarkWorker</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token comment">// &#x4E3A;&#x6BCF;&#x4E2A;P&#x521B;&#x5EFA;&#x4E00;&#x4E2A;goroutine&#xFF0C;&#x4EE5;&#x8FD0;&#x884C;gcBgMarkWorker</span>
+            <span class="token function">notetsleepg</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>work<span class="token punctuation">.</span>bgMarkReady<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+            <span class="token function">noteclear</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>work<span class="token punctuation">.</span>bgMarkReady<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">gcBgMarkWorker</span><span class="token punctuation">(</span>_p_ <span class="token operator">*</span>p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    gp <span class="token operator">:=</span> <span class="token function">getg</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token operator">...</span>
+    <span class="token keyword">for</span> <span class="token punctuation">{</span> <span class="token comment">// &#x5E38;&#x9A7B;&#x540E;&#x53F0;&#x5904;&#x7406;GC&#x4E8B;&#x5B9C;</span>
+        <span class="token operator">...</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="join&#x6A21;&#x5F0F;"><a name="join&#x6A21;&#x5F0F;" class="anchor-navigation-ex-anchor" href="#join&#x6A21;&#x5F0F;"><i class="fa fa-link" aria-hidden="true"></i></a>2.2.2. join&#x6A21;&#x5F0F;</h3>
+<blockquote>
+<p>goroutine&#x9700;&#x8981;&#x7B49;&#x5F85;&#x65B0;goroutine&#x7ED3;&#x675F;&#x3002;</p>
+</blockquote>
+<ol>
+<li>&#x7B49;&#x5F85;&#x4E00;&#x4E2A;goroutine&#x9000;&#x51FA;</li>
+</ol>
+<pre class="language-"><code class="lang-go"><span class="token comment">// chapter6/sources/go-concurrency-pattern-1.go</span>
+<span class="token keyword">func</span> <span class="token function">worker</span><span class="token punctuation">(</span>args <span class="token operator">...</span><span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span>
+    <span class="token punctuation">}</span>
+    interval<span class="token punctuation">,</span> ok <span class="token operator">:=</span> args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token operator">!</span>ok <span class="token punctuation">{</span>
+        <span class="token keyword">return</span>
+    <span class="token punctuation">}</span>
+    time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span>Second <span class="token operator">*</span> <span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Duration</span><span class="token punctuation">(</span>interval<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">spawn</span><span class="token punctuation">(</span>f <span class="token keyword">func</span><span class="token punctuation">(</span>args <span class="token operator">...</span><span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span> args <span class="token operator">...</span><span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token keyword">chan</span> <span class="token keyword">struct</span><span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token punctuation">{</span>
+    c <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token keyword">struct</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">f</span><span class="token punctuation">(</span>args<span class="token operator">...</span><span class="token punctuation">)</span>
+        c <span class="token operator">&lt;-</span> <span class="token keyword">struct</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> c
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    done <span class="token operator">:=</span> <span class="token function">spawn</span><span class="token punctuation">(</span>worker<span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;spawn a worker goroutine&quot;</span><span class="token punctuation">)</span>
+    <span class="token operator">&lt;-</span>done
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;worker done&quot;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class="language-"><code class="lang-bash">$ go run go-concurrency-pattern-1.go
+spawn a worker goroutine
+worker <span class="token keyword">done</span>
+</code></pre>
+<ol>
+<li>&#x83B7;&#x53D6;goroutine&#x7684;&#x9000;&#x51FA;&#x72B6;&#x6001;</li>
+</ol>
+<pre class="language-"><code class="lang-go"><span class="token comment">// chapter6/sources/go-concurrency-pattern-2.go</span>
+<span class="token keyword">var</span> OK <span class="token operator">=</span> errors<span class="token punctuation">.</span><span class="token function">New</span><span class="token punctuation">(</span><span class="token string">&quot;ok&quot;</span><span class="token punctuation">)</span>
+<span class="token keyword">func</span> <span class="token function">worker</span><span class="token punctuation">(</span>args <span class="token operator">...</span><span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token builtin">error</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> errors<span class="token punctuation">.</span><span class="token function">New</span><span class="token punctuation">(</span><span class="token string">&quot;invalid args&quot;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    interval<span class="token punctuation">,</span> ok <span class="token operator">:=</span> args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token operator">!</span>ok <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> errors<span class="token punctuation">.</span><span class="token function">New</span><span class="token punctuation">(</span><span class="token string">&quot;invalid interval arg&quot;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span>Second <span class="token operator">*</span> <span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Duration</span><span class="token punctuation">(</span>interval<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> OK
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">spawn</span><span class="token punctuation">(</span>f <span class="token keyword">func</span><span class="token punctuation">(</span>args <span class="token operator">...</span><span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token builtin">error</span><span class="token punctuation">,</span> args <span class="token operator">...</span><span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token keyword">chan</span> <span class="token builtin">error</span> <span class="token punctuation">{</span>
+    c <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">error</span><span class="token punctuation">)</span>
+    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        c <span class="token operator">&lt;-</span> <span class="token function">f</span><span class="token punctuation">(</span>args<span class="token operator">...</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> c
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    done <span class="token operator">:=</span> <span class="token function">spawn</span><span class="token punctuation">(</span>worker<span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;spawn worker1&quot;</span><span class="token punctuation">)</span>
+    err <span class="token operator">:=</span> <span class="token operator">&lt;-</span>done
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;worker1 done:&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+    done <span class="token operator">=</span> <span class="token function">spawn</span><span class="token punctuation">(</span>worker<span class="token punctuation">)</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;spawn worker2&quot;</span><span class="token punctuation">)</span>
+    err <span class="token operator">=</span> <span class="token operator">&lt;-</span>done
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;worker2 done:&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class="language-"><code class="lang-bash"><span class="token variable">$go</span> run go-concurrency-pattern-2.go
+spawn worker1
+worker1 done: ok
+spawn worker2
+worker2 done: invalid args
+</code></pre>
+<ol>
+<li>&#x7B49;&#x5F85;&#x591A;&#x4E2A;goroutine&#x9000;&#x51FA;</li>
+</ol>
+<pre class="language-"><code class="lang-go"><span class="token comment">// chapter6/sources/go-concurrency-pattern-3.go</span>
+<span class="token keyword">func</span> <span class="token function">worker</span><span class="token punctuation">(</span>args <span class="token operator">...</span><span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span>
+    <span class="token punctuation">}</span>
+    interval<span class="token punctuation">,</span> ok <span class="token operator">:=</span> args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token operator">!</span>ok <span class="token punctuation">{</span>
+        <span class="token keyword">return</span>
+    <span class="token punctuation">}</span>
+    time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span>Second <span class="token operator">*</span> <span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Duration</span><span class="token punctuation">(</span>interval<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">spawnGroup</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> f <span class="token keyword">func</span><span class="token punctuation">(</span>args <span class="token operator">...</span><span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span> args <span class="token operator">...</span><span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token keyword">chan</span> <span class="token keyword">struct</span><span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token punctuation">{</span>
+    c <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token keyword">struct</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token keyword">var</span> wg sync<span class="token punctuation">.</span>WaitGroup
+    <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+        wg<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            name <span class="token operator">:=</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">&quot;worker-%d:&quot;</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+            <span class="token function">f</span><span class="token punctuation">(</span>args<span class="token operator">...</span><span class="token punctuation">)</span>
+            <span class="token function">println</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> <span class="token string">&quot;done&quot;</span><span class="token punctuation">)</span>
+            wg<span class="token punctuation">.</span><span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// worker done!</span>
+        <span class="token punctuation">}</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        wg<span class="token punctuation">.</span><span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        c <span class="token operator">&lt;-</span> <span class="token keyword">struct</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> c
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    done <span class="token operator">:=</span> <span class="token function">spawnGroup</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> worker<span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;spawn a group of workers&quot;</span><span class="token punctuation">)</span>
+    <span class="token operator">&lt;-</span>done
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;group workers done&quot;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class="language-"><code class="lang-bash"><span class="token variable">$go</span> run go-concurrency-pattern-3.go 
+spawn a group of workers
+worker-2: <span class="token keyword">done</span>
+worker-1: <span class="token keyword">done</span>
+worker-0: <span class="token keyword">done</span>
+worker-4: <span class="token keyword">done</span>
+worker-3: <span class="token keyword">done</span>
+group workers <span class="token keyword">done</span>
+</code></pre>
+<ol>
+<li>&#x652F;&#x6301;&#x8D85;&#x65F6;&#x673A;&#x5236;&#x7684;&#x7B49;&#x5F85;</li>
+</ol>
+<pre class="language-"><code class="lang-go"><span class="token comment">// chapter6/sources/go-concurrency-pattern-4.go</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    done <span class="token operator">:=</span> <span class="token function">spawnGroup</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> worker<span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">)</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;spawn a group of workers&quot;</span><span class="token punctuation">)</span>
+    timer <span class="token operator">:=</span> time<span class="token punctuation">.</span><span class="token function">NewTimer</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span>Second <span class="token operator">*</span> <span class="token number">5</span><span class="token punctuation">)</span>
+    <span class="token keyword">defer</span> timer<span class="token punctuation">.</span><span class="token function">Stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">select</span> <span class="token punctuation">{</span>
+        <span class="token keyword">case</span> <span class="token operator">&lt;-</span>timer<span class="token punctuation">.</span>C<span class="token punctuation">:</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;wait group workers exit timeout!&quot;</span><span class="token punctuation">)</span>
+        <span class="token keyword">case</span> <span class="token operator">&lt;-</span>done<span class="token punctuation">:</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;group workers done&quot;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class="language-"><code class="lang-bash">$ go run go-concurrency-pattern-4.go
+spawn a group of workers
+<span class="token function">wait</span> group workers <span class="token builtin class-name">exit</span> timeout<span class="token operator">!</span>
+</code></pre>
+<h3 id="notify-and-wait&#x6A21;&#x5F0F;"><a name="notify-and-wait&#x6A21;&#x5F0F;" class="anchor-navigation-ex-anchor" href="#notify-and-wait&#x6A21;&#x5F0F;"><i class="fa fa-link" aria-hidden="true"></i></a>2.2.3. notify-and-wait&#x6A21;&#x5F0F;</h3>
+<ol>
+<li>&#x901A;&#x77E5;&#x5E76;&#x7B49;&#x5F85;&#x4E00;&#x4E2A;goroutine&#x9000;&#x51FA;</li>
+</ol>
+<pre class="language-"><code class="lang-go"><span class="token comment">// chapter6/sources/go-concurrency-pattern-5.go</span>
+<span class="token keyword">func</span> <span class="token function">worker</span><span class="token punctuation">(</span>j <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span>Second <span class="token operator">*</span> <span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Duration</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">spawn</span><span class="token punctuation">(</span>f <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">chan</span> <span class="token builtin">string</span> <span class="token punctuation">{</span>
+    quit <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">string</span><span class="token punctuation">)</span>
+    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> job <span class="token keyword">chan</span> <span class="token builtin">int</span> <span class="token comment">// &#x6A21;&#x62DF;job channel</span>
+        <span class="token keyword">for</span> <span class="token punctuation">{</span>
+            <span class="token keyword">select</span> <span class="token punctuation">{</span>
+                <span class="token keyword">case</span> j <span class="token operator">:=</span> <span class="token operator">&lt;-</span>job<span class="token punctuation">:</span>
+                <span class="token function">f</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span>
+                <span class="token keyword">case</span> <span class="token operator">&lt;-</span>quit<span class="token punctuation">:</span>
+                quit <span class="token operator">&lt;-</span> <span class="token string">&quot;ok&quot;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> quit
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    quit <span class="token operator">:=</span> <span class="token function">spawn</span><span class="token punctuation">(</span>worker<span class="token punctuation">)</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;spawn a worker goroutine&quot;</span><span class="token punctuation">)</span>
+
+    time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">5</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Second<span class="token punctuation">)</span>
+
+    <span class="token comment">// &#x901A;&#x77E5;&#x65B0;&#x521B;&#x5EFA;&#x7684;goroutine&#x9000;&#x51FA;</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;notify the worker to exit...&quot;</span><span class="token punctuation">)</span>
+    quit <span class="token operator">&lt;-</span> <span class="token string">&quot;exit&quot;</span>
+
+    timer <span class="token operator">:=</span> time<span class="token punctuation">.</span><span class="token function">NewTimer</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span>Second <span class="token operator">*</span> <span class="token number">10</span><span class="token punctuation">)</span>
+    <span class="token keyword">defer</span> timer<span class="token punctuation">.</span><span class="token function">Stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">select</span> <span class="token punctuation">{</span>
+        <span class="token keyword">case</span> status <span class="token operator">:=</span> <span class="token operator">&lt;-</span>quit<span class="token punctuation">:</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;worker done:&quot;</span><span class="token punctuation">,</span> status<span class="token punctuation">)</span>
+        <span class="token keyword">case</span> <span class="token operator">&lt;-</span>timer<span class="token punctuation">.</span>C<span class="token punctuation">:</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;wait worker exit timeout&quot;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class="language-"><code class="lang-bash"><span class="token variable">$go</span> run go-concurrency-pattern-5.go 
+spawn a worker goroutine
+notify the worker to exit<span class="token punctuation">..</span>.
+worker done: ok
+</code></pre>
+<ol>
+<li>&#x901A;&#x77E5;&#x5E76;&#x7B49;&#x5F85;&#x591A;&#x4E2A;goroutine&#x9000;&#x51FA;</li>
+</ol>
+<pre class="language-"><code class="lang-go"><span class="token comment">// chapter6/sources/go-concurrency-pattern-6.go</span>
+<span class="token keyword">func</span> <span class="token function">worker</span><span class="token punctuation">(</span>j <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span>Second <span class="token operator">*</span> <span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Duration</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">spawnGroup</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> f <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">chan</span> <span class="token keyword">struct</span><span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token punctuation">{</span>
+    quit <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token keyword">struct</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    job <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">)</span>
+    <span class="token keyword">var</span> wg sync<span class="token punctuation">.</span>WaitGroup
+
+    <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+        wg<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">defer</span> wg<span class="token punctuation">.</span><span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// &#x4FDD;&#x8BC1;wg.Done&#x5728;goroutine&#x9000;&#x51FA;&#x524D;&#x88AB;&#x6267;&#x2F8F;</span>
+            name <span class="token operator">:=</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">&quot;worker-%d:&quot;</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+            <span class="token keyword">for</span> <span class="token punctuation">{</span>
+                j<span class="token punctuation">,</span> ok <span class="token operator">:=</span> <span class="token operator">&lt;-</span>job
+                <span class="token keyword">if</span> <span class="token operator">!</span>ok <span class="token punctuation">{</span>
+                    <span class="token function">println</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> <span class="token string">&quot;done&quot;</span><span class="token punctuation">)</span>
+                    <span class="token keyword">return</span>
+                <span class="token punctuation">}</span>
+                <span class="token comment">// &#x6267;&#x2F8F;&#x8FD9;&#x4E2A;job</span>
+                <span class="token function">worker</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token operator">&lt;-</span>quit
+        <span class="token function">close</span><span class="token punctuation">(</span>job<span class="token punctuation">)</span> <span class="token comment">// &#x2F34;&#x64AD;&#x7ED9;&#x6240;&#x6709;&#x65B0;goroutine</span>
+        wg<span class="token punctuation">.</span><span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        quit <span class="token operator">&lt;-</span> <span class="token keyword">struct</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> quit
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    quit <span class="token operator">:=</span> <span class="token function">spawnGroup</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> worker<span class="token punctuation">)</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;spawn a group of workers&quot;</span><span class="token punctuation">)</span>
+
+    time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">5</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Second<span class="token punctuation">)</span>
+    <span class="token comment">// &#x901A;&#x77E5; worker goroutine &#x7EC4;&#x9000;&#x51FA;</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;notify the worker group to exit...&quot;</span><span class="token punctuation">)</span>
+    quit <span class="token operator">&lt;-</span> <span class="token keyword">struct</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+    timer <span class="token operator">:=</span> time<span class="token punctuation">.</span><span class="token function">NewTimer</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span>Second <span class="token operator">*</span> <span class="token number">5</span><span class="token punctuation">)</span>
+    <span class="token keyword">defer</span> timer<span class="token punctuation">.</span><span class="token function">Stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">select</span> <span class="token punctuation">{</span>
+        <span class="token keyword">case</span> <span class="token operator">&lt;-</span>timer<span class="token punctuation">.</span>C<span class="token punctuation">:</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;wait group workers exit timeout!&quot;</span><span class="token punctuation">)</span>
+        <span class="token keyword">case</span> <span class="token operator">&lt;-</span>quit<span class="token punctuation">:</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;group workers done&quot;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class="language-"><code class="lang-bash"><span class="token variable">$go</span> run go-concurrency-pattern-6.go
+spawn a group of workers
+notify the worker group to exit<span class="token punctuation">..</span>.
+worker-3: <span class="token keyword">done</span>
+worker-0: <span class="token keyword">done</span>
+worker-4: <span class="token keyword">done</span>
+worker-2: <span class="token keyword">done</span>
+worker-1: <span class="token keyword">done</span>
+group workers <span class="token keyword">done</span>
+</code></pre>
+<h3 id="&#x9000;&#x51FA;&#x6A21;&#x5F0F;&#x7684;&#x5E94;&#x7528;"><a name="&#x9000;&#x51FA;&#x6A21;&#x5F0F;&#x7684;&#x5E94;&#x7528;" class="anchor-navigation-ex-anchor" href="#&#x9000;&#x51FA;&#x6A21;&#x5F0F;&#x7684;&#x5E94;&#x7528;"><i class="fa fa-link" aria-hidden="true"></i></a>2.2.4. &#x9000;&#x51FA;&#x6A21;&#x5F0F;&#x7684;&#x5E94;&#x7528;</h3>
+<p>&#xFF08;&#x7565;&#xFF09;</p>
+<h2 id="&#x7BA1;&#x9053;&#x6A21;&#x5F0F;"><a name="&#x7BA1;&#x9053;&#x6A21;&#x5F0F;" class="anchor-navigation-ex-anchor" href="#&#x7BA1;&#x9053;&#x6A21;&#x5F0F;"><i class="fa fa-link" aria-hidden="true"></i></a>2.3. &#x7BA1;&#x9053;&#x6A21;&#x5F0F;</h2>
+<ul>
+<li>Unix/Linux&#x7684;&#x7BA1;&#x9053;&#x673A;&#x5236;&#x5C31;&#x662F;&#x5C06;&#x524D;&#x9762;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x6570;&#x636E;&#x4F5C;&#x4E3A;&#x8F93;&#x5165;&#x6570;&#x636E;&#x4F20;&#x9012;&#x7ED9;&#x540E;&#x9762;&#x7684;&#x7A0B;&#x5E8F;</li>
+<li>&#x7BA1;&#x9053;&#x662F;Unix/Linux&#x4E0A;&#x4E00;&#x79CD;&#x5178;&#x578B;&#x7684;&#x5E76;&#x53D1;&#x7A0B;&#x5E8F;&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;&#xFF0C;&#x4E5F;&#x662F;Unix&#x5D07;&#x5C1A;&#x201C;&#x7EC4;&#x5408;&#x201D;&#x8BBE;&#x8BA1;&#x54F2;&#x5B66;&#x7684;&#x5177;&#x4F53;&#x4F53;&#x73B0;</li>
+<li>&#x5177;&#x6709;&#x6DF1;&#x539A;Unix&#x6587;&#x5316;&#x80CC;&#x666F;&#x7684;Go&#x8BED;&#x8A00;&#x7F14;&#x9020;&#x8005;&#x4EEC;&#x663E;&#x7136;&#x501F;&#x9274;&#x4E86;Unix&#x7684;&#x8BBE;&#x8BA1;&#x54F2;&#x5B66;&#xFF0C;&#x5728;Go&#x4E2D;&#x5F15;&#x5165;&#x4E86;channel&#x8FD9;&#x79CD;&#x5E76;&#x53D1;&#x539F;&#x8BED;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</li>
+</ul>
+<p><img src="images/image-20231006120521772.png" alt="image-20231006120521772" style="zoom: 30%;"></p>
+<pre class="language-"><code class="lang-go"><span class="token comment">// chapter6/sources/go-concurrency-pattern-8.go</span>
+<span class="token keyword">func</span> <span class="token function">newNumGenerator</span><span class="token punctuation">(</span>start<span class="token punctuation">,</span> count <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">&lt;-</span><span class="token keyword">chan</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
+    c <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">)</span>
+    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> i <span class="token operator">:=</span> start<span class="token punctuation">;</span> i <span class="token operator">&lt;</span> start<span class="token operator">+</span>count<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+            c <span class="token operator">&lt;-</span> i
+        <span class="token punctuation">}</span>
+        <span class="token function">close</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> c
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">filterOdd</span><span class="token punctuation">(</span>in <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> in<span class="token operator">%</span><span class="token number">2</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token boolean">false</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> in<span class="token punctuation">,</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">square</span><span class="token punctuation">(</span>in <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> in <span class="token operator">*</span> in<span class="token punctuation">,</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">spawn</span><span class="token punctuation">(</span>f <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token builtin">bool</span><span class="token punctuation">)</span><span class="token punctuation">,</span> in <span class="token operator">&lt;-</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">&lt;-</span><span class="token keyword">chan</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
+    out <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> v <span class="token operator">:=</span> <span class="token keyword">range</span> in <span class="token punctuation">{</span>
+            r<span class="token punctuation">,</span> ok <span class="token operator">:=</span> <span class="token function">f</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span>
+            <span class="token keyword">if</span> ok <span class="token punctuation">{</span>
+                out <span class="token operator">&lt;-</span> r
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token function">close</span><span class="token punctuation">(</span>out<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> out
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    in <span class="token operator">:=</span> <span class="token function">newNumGenerator</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span>
+    out <span class="token operator">:=</span> <span class="token function">spawn</span><span class="token punctuation">(</span>square<span class="token punctuation">,</span> <span class="token function">spawn</span><span class="token punctuation">(</span>filterOdd<span class="token punctuation">,</span> in<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">for</span> v <span class="token operator">:=</span> <span class="token keyword">range</span> out <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class="language-"><code class="lang-bash"><span class="token variable">$go</span> run go-concurrency-pattern-8.go
+<span class="token number">4</span>
+<span class="token number">16</span>
+<span class="token number">36</span>
+<span class="token number">64</span>
+<span class="token number">100</span>
+<span class="token number">144</span>
+<span class="token number">196</span>
+<span class="token number">256</span>
+<span class="token number">324</span>
+<span class="token number">400</span>
+</code></pre>
+<h2 id="&#x6247;&#x51FA;&#x548C;&#x6247;&#x5165;&#x6A21;&#x5F0F;"><a name="&#x6247;&#x51FA;&#x548C;&#x6247;&#x5165;&#x6A21;&#x5F0F;" class="anchor-navigation-ex-anchor" href="#&#x6247;&#x51FA;&#x548C;&#x6247;&#x5165;&#x6A21;&#x5F0F;"><i class="fa fa-link" aria-hidden="true"></i></a>2.4. &#x6247;&#x51FA;&#x548C;&#x6247;&#x5165;&#x6A21;&#x5F0F;</h2>
+<ol>
+<li>&#x6247;&#x51FA;&#x6A21;&#x5F0F;&#x5728;&#x67D0;&#x4E2A;&#x5904;&#x7406;&#x73AF;&#x8282;&#xFF0C;&#x591A;&#x4E2A;&#x529F;&#x80FD;&#x76F8;&#x540C;&#x7684;goroutine&#x4ECE;&#x540C;&#x4E00;&#x4E2A;channel&#x8BFB;&#x53D6;&#x6570;&#x636E;&#x5E76;&#x5904;&#x7406;&#xFF0C;&#x76F4;&#x5230;&#x8BE5;channel&#x5173;&#x95ED;&#xFF0C;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x88AB;&#x79F0;&#x4E3A;&#x201C;&#x6247;&#x51FA;&#x201D;&#xFF08;fanout&#xFF09;&#x3002;&#x4F7F;&#x7528;&#x6247;&#x51FA;&#x6A21;&#x5F0F;&#x53EF;&#x4EE5;&#x5728;&#x4E00;&#x7EC4;goroutine&#x4E2D;&#x5747;&#x8861;&#x5206;&#x914D;&#x5DE5;&#x4F5C;&#x91CF;&#xFF0C;&#x4ECE;&#x800C;&#x66F4;&#x5747;&#x8861;&#x5730;&#x5229;&#x7528;CPU&#x3002; </li>
+<li>&#x6247;&#x5165;&#x6A21;&#x5F0F;&#x5728;&#x67D0;&#x4E2A;&#x5904;&#x7406;&#x73AF;&#x8282;&#xFF0C;&#x5904;&#x7406;&#x7A0B;&#x5E8F;&#x9762;&#x5BF9;&#x4E0D;&#x6B62;&#x4E00;&#x4E2A;&#x8F93;&#x5165;channel&#x3002;&#x6211;&#x4EEC;&#x628A;&#x6240;&#x6709;&#x8F93;&#x5165;channel&#x7684;&#x6570;&#x636E;&#x6C47;&#x805A;&#x5230;&#x4E00;&#x4E2A;&#x7EDF;&#x4E00;&#x7684;&#x8F93;&#x5165;channel&#xFF0C;&#x7136;&#x540E;&#x5904;&#x7406;&#x7A0B;&#x5E8F;&#x518D;&#x4ECE;&#x8FD9;&#x4E2A;channel&#x4E2D;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#x5E76;&#x5904;&#x7406;&#xFF0C;&#x76F4;&#x5230;&#x8BE5;channel&#x56E0;&#x6240;&#x6709;&#x8F93;&#x5165;channel&#x5173;&#x95ED;&#x800C;&#x5173;&#x95ED;&#x3002;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x88AB;&#x79F0;&#x4E3A;&#x201C;&#x6247;&#x5165;&#x201D;&#xFF08;fan-in&#xFF09;&#x3002;</li>
+</ol>
+<p><img src="images/image-20231006121127520.png" alt="image-20231006121127520" style="zoom:50%;"></p>
+<pre class="language-"><code class="lang-go"><span class="token comment">// chapter6/sources/go-concurrency-pattern-9.go</span>
+<span class="token keyword">func</span> <span class="token function">newNumGenerator</span><span class="token punctuation">(</span>start<span class="token punctuation">,</span> count <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">&lt;-</span><span class="token keyword">chan</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
+    c <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">)</span>
+    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> i <span class="token operator">:=</span> start<span class="token punctuation">;</span> i <span class="token operator">&lt;</span> start<span class="token operator">+</span>count<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+            c <span class="token operator">&lt;-</span> i
+        <span class="token punctuation">}</span>
+        <span class="token function">close</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> c
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">filterOdd</span><span class="token punctuation">(</span>in <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> in<span class="token operator">%</span><span class="token number">2</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token boolean">false</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> in<span class="token punctuation">,</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">square</span><span class="token punctuation">(</span>in <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> in <span class="token operator">*</span> in<span class="token punctuation">,</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">spawnGroup</span><span class="token punctuation">(</span>name <span class="token builtin">string</span><span class="token punctuation">,</span> num <span class="token builtin">int</span><span class="token punctuation">,</span> f <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token builtin">bool</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    in <span class="token operator">&lt;-</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">&lt;-</span><span class="token keyword">chan</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
+    groupOut <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">)</span>
+    <span class="token keyword">var</span> outSlice <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token keyword">chan</span> <span class="token builtin">int</span>
+    <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> num<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+        out <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">)</span>
+        <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            name <span class="token operator">:=</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">&quot;%s-%d:&quot;</span><span class="token punctuation">,</span> name<span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+            fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;%s begin to work...\n&quot;</span><span class="token punctuation">,</span> name<span class="token punctuation">)</span>
+
+            <span class="token keyword">for</span> v <span class="token operator">:=</span> <span class="token keyword">range</span> in <span class="token punctuation">{</span>
+                r<span class="token punctuation">,</span> ok <span class="token operator">:=</span> <span class="token function">f</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span>
+                <span class="token keyword">if</span> ok <span class="token punctuation">{</span>
+                    out <span class="token operator">&lt;-</span> r
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+            <span class="token function">close</span><span class="token punctuation">(</span>out<span class="token punctuation">)</span>
+            fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;%s work done\n&quot;</span><span class="token punctuation">,</span> name<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+        outSlice <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>outSlice<span class="token punctuation">,</span> out<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// &#x6247;&#x2F0A;&#x6A21;&#x5F0F;</span>
+    <span class="token comment">//</span>
+    <span class="token comment">// out --\</span>
+    <span class="token comment">// \</span>
+    <span class="token comment">// out ---- --&gt; groupOut</span>
+    <span class="token comment">// /</span>
+    <span class="token comment">// out --/</span>
+    <span class="token comment">//</span>
+    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> wg sync<span class="token punctuation">.</span>WaitGroup
+        <span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> out <span class="token operator">:=</span> <span class="token keyword">range</span> outSlice <span class="token punctuation">{</span>
+            wg<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+            <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span>out <span class="token operator">&lt;-</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">for</span> v <span class="token operator">:=</span> <span class="token keyword">range</span> out <span class="token punctuation">{</span>
+                    groupOut <span class="token operator">&lt;-</span> v
+                <span class="token punctuation">}</span>
+                wg<span class="token punctuation">.</span><span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span><span class="token punctuation">(</span>out<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        wg<span class="token punctuation">.</span><span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token function">close</span><span class="token punctuation">(</span>groupOut<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> groupOut
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    in <span class="token operator">:=</span> <span class="token function">newNumGenerator</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span>
+    out <span class="token operator">:=</span> <span class="token function">spawnGroup</span><span class="token punctuation">(</span><span class="token string">&quot;square&quot;</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> square<span class="token punctuation">,</span>
+        <span class="token function">spawnGroup</span><span class="token punctuation">(</span><span class="token string">&quot;filterOdd&quot;</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> filterOdd<span class="token punctuation">,</span> in<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">3</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Second<span class="token punctuation">)</span> <span class="token comment">//&#x4E3A;&#x4E86;&#x8F93;&#x51FA;&#x66F4;&#x76F4;&#x89C2;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x8FD9;&#x2FA5;&#x7B49;&#x4E0A;&#x2FAF;</span>
+    &#x7684;goroutine&#x90FD;&#x5C31;&#x7EEA;
+    <span class="token keyword">for</span> v <span class="token operator">:=</span> <span class="token keyword">range</span> out <span class="token punctuation">{</span>
+        fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class="language-"><code class="lang-bash">$ go run go-concurrency-pattern-9.go 
+square-1: begin to work<span class="token punctuation">..</span>.
+filterOdd-1: begin to work<span class="token punctuation">..</span>.
+square-0: begin to work<span class="token punctuation">..</span>.
+filterOdd-2: begin to work<span class="token punctuation">..</span>.
+filterOdd-0: begin to work<span class="token punctuation">..</span>.
+filterOdd-1: work <span class="token keyword">done</span>
+<span class="token number">4</span>
+<span class="token number">16</span>
+<span class="token number">36</span>
+<span class="token number">100</span>
+<span class="token number">64</span>
+<span class="token number">144</span>
+<span class="token number">324</span>
+<span class="token number">400</span>
+<span class="token number">256</span>
+<span class="token number">196</span>
+filterOdd-2: work <span class="token keyword">done</span>
+filterOdd-0: work <span class="token keyword">done</span>
+square-0: work <span class="token keyword">done</span>
+square-1: work <span class="token keyword">done</span>
+</code></pre>
+<h2 id="&#x8D85;&#x65F6;&#x4E0E;&#x53D6;&#x6D88;&#x6A21;&#x5F0F;"><a name="&#x8D85;&#x65F6;&#x4E0E;&#x53D6;&#x6D88;&#x6A21;&#x5F0F;" class="anchor-navigation-ex-anchor" href="#&#x8D85;&#x65F6;&#x4E0E;&#x53D6;&#x6D88;&#x6A21;&#x5F0F;"><i class="fa fa-link" aria-hidden="true"></i></a>2.5. &#x8D85;&#x65F6;&#x4E0E;&#x53D6;&#x6D88;&#x6A21;&#x5F0F;</h2>
+<p>&#xFF08;&#x7565;&#xFF09;</p>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/poker-svg" target="_blank">YangXin Xu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-10-06 12:12:44 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="第32条-了解goroutine的调度原理.html" class="navigation navigation-prev " aria-label="Previous page: 第32条-了解goroutine的调度原理">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="第34条-了解channel的妙用.html" class="navigation navigation-next " aria-label="Next page: 第34条-了解channel的妙用">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"第33条-掌握Go并发模型和常见并发模式","level":"1.34","depth":1,"next":{"title":"第34条-了解channel的妙用","level":"1.35","depth":1,"path":"第34条-了解channel的妙用.md","ref":"第34条-了解channel的妙用.md","articles":[]},"previous":{"title":"第32条-了解goroutine的调度原理","level":"1.33","depth":1,"path":"第32条-了解goroutine的调度原理.md","ref":"第32条-了解goroutine的调度原理.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","-lunr","-search","search-pro","-sharing","splitter","hide-element","insert-logo","code","livereload"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"livereload":{},"page-footer-ex":{"copyright":"By [YangXin Xu](https://github.com/poker-svg)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"expandable-chapters-small":{},"copy-code-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"style":"background: none; max-height: 120px; min-height: 120px","url":"./images/icon.png"},"expandable-chapters":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Go语言精进之路","gitbook":"*"},"file":{"path":"第33条-掌握Go并发模型和常见并发模式.md","mtime":"2023-10-06T04:12:44.327Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-10-06T13:46:14.437Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-hide-element/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-insert-logo/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

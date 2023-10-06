@@ -1,0 +1,901 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>第35条-了解sync包的正确用法 · Go语言精进之路</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-insert-logo/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="第36条-使用atomic包实现伸缩性更好的并发读取.html" />
+    
+    
+    <link rel="prev" href="第34条-了解channel的妙用.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="第1条-了解Go语言的诞生和演进.html">
+            
+                <a href="第1条-了解Go语言的诞生和演进.html">
+            
+                    
+                    第1条-了解Go语言的诞生和演进
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="第2条-选择适当的Go语言版本.html">
+            
+                <a href="第2条-选择适当的Go语言版本.html">
+            
+                    
+                    第2条-选择适当的Go语言版本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="第3条-理解Go语言的设计哲学.html">
+            
+                <a href="第3条-理解Go语言的设计哲学.html">
+            
+                    
+                    第3条-理解Go语言的设计哲学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                <a href="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                    
+                    第4条-使用Go语言原生编程思维来写Go代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                <a href="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                    
+                    第5条-使用得到工人且广泛使用的项目结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="第6条-提交前使用gofmt格式化源码.html">
+            
+                <a href="第6条-提交前使用gofmt格式化源码.html">
+            
+                    
+                    第6条-提交前使用gofmt格式化源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                <a href="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                    
+                    第7条-使用Go命名惯例对标识符进行命名
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="第8条-使用一致的变量声明形式.html">
+            
+                <a href="第8条-使用一致的变量声明形式.html">
+            
+                    
+                    第8条-使用一致的变量声明形式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="第9条-使用无类型常量简化代码.html">
+            
+                <a href="第9条-使用无类型常量简化代码.html">
+            
+                    
+                    第9条-使用无类型常量简化代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="第10条-使用iota实现枚举常量.html">
+            
+                <a href="第10条-使用iota实现枚举常量.html">
+            
+                    
+                    第10条-使用iota实现枚举常量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="第11条-尽量定义零值可用的类型.html">
+            
+                <a href="第11条-尽量定义零值可用的类型.html">
+            
+                    
+                    第11条-尽量定义零值可用的类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="第12条-使用复合字面值作为初值构造器.html">
+            
+                <a href="第12条-使用复合字面值作为初值构造器.html">
+            
+                    
+                    第12条-使用复合字面值作为初值构造器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="第13条-了解切片实现原理并高效使用.html">
+            
+                <a href="第13条-了解切片实现原理并高效使用.html">
+            
+                    
+                    第13条-了解切片实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="第14条-了解map实现原理并高效使用.html">
+            
+                <a href="第14条-了解map实现原理并高效使用.html">
+            
+                    
+                    第14条-了解map实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="第15条-了解string实现原理并高效使用.html">
+            
+                <a href="第15条-了解string实现原理并高效使用.html">
+            
+                    
+                    第15条-了解string实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="第16条-理解Go语言的包导入.html">
+            
+                <a href="第16条-理解Go语言的包导入.html">
+            
+                    
+                    第16条-理解Go语言的包导入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="第17条-理解Go语言表达式的求值顺序.html">
+            
+                <a href="第17条-理解Go语言表达式的求值顺序.html">
+            
+                    
+                    第17条-理解Go语言表达式的求值顺序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="第18条-理解Go语言代码块与作用域.html">
+            
+                <a href="第18条-理解Go语言代码块与作用域.html">
+            
+                    
+                    第18条-理解Go语言代码块与作用域
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="第19条-了解Go语言控制语句惯用法及使用注意事项.html">
+            
+                <a href="第19条-了解Go语言控制语句惯用法及使用注意事项.html">
+            
+                    
+                    第19条-了解Go语言控制语句惯用法及使用注意事项
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="第20条-在init函数中检查包级变量的初始状态.html">
+            
+                <a href="第20条-在init函数中检查包级变量的初始状态.html">
+            
+                    
+                    第20条-在init函数中检查包级变量的初始状态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="第21条-让自己习惯于函数是“一等公民”.html">
+            
+                <a href="第21条-让自己习惯于函数是“一等公民”.html">
+            
+                    
+                    第21条-让自己习惯于函数是“一等公民”
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="第22条-使用defer让函数更简洁、更健壮.html">
+            
+                <a href="第22条-使用defer让函数更简洁、更健壮.html">
+            
+                    
+                    第22条-使用defer让函数更简洁、更健壮
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="第23条-理解方法的本质以选择正确的receiver类型.html">
+            
+                <a href="第23条-理解方法的本质以选择正确的receiver类型.html">
+            
+                    
+                    第23条-理解方法的本质以选择正确的receiver类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="第24条-方法集合决定接口实现.html">
+            
+                <a href="第24条-方法集合决定接口实现.html">
+            
+                    
+                    第24条-方法集合决定接口实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="第25条-了解变长参数函数的妙用.html">
+            
+                <a href="第25条-了解变长参数函数的妙用.html">
+            
+                    
+                    第25条-了解变长参数函数的妙用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="第26条-了解接口类型变量的内部表示.html">
+            
+                <a href="第26条-了解接口类型变量的内部表示.html">
+            
+                    
+                    第26条-了解接口类型变量的内部表示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="第27条-尽量定义小接口.html">
+            
+                <a href="第27条-尽量定义小接口.html">
+            
+                    
+                    第27条-尽量定义小接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="第28条-尽量避免使用空接口作为函数参数类型.html">
+            
+                <a href="第28条-尽量避免使用空接口作为函数参数类型.html">
+            
+                    
+                    第28条-尽量避免使用空接口作为函数参数类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="第29条-使用接口作为程序水平组合的连接点.html">
+            
+                <a href="第29条-使用接口作为程序水平组合的连接点.html">
+            
+                    
+                    第29条-使用接口作为程序水平组合的连接点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="第30条-使用接口提高代码的可测试性.html">
+            
+                <a href="第30条-使用接口提高代码的可测试性.html">
+            
+                    
+                    第30条-使用接口提高代码的可测试性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="第31条-优先考虑并发设计.html">
+            
+                <a href="第31条-优先考虑并发设计.html">
+            
+                    
+                    第31条-优先考虑并发设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="第32条-了解goroutine的调度原理.html">
+            
+                <a href="第32条-了解goroutine的调度原理.html">
+            
+                    
+                    第32条-了解goroutine的调度原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="第33条-掌握Go并发模型和常见并发模式.html">
+            
+                <a href="第33条-掌握Go并发模型和常见并发模式.html">
+            
+                    
+                    第33条-掌握Go并发模型和常见并发模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="第34条-了解channel的妙用.html">
+            
+                <a href="第34条-了解channel的妙用.html">
+            
+                    
+                    第34条-了解channel的妙用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.36" data-path="第35条-了解sync包的正确用法.html">
+            
+                <a href="第35条-了解sync包的正确用法.html">
+            
+                    
+                    第35条-了解sync包的正确用法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="第36条-使用atomic包实现伸缩性更好的并发读取.html">
+            
+                <a href="第36条-使用atomic包实现伸缩性更好的并发读取.html">
+            
+                    
+                    第36条-使用atomic包实现伸缩性更好的并发读取
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="第37条-了解错误处理的4种策略.html">
+            
+                <a href="第37条-了解错误处理的4种策略.html">
+            
+                    
+                    第37条-了解错误处理的4种策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="第38条-尽量优化反复出现的if%20err != nil.md">
+            
+                <span>
+            
+                    
+                    第38条-尽量优化反复出现的if err != nil
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="第39条-不要使用panic进行正常的错误处理.html">
+            
+                <a href="第39条-不要使用panic进行正常的错误处理.html">
+            
+                    
+                    第39条-不要使用panic进行正常的错误处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >第35条-了解sync包的正确用法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#&#x4F7F;&#x7528;sync&#x5305;&#x7684;&#x6CE8;&#x610F;&#x4E8B;&#x9879;"><b>1. </b>&#x4F7F;&#x7528;sync&#x5305;&#x7684;&#x6CE8;&#x610F;&#x4E8B;&#x9879;</a></li><li><span class="title-icon "></span><a href="#&#x4E92;&#x65A5;&#x9501;&#x8FD8;&#x662F;&#x8BFB;&#x5199;&#x9501;"><b>2. </b>&#x4E92;&#x65A5;&#x9501;&#x8FD8;&#x662F;&#x8BFB;&#x5199;&#x9501;</a></li><li><span class="title-icon "></span><a href="#&#x6761;&#x4EF6;&#x53D8;&#x91CF;"><b>3. </b>&#x6761;&#x4EF6;&#x53D8;&#x91CF;</a></li></ul></div><a href="#&#x4F7F;&#x7528;sync&#x5305;&#x7684;&#x6CE8;&#x610F;&#x4E8B;&#x9879;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><blockquote>
+<p>Go&#x8BED;&#x4E49;&#x5728;&#x63D0;&#x4F9B;CSP&#x5E76;&#x53D1;&#x6A21;&#x578B;&#x539F;&#x8BED;&#x7684;&#x540C;&#x65F6;&#xFF0C;&#x8FD8;&#x901A;&#x8FC7;&#x6807;&#x51C6;&#x5E93;&#x7684;sync&#x5305;&#x63D0;&#x4F9B;&#x4E86;&#x9488;&#x5BF9;&#x4F20;&#x7EDF;&#x57FA;&#x4E8E;&#x5171;&#x4EAB;&#x5185;&#x5B58;&#x5E76;&#x53D1;&#x6A21;&#x578B;&#x7684;&#x57FA;&#x672C;&#x540C;&#x6B65;&#x539F;&#x8BED;&#xFF0C;&#x5305;&#x62EC;&#x4E92;&#x65A5;&#x9501;&#xFF08;sync.Mutex&#xFF09;&#x3001;&#x8BFB;&#x5199;&#x9501;&#xFF08;sync.RWMutex&#xFF09;&#x3001;&#x6761;&#x4EF6;&#x53D8;&#x91CF;&#xFF08;sync.Cond&#xFF09;&#x7B49;&#x3002;</p>
+</blockquote>
+<h1 id="&#x4F7F;&#x7528;sync&#x5305;&#x7684;&#x6CE8;&#x610F;&#x4E8B;&#x9879;"><a name="&#x4F7F;&#x7528;sync&#x5305;&#x7684;&#x6CE8;&#x610F;&#x4E8B;&#x9879;" class="anchor-navigation-ex-anchor" href="#&#x4F7F;&#x7528;sync&#x5305;&#x7684;&#x6CE8;&#x610F;&#x4E8B;&#x9879;"><i class="fa fa-link" aria-hidden="true"></i></a>1. &#x4F7F;&#x7528;sync&#x5305;&#x7684;&#x6CE8;&#x610F;&#x4E8B;&#x9879;</h1>
+<ul>
+<li>&#x5728;$GOROOT/src/sync/mutex.go&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x770B;&#x5230;&#x8FD9;&#x6837;&#x4E00;&#x884C;&#x5173;&#x4E8E;&#x4F7F;&#x7528;sync&#x5305;&#x7684;&#x6CE8;&#x610F;&#x4E8B;&#x9879;&#xFF1A;</li>
+</ul>
+<pre class="language-"><code class="lang-go"><span class="token comment">// Values containing the types defined in this package should not be copied.</span>
+<span class="token comment">// &#x4E0D;&#x5E94;&#x590D;&#x5236;&#x90A3;&#x4E9B;&#x5305;&#x542B;&#x4E86;&#x6B64;&#x5305;&#x4E2D;&#x7C7B;&#x578B;&#x7684;&#x503C;</span>
+</code></pre>
+<ul>
+<li>&#x56E0;&#x4E3A;Metex&#x7B49;sync&#x5305;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x7ED3;&#x6784;&#x7C7B;&#x578B;&#x9996;&#x6B21;&#x4F7F;&#x7528;&#x540E;&#x5982;&#x679C;&#x88AB;&#x590D;&#x5236;&#xFF0C;&#x4F1A;&#x5BFC;&#x81F4;&#x9501;&#x526F;&#x672C;&#x7684;&#x4EA7;&#x751F;&#xFF0C;&#x4ECE;&#x800C;&#x5BFC;&#x81F4;&#x8FDB;&#x7A0B;&#x4E4B;&#x95F4;&#x5E76;&#x6CA1;&#x6709;&#x5171;&#x4EAB;&#x540C;&#x4E00;&#x4E2A;&#x9501;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x5F15;&#x53D1;&#x6B7B;&#x9501;&#x95EE;&#x9898;</li>
+<li>Go&#x6807;&#x51C6;&#x5E93;&#x4E2D;sync.Mutex&#x7684;&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</li>
+</ul>
+<pre class="language-"><code class="lang-go"><span class="token comment">// $GOROOT/src/sync/mutex.go</span>
+<span class="token keyword">type</span> Mutex <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    state <span class="token builtin">int32</span>
+    sema <span class="token builtin">uint32</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li><strong><u>state</u></strong>&#xFF1A;&#x8868;&#x793A;&#x5F53;&#x524D;&#x4E92;&#x65A5;&#x9501;&#x7684;&#x72B6;&#x6001;</li>
+<li><strong><u>sema</u></strong>&#xFF1A;&#x7528;&#x4E8E;&#x63A7;&#x5236;&#x9501;&#x72B6;&#x6001;&#x7684;&#x4FE1;&#x53F7;&#x91CF;</li>
+</ul>
+<blockquote>
+<p>&#x90A3;&#x4E9B;sync&#x5305;&#x4E2D;&#x7C7B;&#x578B;&#x7684;&#x5B9E;&#x4F8B;&#x5728;&#x9996;&#x6B21;&#x4F7F;&#x7528;&#x540E;&#x88AB;&#x590D;&#x5236;&#x5F97;&#x5230;&#x7684;&#x526F;&#x672C;&#x4E00;&#x65E6;&#x518D;&#x88AB;&#x4F7F;&#x7528;&#x5C06;&#x5BFC;&#x81F4;&#x4E0D;&#x53EF;&#x9884;&#x671F;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x4E3A;&#x6B64;&#x5728;&#x4F7F;&#x7528;sync&#x5305;&#x4E2D;&#x7C7B;&#x578B;&#x65F6;&#xFF0C;&#x63A8;&#x8350;&#x901A;&#x8FC7; <strong><u>&#x95ED;&#x5305;&#x65B9;&#x5F0F;&#x6216;&#x4F20;&#x9012;&#x7C7B;&#x578B;&#x5B9E;&#x4F8B;&#x7684;&#x5730;&#x5740;&#x6216;&#x6307;&#x9488;</u></strong> &#x7684;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#xFF0C;&#x8FD9;&#x662F;&#x4F7F;&#x7528;sync&#x5305;&#x6700;&#x503C;&#x5F97;&#x6CE8;&#x610F;&#x7684;&#x4E8B;&#x9879;&#x3002;</p>
+</blockquote>
+<h1 id="&#x4E92;&#x65A5;&#x9501;&#x8FD8;&#x662F;&#x8BFB;&#x5199;&#x9501;"><a name="&#x4E92;&#x65A5;&#x9501;&#x8FD8;&#x662F;&#x8BFB;&#x5199;&#x9501;" class="anchor-navigation-ex-anchor" href="#&#x4E92;&#x65A5;&#x9501;&#x8FD8;&#x662F;&#x8BFB;&#x5199;&#x9501;"><i class="fa fa-link" aria-hidden="true"></i></a>2. &#x4E92;&#x65A5;&#x9501;&#x8FD8;&#x662F;&#x8BFB;&#x5199;&#x9501;</h1>
+<ul>
+<li><strong><u><code>&#x4E92;&#x65A5;&#x9501;</code></u></strong> &#x662F;&#x4E34;&#x754C;&#x533A;&#x540C;&#x6B65;&#x539F;&#x8BED;&#x7684;&#x9996;&#x9009;&#xFF0C;&#x5B83;&#x5E38;&#x88AB;&#x7528;&#x6765;&#x5BF9;&#x7ED3;&#x6784;&#x4F53;&#x5BF9;&#x8C61;&#x7684;&#x5185;&#x90E8;&#x72B6;&#x6001;&#x3001;&#x7F13;&#x5B58;&#x7B49;&#x8FDB;&#x884C;&#x4FDD;&#x62A4;&#xFF0C;&#x662F;&#x4F7F;&#x7528;&#x6700;&#x4E3A;&#x5E7F;&#x6CDB;&#x7684;&#x4E34;&#x754C;&#x533A;&#x540C;&#x6B65;&#x539F;&#x8BED;&#x3002;</li>
+<li>&#x76F8;&#x6BD4;&#x4E4B;&#x4E0B;&#xFF0C;<strong><u><code>&#x8BFB;&#x5199;&#x9501;</code></u></strong> &#x9887;&#x53D7;&#x201C;&#x51B7;&#x843D;&#x201D;&#xFF0C;&#x4F46;&#x5B83;&#x4F9D;&#x7136;&#x6709;&#x5176;&#x5B58;&#x5728;&#x7684;&#x9053;&#x7406;&#x548C;&#x9002;&#x7528;&#x7684;&#x573A;&#x666F;&#x3002;</li>
+</ul>
+<p>&#x603B;&#x7684;&#x6765;&#x8BF4;&#xFF1A;</p>
+<ol>
+<li>&#x5728;&#x5E76;&#x53D1;&#x91CF;&#x8F83;&#x5C0F;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x4E92;&#x65A5;&#x9501;&#x6027;&#x80FD;&#x66F4;&#x597D;&#xFF1B;</li>
+<li>&#x968F;&#x7740;&#x5E76;&#x53D1;&#x91CF;&#x589E;&#x5927;&#xFF0C;&#x4E92;&#x65A5;&#x9501;&#x7684;&#x7ADE;&#x4E89;&#x6FC0;&#x70C8;&#xFF0C;&#x5BFC;&#x81F4;&#x52A0;&#x9501;&#x548C;&#x89E3;&#x9501;&#x6027;&#x80FD;&#x4E0B;&#x964D;&#x3002; </li>
+<li>&#x8BFB;&#x5199;&#x9501;&#x7684;&#x8BFB;&#x9501;&#x6027;&#x80FD;&#x5E76;&#x672A;&#x968F;&#x5E76;&#x53D1;&#x91CF;&#x7684;&#x589E;&#x5927;&#x800C;&#x53D1;&#x751F;&#x8F83;&#x5927;&#x53D8;&#x5316;&#xFF0C;&#x6027;&#x80FD;&#x59CB;&#x7EC8;&#x6052;&#x5B9A;&#x5728;40ns&#x5DE6;&#x53F3;&#x3002;</li>
+<li>&#x5728;&#x5E76;&#x53D1;&#x91CF;&#x8F83;&#x5927;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x8BFB;&#x5199;&#x9501;&#x7684;&#x5199;&#x9501;&#x6027;&#x80FD;&#x6BD4;&#x4E92;&#x65A5;&#x9501;&#x3001;&#x8BFB;&#x5199;&#x9501;&#x7684;&#x8BFB;&#x9501;&#x90FD;&#x5DEE;&#xFF0C;&#x5E76;&#x4E14;&#x968F;&#x7740;&#x5E76;&#x53D1;&#x91CF;&#x589E;&#x5927;&#xFF0C;&#x5176;&#x5199;&#x9501;&#x6027;&#x80FD;&#x6709;&#x7EE7;&#x7EED;&#x4E0B;&#x964D;&#x7684;&#x8D8B;&#x52BF;&#x3002;</li>
+<li>&#x7531;&#x6B64;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x8BFB;&#x5199;&#x9501;&#x9002;&#x5408;&#x5E94;&#x7528;&#x5728;&#x5177;&#x6709;&#x4E00;&#x5B9A;&#x5E76;&#x53D1;&#x91CF;&#x4E14;&#x8BFB;&#x591A;&#x5199;&#x5C11;&#x7684;&#x573A;&#x5408;</li>
+</ol>
+<h1 id="&#x6761;&#x4EF6;&#x53D8;&#x91CF;"><a name="&#x6761;&#x4EF6;&#x53D8;&#x91CF;" class="anchor-navigation-ex-anchor" href="#&#x6761;&#x4EF6;&#x53D8;&#x91CF;"><i class="fa fa-link" aria-hidden="true"></i></a>3. &#x6761;&#x4EF6;&#x53D8;&#x91CF;</h1>
+<ul>
+<li>sync.Cond&#x662F;&#x4F20;&#x7EDF;&#x7684;&#x6761;&#x4EF6;&#x53D8;&#x91CF;&#x539F;&#x8BED;&#x6982;&#x5FF5;&#x5728;Go&#x8BED;&#x8A00;&#x4E2D;&#x7684;&#x5B9E;&#x73B0;&#x3002;</li>
+<li>&#x4E00;&#x4E2A;&#x6761;&#x4EF6;&#x53D8;&#x91CF;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x4E00;&#x4E2A;&#x5BB9;&#x5668;&#xFF0C;&#x8FD9;&#x4E2A;&#x5BB9;&#x5668;&#x4E2D;&#x5B58;&#x653E;&#x7740;&#x4E00;&#x4E2A;&#x6216;&#x4E00;&#x7EC4;&#x7B49;&#x5F85;&#x7740;&#x67D0;&#x4E2A;&#x6761;&#x4EF6;&#x6210;&#x7ACB;&#x7684;goroutine&#x3002;</li>
+<li>&#x5F53;&#x6761;&#x4EF6;&#x6210;&#x7ACB;&#x65F6;&#xFF0C;&#x8FD9;&#x4E9B;&#x5904;&#x4E8E;&#x7B49;&#x5F85;&#x72B6;&#x6001;&#x7684;goroutine&#x5C06;&#x5F97;&#x5230;&#x901A;&#x77E5;&#x5E76;&#x88AB;&#x5524;&#x9192;&#x4EE5;&#x7EE7;&#x7EED;&#x540E;&#x7EED;&#x7684;&#x5DE5;&#x4F5C;&#x3002;</li>
+</ul>
+<pre class="language-"><code class="lang-go"><span class="token comment">// chapter6/sources/go-sync-package-5.go</span>
+<span class="token keyword">type</span> signal <span class="token keyword">struct</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> ready <span class="token builtin">bool</span>
+
+<span class="token keyword">func</span> <span class="token function">worker</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;worker %d: is working...\n&quot;</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+    time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Second<span class="token punctuation">)</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;worker %d: works done\n&quot;</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">spawnGroup</span><span class="token punctuation">(</span>f <span class="token keyword">func</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">)</span><span class="token punctuation">,</span> num <span class="token builtin">int</span><span class="token punctuation">,</span> groupSignal <span class="token operator">*</span>sync<span class="token punctuation">.</span>Cond<span class="token punctuation">)</span> <span class="token operator">&lt;-</span><span class="token keyword">chan</span> signal <span class="token punctuation">{</span>
+    c <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> signal<span class="token punctuation">)</span>
+    <span class="token keyword">var</span> wg sync<span class="token punctuation">.</span>WaitGroup
+
+    <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> num<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+        wg<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            groupSignal<span class="token punctuation">.</span>L<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">for</span> <span class="token operator">!</span>ready <span class="token punctuation">{</span>
+                groupSignal<span class="token punctuation">.</span><span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+            groupSignal<span class="token punctuation">.</span>L<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;worker %d: start to work...\n&quot;</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+            <span class="token function">f</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+            wg<span class="token punctuation">.</span><span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        wg<span class="token punctuation">.</span><span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        c <span class="token operator">&lt;-</span> <span class="token function">signal</span><span class="token punctuation">(</span><span class="token keyword">struct</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> c
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;start a group of workers...&quot;</span><span class="token punctuation">)</span>
+    groupSignal <span class="token operator">:=</span> sync<span class="token punctuation">.</span><span class="token function">NewCond</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>sync<span class="token punctuation">.</span>Mutex<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    c <span class="token operator">:=</span> <span class="token function">spawnGroup</span><span class="token punctuation">(</span>worker<span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> groupSignal<span class="token punctuation">)</span>
+
+    time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">5</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Second<span class="token punctuation">)</span> <span class="token comment">// &#x6A21;&#x62DF;ready&#x524D;&#x7684;&#x51C6;&#x5907;&#x2F2F;&#x4F5C;</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;the group of workers start to work...&quot;</span><span class="token punctuation">)</span>
+
+    groupSignal<span class="token punctuation">.</span>L<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    ready <span class="token operator">=</span> <span class="token boolean">true</span>
+    groupSignal<span class="token punctuation">.</span><span class="token function">Broadcast</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    groupSignal<span class="token punctuation">.</span>L<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token operator">&lt;-</span>c
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;the group of workers work done!&quot;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class="language-"><code class="lang-bash"><span class="token variable">$go</span> run go-sync-package-5.go
+start a group of workers<span class="token punctuation">..</span>.
+the group of workers start to work<span class="token punctuation">..</span>.
+worker <span class="token number">4</span>: start to work<span class="token punctuation">..</span>.
+worker <span class="token number">4</span>: is working<span class="token punctuation">..</span>.
+worker <span class="token number">1</span>: start to work<span class="token punctuation">..</span>.
+worker <span class="token number">1</span>: is working<span class="token punctuation">..</span>.
+worker <span class="token number">3</span>: start to work<span class="token punctuation">..</span>.
+worker <span class="token number">3</span>: is working<span class="token punctuation">..</span>.
+worker <span class="token number">5</span>: start to work<span class="token punctuation">..</span>.
+worker <span class="token number">5</span>: is working<span class="token punctuation">..</span>.
+worker <span class="token number">2</span>: start to work<span class="token punctuation">..</span>.
+worker <span class="token number">2</span>: is working<span class="token punctuation">..</span>.
+worker <span class="token number">1</span>: works <span class="token keyword">done</span>
+worker <span class="token number">3</span>: works <span class="token keyword">done</span>
+worker <span class="token number">4</span>: works <span class="token keyword">done</span>
+worker <span class="token number">2</span>: works <span class="token keyword">done</span>
+worker <span class="token number">5</span>: works <span class="token keyword">done</span>
+the group of workers work done<span class="token operator">!</span>
+</code></pre>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/poker-svg" target="_blank">YangXin Xu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-10-06 14:46:46 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="第34条-了解channel的妙用.html" class="navigation navigation-prev " aria-label="Previous page: 第34条-了解channel的妙用">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="第36条-使用atomic包实现伸缩性更好的并发读取.html" class="navigation navigation-next " aria-label="Next page: 第36条-使用atomic包实现伸缩性更好的并发读取">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"第35条-了解sync包的正确用法","level":"1.36","depth":1,"next":{"title":"第36条-使用atomic包实现伸缩性更好的并发读取","level":"1.37","depth":1,"path":"第36条-使用atomic包实现伸缩性更好的并发读取.md","ref":"第36条-使用atomic包实现伸缩性更好的并发读取.md","articles":[]},"previous":{"title":"第34条-了解channel的妙用","level":"1.35","depth":1,"path":"第34条-了解channel的妙用.md","ref":"第34条-了解channel的妙用.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","-lunr","-search","search-pro","-sharing","splitter","hide-element","insert-logo","code","livereload"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"livereload":{},"page-footer-ex":{"copyright":"By [YangXin Xu](https://github.com/poker-svg)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"expandable-chapters-small":{},"copy-code-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"style":"background: none; max-height: 120px; min-height: 120px","url":"./images/icon.png"},"expandable-chapters":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Go语言精进之路","gitbook":"*"},"file":{"path":"第35条-了解sync包的正确用法.md","mtime":"2023-10-06T06:46:46.949Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-10-06T13:46:14.437Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-hide-element/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-insert-logo/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
