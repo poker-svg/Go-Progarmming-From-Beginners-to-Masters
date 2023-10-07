@@ -1,0 +1,1081 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>第46条-为被测对象建立性能基准 · Go语言精进之路</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-insert-logo/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="第47条-使用pprof对程序进行性能剖析.html" />
+    
+    
+    <link rel="prev" href="第45条-使用模糊测试让潜在bug无处遁形.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="第1条-了解Go语言的诞生和演进.html">
+            
+                <a href="第1条-了解Go语言的诞生和演进.html">
+            
+                    
+                    第1条-了解Go语言的诞生和演进
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="第2条-选择适当的Go语言版本.html">
+            
+                <a href="第2条-选择适当的Go语言版本.html">
+            
+                    
+                    第2条-选择适当的Go语言版本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="第3条-理解Go语言的设计哲学.html">
+            
+                <a href="第3条-理解Go语言的设计哲学.html">
+            
+                    
+                    第3条-理解Go语言的设计哲学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                <a href="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                    
+                    第4条-使用Go语言原生编程思维来写Go代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                <a href="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                    
+                    第5条-使用得到工人且广泛使用的项目结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="第6条-提交前使用gofmt格式化源码.html">
+            
+                <a href="第6条-提交前使用gofmt格式化源码.html">
+            
+                    
+                    第6条-提交前使用gofmt格式化源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                <a href="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                    
+                    第7条-使用Go命名惯例对标识符进行命名
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="第8条-使用一致的变量声明形式.html">
+            
+                <a href="第8条-使用一致的变量声明形式.html">
+            
+                    
+                    第8条-使用一致的变量声明形式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="第9条-使用无类型常量简化代码.html">
+            
+                <a href="第9条-使用无类型常量简化代码.html">
+            
+                    
+                    第9条-使用无类型常量简化代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="第10条-使用iota实现枚举常量.html">
+            
+                <a href="第10条-使用iota实现枚举常量.html">
+            
+                    
+                    第10条-使用iota实现枚举常量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="第11条-尽量定义零值可用的类型.html">
+            
+                <a href="第11条-尽量定义零值可用的类型.html">
+            
+                    
+                    第11条-尽量定义零值可用的类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="第12条-使用复合字面值作为初值构造器.html">
+            
+                <a href="第12条-使用复合字面值作为初值构造器.html">
+            
+                    
+                    第12条-使用复合字面值作为初值构造器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="第13条-了解切片实现原理并高效使用.html">
+            
+                <a href="第13条-了解切片实现原理并高效使用.html">
+            
+                    
+                    第13条-了解切片实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="第14条-了解map实现原理并高效使用.html">
+            
+                <a href="第14条-了解map实现原理并高效使用.html">
+            
+                    
+                    第14条-了解map实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="第15条-了解string实现原理并高效使用.html">
+            
+                <a href="第15条-了解string实现原理并高效使用.html">
+            
+                    
+                    第15条-了解string实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="第16条-理解Go语言的包导入.html">
+            
+                <a href="第16条-理解Go语言的包导入.html">
+            
+                    
+                    第16条-理解Go语言的包导入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="第17条-理解Go语言表达式的求值顺序.html">
+            
+                <a href="第17条-理解Go语言表达式的求值顺序.html">
+            
+                    
+                    第17条-理解Go语言表达式的求值顺序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="第18条-理解Go语言代码块与作用域.html">
+            
+                <a href="第18条-理解Go语言代码块与作用域.html">
+            
+                    
+                    第18条-理解Go语言代码块与作用域
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="第19条-了解Go语言控制语句惯用法及使用注意事项.html">
+            
+                <a href="第19条-了解Go语言控制语句惯用法及使用注意事项.html">
+            
+                    
+                    第19条-了解Go语言控制语句惯用法及使用注意事项
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="第20条-在init函数中检查包级变量的初始状态.html">
+            
+                <a href="第20条-在init函数中检查包级变量的初始状态.html">
+            
+                    
+                    第20条-在init函数中检查包级变量的初始状态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="第21条-让自己习惯于函数是“一等公民”.html">
+            
+                <a href="第21条-让自己习惯于函数是“一等公民”.html">
+            
+                    
+                    第21条-让自己习惯于函数是“一等公民”
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="第22条-使用defer让函数更简洁、更健壮.html">
+            
+                <a href="第22条-使用defer让函数更简洁、更健壮.html">
+            
+                    
+                    第22条-使用defer让函数更简洁、更健壮
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="第23条-理解方法的本质以选择正确的receiver类型.html">
+            
+                <a href="第23条-理解方法的本质以选择正确的receiver类型.html">
+            
+                    
+                    第23条-理解方法的本质以选择正确的receiver类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="第24条-方法集合决定接口实现.html">
+            
+                <a href="第24条-方法集合决定接口实现.html">
+            
+                    
+                    第24条-方法集合决定接口实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="第25条-了解变长参数函数的妙用.html">
+            
+                <a href="第25条-了解变长参数函数的妙用.html">
+            
+                    
+                    第25条-了解变长参数函数的妙用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="第26条-了解接口类型变量的内部表示.html">
+            
+                <a href="第26条-了解接口类型变量的内部表示.html">
+            
+                    
+                    第26条-了解接口类型变量的内部表示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="第27条-尽量定义小接口.html">
+            
+                <a href="第27条-尽量定义小接口.html">
+            
+                    
+                    第27条-尽量定义小接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="第28条-尽量避免使用空接口作为函数参数类型.html">
+            
+                <a href="第28条-尽量避免使用空接口作为函数参数类型.html">
+            
+                    
+                    第28条-尽量避免使用空接口作为函数参数类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="第29条-使用接口作为程序水平组合的连接点.html">
+            
+                <a href="第29条-使用接口作为程序水平组合的连接点.html">
+            
+                    
+                    第29条-使用接口作为程序水平组合的连接
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="第30条-使用接口提高代码的可测试性.html">
+            
+                <a href="第30条-使用接口提高代码的可测试性.html">
+            
+                    
+                    第30条-使用接口提高代码的可测试性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="第31条-优先考虑并发设计.html">
+            
+                <a href="第31条-优先考虑并发设计.html">
+            
+                    
+                    第31条-优先考虑并发设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="第32条-了解goroutine的调度原理.html">
+            
+                <a href="第32条-了解goroutine的调度原理.html">
+            
+                    
+                    第32条-了解goroutine的调度原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="第33条-掌握Go并发模型和常见并发模式.html">
+            
+                <a href="第33条-掌握Go并发模型和常见并发模式.html">
+            
+                    
+                    第33条-掌握Go并发模型和常见并发模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="第34条-了解channel的妙用.html">
+            
+                <a href="第34条-了解channel的妙用.html">
+            
+                    
+                    第34条-了解channel的妙用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="第35条-了解sync包的正确用法.html">
+            
+                <a href="第35条-了解sync包的正确用法.html">
+            
+                    
+                    第35条-了解sync包的正确用法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="第36条-使用atomic包实现伸缩性更好的并发读取.html">
+            
+                <a href="第36条-使用atomic包实现伸缩性更好的并发读取.html">
+            
+                    
+                    第36条-使用atomic包实现伸缩性更好的并发读取
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="第37条-了解错误处理的4种策略.html">
+            
+                <a href="第37条-了解错误处理的4种策略.html">
+            
+                    
+                    第37条-了解错误处理的4种策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="第38条-尽量优化反复出现的if%20err != nil.md">
+            
+                <span>
+            
+                    
+                    第38条-尽量优化反复出现的if err != nil
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="第39条-不要使用panic进行正常的错误处理.html">
+            
+                <a href="第39条-不要使用panic进行正常的错误处理.html">
+            
+                    
+                    第39条-不要使用panic进行正常的错误处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="第40条-理解包内测试与包外测试的差别.html">
+            
+                <a href="第40条-理解包内测试与包外测试的差别.html">
+            
+                    
+                    第40条-理解包内测试与包外测试的差别
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="第41条-有层次地组织测试代码.html">
+            
+                <a href="第41条-有层次地组织测试代码.html">
+            
+                    
+                    第41条-有层次地组织测试代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="第42条-优先编写表驱动的测试.html">
+            
+                <a href="第42条-优先编写表驱动的测试.html">
+            
+                    
+                    第42条-优先编写表驱动的测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="第43条-使用testdata管理测试依赖的外部数据文件.html">
+            
+                <a href="第43条-使用testdata管理测试依赖的外部数据文件.html">
+            
+                    
+                    第43条-使用testdata管理测试依赖的外部数据文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="第44条-正确使用fake、stub和mock等辅助单元测试.html">
+            
+                <a href="第44条-正确使用fake、stub和mock等辅助单元测试.html">
+            
+                    
+                    第44条-正确使用fake、stub和mock等辅助单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="第45条-使用模糊测试让潜在bug无处遁形.html">
+            
+                <a href="第45条-使用模糊测试让潜在bug无处遁形.html">
+            
+                    
+                    第45条-使用模糊测试让潜在bug无处遁形
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.47" data-path="第46条-为被测对象建立性能基准.html">
+            
+                <a href="第46条-为被测对象建立性能基准.html">
+            
+                    
+                    第46条-为被测对象建立性能基准
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="第47条-使用pprof对程序进行性能剖析.html">
+            
+                <a href="第47条-使用pprof对程序进行性能剖析.html">
+            
+                    
+                    第47条-使用pprof对程序进行性能剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="第48条-使用expvar输出度量数据，辅助定位性能瓶颈点.html">
+            
+                <a href="第48条-使用expvar输出度量数据，辅助定位性能瓶颈点.html">
+            
+                    
+                    第48条-使用expvar输出度量数据，辅助定位性能瓶颈点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="第49条-使用Delve调试Go代码.html">
+            
+                <a href="第49条-使用Delve调试Go代码.html">
+            
+                    
+                    第49条-使用Delve调试Go代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >第46条-为被测对象建立性能基准</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x5728;go&#x8BED;&#x8A00;&#x4E2D;&#x662F;&#x4E00;&#x7B49;&#x516C;&#x6C11;"><b>1. </b>&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x5728;Go&#x8BED;&#x8A00;&#x4E2D;&#x662F;&#x201C;&#x4E00;&#x7B49;&#x516C;&#x6C11;&#x201D;</a></li><li><span class="title-icon "></span><a href="#&#x987A;&#x5E8F;&#x6267;&#x884C;&#x548C;&#x5E76;&#x884C;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;"><b>2. </b>&#x987A;&#x5E8F;&#x6267;&#x884C;&#x548C;&#x5E76;&#x884C;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;</a></li><ul><li><span class="title-icon "></span><a href="#&#x987A;&#x5E8F;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;"><b>2.1. </b>&#x987A;&#x5E8F;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;</a></li><li><span class="title-icon "></span><a href="#&#x5E76;&#x884C;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;"><b>2.2. </b>&#x5E76;&#x884C;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;</a></li></ul><li><span class="title-icon "></span><a href="#&#x4F7F;&#x7528;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6BD4;&#x8F83;&#x5DE5;&#x5177;"><b>3. </b>&#x4F7F;&#x7528;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6BD4;&#x8F83;&#x5DE5;&#x5177;</a></li><ul><li><span class="title-icon "></span><a href="#benchcmp"><b>3.1. </b>benchcmp</a></li><li><span class="title-icon "></span><a href="#benchstat"><b>3.2. </b>benchstat</a></li></ul><li><span class="title-icon "></span><a href="#&#x6392;&#x9664;&#x989D;&#x5916;&#x5E72;&#x6270;&#xFF0C;&#x8BA9;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x66F4;&#x7CBE;&#x786E;"><b>4. </b>&#x6392;&#x9664;&#x989D;&#x5916;&#x5E72;&#x6270;&#xFF0C;&#x8BA9;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x66F4;&#x7CBE;&#x786E;</a></li></ul></div><a href="#&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x5728;go&#x8BED;&#x8A00;&#x4E2D;&#x662F;&#x4E00;&#x7B49;&#x516C;&#x6C11;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><blockquote>
+<p>&#x8457;&#x540D;&#x8BA1;&#x7B97;&#x673A;&#x79D1;&#x5B66;&#x5BB6;&#x3001;&#x300A;&#x8BA1;&#x7B97;&#x673A;&#x7A0B;&#x5E8F;&#x8BBE;&#x8BA1;&#x827A;&#x672F;&#x300B;&#x7684;&#x4F5C;&#x8005;&#x9AD8;&#x5FB7;&#x7EB3;&#x66FE;&#x8BF4;&#x8FC7;&#xFF1A; &#x201C;&#x8FC7;&#x65E9;&#x4F18;&#x5316;&#x662F;&#x4E07;&#x6076;&#x4E4B;&#x6E90;&#x3002;&#x201D;</p>
+<p>&#x4F46;&#x662F;Android&#x754C;&#x5F00;&#x6E90;&#x5927;&#x725B;Jake Wharton&#x5C31;&#x66FE;&#x63D0;&#x51FA;&#x8FC7;&#x8FD9;&#x6837;&#x4E00;&#x4E2A;&#x89C2;&#x70B9;&#xFF1A;&#x201C;&#x8FC7;&#x65E9;&#x7684;&#x5F15;&#x7528;&#x2018;&#x8FC7;&#x65E9;&#x4F18;&#x5316;&#x662F;&#x4E07;&#x6076;&#x4E4B;&#x6E90;&#x2019;&#x662F;&#x4E00;&#x5207;&#x9F9F;&#x901F;&#x8F6F;&#x4EF6;&#x4E4B;&#x6E90;&#x3002;&#x201D;</p>
+</blockquote>
+<p>&#x662F;&#x5426;&#x4F18;&#x5316;&#x3001;&#x4F55;&#x65F6;&#x4F18;&#x5316;&#x5B9E;&#x8D28;&#x4E0A;&#x662F;&#x4E00;&#x4E2A;<strong><u>&#x51B3;&#x7B56;&#x95EE;&#x9898;</u></strong>&#xFF0C;&#x4F46;<strong><u>&#x51B3;&#x7B56;&#x4E0D;&#x80FD;&#x9760;&#x76F4;&#x89C9;&#xFF0C; &#x8981;&#x9760;&#x6570;&#x636E;&#x8BF4;&#x8BDD;</u></strong>&#x3002;&#x501F;&#x7528;&#x4E0A;&#x9762;&#x540D;&#x8A00;&#x4E2D;&#x7684;&#x53E5;&#x578B;&#xFF1A;<strong><u>&#x6CA1;&#x6709;&#x6570;&#x636E;&#x652F;&#x6491;&#x7684;&#x8FC7;&#x65E9;&#x51B3;&#x7B56;&#x662F;&#x4E07; &#x6076;&#x4E4B;&#x6E90;&#x3002;</u></strong></p>
+<p>&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E3A;&#x88AB;&#x6D4B;&#x5BF9;&#x8C61;&#x5EFA;&#x7ACB;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x7684;&#x65B9;&#x5F0F;&#x53BB;&#x83B7;&#x5F97;&#x51B3;&#x7B56;&#x662F;&#x5426;&#x4F18;&#x5316;&#x7684;&#x652F;&#x6491;&#x6570;&#x636E;&#xFF0C;&#x540C;&#x65F6;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x8FD9;&#x4E9B;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6570;&#x636E;&#x5224;&#x65AD;&#x51FA;&#x5BF9;&#x4EE3;&#x7801;&#x6240;&#x505A;&#x7684;&#x4EFB;&#x4F55;&#x66F4;&#x6539;&#x662F;&#x5426;&#x5BF9;&#x4EE3;&#x7801;&#x6027;&#x80FD;&#x6709;&#x6240;&#x5F71;&#x54CD;&#x3002;</p>
+<h1 id="&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x5728;go&#x8BED;&#x8A00;&#x4E2D;&#x662F;&#x4E00;&#x7B49;&#x516C;&#x6C11;"><a name="&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x5728;go&#x8BED;&#x8A00;&#x4E2D;&#x662F;&#x4E00;&#x7B49;&#x516C;&#x6C11;" class="anchor-navigation-ex-anchor" href="#&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x5728;go&#x8BED;&#x8A00;&#x4E2D;&#x662F;&#x4E00;&#x7B49;&#x516C;&#x6C11;"><i class="fa fa-link" aria-hidden="true"></i></a>1. &#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x5728;Go&#x8BED;&#x8A00;&#x4E2D;&#x662F;&#x201C;&#x4E00;&#x7B49;&#x516C;&#x6C11;&#x201D;</h1>
+<p>&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x5728;Go&#x8BED;&#x8A00;&#x4E2D;&#x662F;&#x548C;&#x666E;&#x901A;&#x7684;&#x5355;&#x5143;&#x6D4B;&#x8BD5;&#x4E00;&#x6837;&#x88AB;&#x539F;&#x751F;&#x652F;&#x6301;&#x7684;&#xFF0C;&#x5F97;&#x5230;&#x7684;&#x662F;&#x201C;&#x4E00;&#x7B49;&#x516C;&#x6C11;&#x201D;&#x7684;&#x5F85;&#x9047;&#x3002;</p>
+<p>&#x6BCF;&#x4E2A;&#x4EE5; Benchmark&#x524D;&#x7F00;&#x5F00;&#x5934;&#x7684;&#x51FD;&#x6570;&#x90FD;&#x4F1A;&#x88AB;&#x5F53;&#x4F5C;&#x4E00;&#x4E2A;&#x72EC;&#x7ACB;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#xFF1A;</p>
+<pre class="language-"><code class="lang-go"><span class="token keyword">func</span> <span class="token function">BenchmarkXxx</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//...</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<hr>
+<pre class="language-"><code class="lang-go"><span class="token comment">// chapter8/sources/benchmark_intro_test.go</span>
+<span class="token keyword">var</span> sl <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">{</span>
+    <span class="token string">&quot;Rob Pike &quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;Robert Griesemer &quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;Ken Thompson &quot;</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">concatStringByOperator</span><span class="token punctuation">(</span>sl <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> s <span class="token builtin">string</span>
+    <span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> v <span class="token operator">:=</span> <span class="token keyword">range</span> sl <span class="token punctuation">{</span>
+        s <span class="token operator">+=</span> v
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> s
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">concatStringBySprintf</span><span class="token punctuation">(</span>sl <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> s <span class="token builtin">string</span>
+    <span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> v <span class="token operator">:=</span> <span class="token keyword">range</span> sl <span class="token punctuation">{</span>
+        s <span class="token operator">=</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">&quot;%s%s&quot;</span><span class="token punctuation">,</span> s<span class="token punctuation">,</span> v<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> s
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">concatStringByJoin</span><span class="token punctuation">(</span>sl <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> strings<span class="token punctuation">.</span><span class="token function">Join</span><span class="token punctuation">(</span>sl<span class="token punctuation">,</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">BenchmarkConcatStringByOperator</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> n <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> n <span class="token operator">&amp;</span>lt<span class="token punctuation">;</span> b<span class="token punctuation">.</span>N<span class="token punctuation">;</span> n<span class="token operator">++</span> <span class="token punctuation">{</span>
+        <span class="token function">concatStringByOperator</span><span class="token punctuation">(</span>sl<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">BenchmarkConcatStringBySprintf</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> n <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> n <span class="token operator">&amp;</span>lt<span class="token punctuation">;</span> b<span class="token punctuation">.</span>N<span class="token punctuation">;</span> n<span class="token operator">++</span> <span class="token punctuation">{</span>
+        <span class="token function">concatStringBySprintf</span><span class="token punctuation">(</span>sl<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">BenchmarkConcatStringByJoin</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> n <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> n <span class="token operator">&amp;</span>lt<span class="token punctuation">;</span> b<span class="token punctuation">.</span>N<span class="token punctuation">;</span> n<span class="token operator">++</span> <span class="token punctuation">{</span>
+        <span class="token function">concatStringByJoin</span><span class="token punctuation">(</span>sl<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>&#x4E00;&#x8D77;&#x8FD0;&#x884C;&#x8FD9;&#x4E09;&#x4E2A;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#xFF1A;</p>
+<pre class="language-"><code class="lang-bash"><span class="token variable">$go</span> <span class="token builtin class-name">test</span> <span class="token parameter variable">-bench</span> <span class="token builtin class-name">.</span> benchmark_intro_test.go
+goos: darwin
+goarch: amd64
+BenchmarkConcatStringByOperator-8 <span class="token number">12810092</span> <span class="token number">88.5</span> ns/op
+BenchmarkConcatStringBySprintf-8 <span class="token number">2777902</span> <span class="token number">432</span> ns/op
+BenchmarkConcatStringByJoin-8 <span class="token number">23994218</span> <span class="token number">49.7</span> ns/op
+PASS
+ok command-line-arguments <span class="token number">4</span>.117s
+</code></pre>
+<blockquote>
+<p>&#x4EE5; BenchmarkConcatStringByJoin&#x4E3A;&#x4F8B;&#xFF0C;&#x5176;&#x7B2C;&#x4E09;&#x5217;&#x7684;&#x503C;&#x4E3A;49.1ns/op&#xFF0C;&#x8BE5;&#x503C;&#x8868; &#x793A;BenchmarkConcatStringByJoin&#x8FD9;&#x4E2A;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x4E2D;for&#x5FAA;&#x73AF;&#x7684;&#x6BCF;&#x6B21;&#x5FAA;&#x73AF;&#x5E73;&#x5747;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x4E3A;49.1ns&#xFF08;op&#x4EE3;&#x8868;&#x6BCF;&#x6B21;&#x5FAA;&#x73AF;&#x64CD;&#x4F5C;&#xFF09;&#x3002;&#x8FD9;&#x91CC;for&#x5FAA;&#x73AF;&#x8C03;&#x7528;&#x7684;&#x662F; concatStringByJoin&#xFF0C;&#x5373;&#x6267;&#x884C;&#x4E00;&#x6B21;concatStringByJoin&#x7684;&#x5E73;&#x5747;&#x65F6;&#x957F;&#x4E3A;49.1ns&#x3002;</p>
+</blockquote>
+<p>&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x8FD8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4F20;&#x5165;-benchmem&#x547D;&#x4EE4;&#x884C;&#x53C2;&#x6570;&#x8F93;&#x51FA;&#x5185;&#x5B58;&#x5206;&#x914D;&#x4FE1;&#x606F;&#xFF08;&#x4E0E;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#x4E2D;&#x663E;&#x5F0F;&#x8C03;&#x7528;b.ReportAllocs&#x7684;&#x6548;&#x679C;&#x662F;&#x7B49;&#x4EF7;&#x7684;&#xFF09;&#xFF1A;</p>
+<pre class="language-"><code class="lang-bash"><span class="token variable">$go</span> <span class="token builtin class-name">test</span> <span class="token parameter variable">-bench</span><span class="token operator">=</span>Join ./benchmark_intro_test.go <span class="token parameter variable">-benchmem</span>
+goos: darwin
+goarch: amd64
+BenchmarkConcatStringByJoin-8 <span class="token number">23004709</span> <span class="token number">48.8</span> ns/op <span class="token number">48</span> B/op <span class="token number">1</span> allocs/op
+PASS
+ok command-line-arguments <span class="token number">1</span>.183s
+</code></pre>
+<blockquote>
+<p>&#x8FD9;&#x91CC;&#x8F93;&#x51FA;&#x7684;&#x5185;&#x5B58;&#x5206;&#x914D;&#x4FE1;&#x606F;&#x544A;&#x8BC9;&#x6211;&#x4EEC;&#xFF0C;&#x6BCF;&#x6267;&#x884C;&#x4E00;&#x6B21;concatStringByJoin&#x5E73;&#x5747;&#x8FDB;&#x884C;&#x4E00;&#x6B21;&#x5185;&#x5B58;&#x5206;&#x914D;&#xFF0C;&#x6BCF;&#x6B21;&#x5E73;&#x5747;&#x5206;&#x914D;48&#x5B57;&#x8282;&#x7684;&#x6570;&#x636E;&#x3002;</p>
+</blockquote>
+<h1 id="&#x987A;&#x5E8F;&#x6267;&#x884C;&#x548C;&#x5E76;&#x884C;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;"><a name="&#x987A;&#x5E8F;&#x6267;&#x884C;&#x548C;&#x5E76;&#x884C;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;" class="anchor-navigation-ex-anchor" href="#&#x987A;&#x5E8F;&#x6267;&#x884C;&#x548C;&#x5E76;&#x884C;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;"><i class="fa fa-link" aria-hidden="true"></i></a>2. &#x987A;&#x5E8F;&#x6267;&#x884C;&#x548C;&#x5E76;&#x884C;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;</h1>
+<h2 id="&#x987A;&#x5E8F;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;"><a name="&#x987A;&#x5E8F;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;" class="anchor-navigation-ex-anchor" href="#&#x987A;&#x5E8F;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;"><i class="fa fa-link" aria-hidden="true"></i></a>2.1. &#x987A;&#x5E8F;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;</h2>
+<p>&#x5176;&#x4EE3;&#x7801;&#x5199;&#x6CD5;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre class="language-"><code class="lang-go"><span class="token keyword">func</span> <span class="token function">BenchmarkXxx</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// ...</span>
+    <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&amp;</span>lt<span class="token punctuation">;</span> b<span class="token punctuation">.</span>N<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+        <span class="token comment">// &#x88AB;&#x6D4B;&#x5BF9;&#x8C61;&#x7684;&#x6267;&#x884C;&#x4EE3;&#x7801;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="&#x5E76;&#x884C;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;"><a name="&#x5E76;&#x884C;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;" class="anchor-navigation-ex-anchor" href="#&#x5E76;&#x884C;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;"><i class="fa fa-link" aria-hidden="true"></i></a>2.2. &#x5E76;&#x884C;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;</h2>
+<p>&#x5E76;&#x884C;&#x6267;&#x884C;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x7684;&#x4EE3;&#x7801;&#x5199;&#x6CD5;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre class="language-"><code class="lang-go"><span class="token keyword">func</span> <span class="token function">BenchmarkXxx</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// ...</span>
+    b<span class="token punctuation">.</span><span class="token function">RunParallel</span><span class="token punctuation">(</span><span class="token keyword">func</span><span class="token punctuation">(</span>pb <span class="token operator">*</span>testing<span class="token punctuation">.</span>PB<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> pb<span class="token punctuation">.</span><span class="token function">Next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment">// &#x88AB;&#x6D4B;&#x5BF9;&#x8C61;&#x7684;&#x6267;&#x884C;&#x4EE3;&#x7801;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h1 id="&#x4F7F;&#x7528;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6BD4;&#x8F83;&#x5DE5;&#x5177;"><a name="&#x4F7F;&#x7528;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6BD4;&#x8F83;&#x5DE5;&#x5177;" class="anchor-navigation-ex-anchor" href="#&#x4F7F;&#x7528;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6BD4;&#x8F83;&#x5DE5;&#x5177;"><i class="fa fa-link" aria-hidden="true"></i></a>3. &#x4F7F;&#x7528;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6BD4;&#x8F83;&#x5DE5;&#x5177;</h1>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;Go&#x539F;&#x751F;&#x63D0;&#x4F9B;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x4E3A;&#x88AB;&#x6D4B;&#x5BF9;&#x8C61;&#x5EFA;&#x7ACB;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x4E86;&#x3002;&#x4F46;&#x88AB;&#x6D4B;&#x4EE3;&#x7801;&#x66F4;&#x65B0;&#x524D;&#x540E;&#x7684;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6BD4;&#x8F83;&#x4F9D;&#x7136;&#x8981;&#x9760;&#x4EBA;&#x5DE5;&#x8BA1;&#x7B97;&#x548C;&#x8089;&#x773C;&#x6BD4;&#x5BF9;&#xFF0C;&#x5341;&#x5206;&#x4E0D;&#x65B9;&#x4FBF;&#x3002;&#x4E3A;&#x6B64;&#xFF0C;Go&#x6838;&#x5FC3;&#x56E2;&#x961F;&#x5148;&#x540E;&#x5F00;&#x53D1;&#x4E86;&#x4E24;&#x6B3E;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6BD4;&#x8F83;&#x5DE5;&#x5177;&#xFF1A; </p>
+<ul>
+<li><p><a href="https://github.com/golang/tools/tree/master/cmd/benchcmp" target="_blank">benchcmp</a></p>
+</li>
+<li><p><a href="https://github.com/golang/perf/tree/master/benchstat" target="_blank">benchstat</a></p>
+</li>
+</ul>
+<h2 id="benchcmp"><a name="benchcmp" class="anchor-navigation-ex-anchor" href="#benchcmp"><i class="fa fa-link" aria-hidden="true"></i></a>3.1. benchcmp</h2>
+<p>&#xFF08;&#x7565;&#xFF09;</p>
+<h2 id="benchstat"><a name="benchstat" class="anchor-navigation-ex-anchor" href="#benchstat"><i class="fa fa-link" aria-hidden="true"></i></a>3.2. benchstat</h2>
+<p>&#xFF08;&#x7565;&#xFF09;</p>
+<blockquote>
+<p>Go&#x6838;&#x5FC3;&#x56E2;&#x961F;&#x5DF2;&#x7ECF;&#x7ED9;benchcmp&#x5DE5;&#x5177;&#x6253;&#x4E0A;&#x4E86;&#x201C;deprecation&#x201D;&#x6807;&#x7B7E;&#xFF0C;&#x56E0;&#x6B64;&#x5EFA;&#x8BAE;&#x5927;&#x5BB6;&#x4F7F;&#x7528;benchstat&#x6765;&#x8FDB;&#x884C;&#x6027;&#x80FD;&#x57FA;&#x51C6;&#x6570;&#x636E;&#x7684;&#x6BD4;&#x8F83;&#x3002;</p>
+</blockquote>
+<h1 id="&#x6392;&#x9664;&#x989D;&#x5916;&#x5E72;&#x6270;&#xFF0C;&#x8BA9;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x66F4;&#x7CBE;&#x786E;"><a name="&#x6392;&#x9664;&#x989D;&#x5916;&#x5E72;&#x6270;&#xFF0C;&#x8BA9;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x66F4;&#x7CBE;&#x786E;" class="anchor-navigation-ex-anchor" href="#&#x6392;&#x9664;&#x989D;&#x5916;&#x5E72;&#x6270;&#xFF0C;&#x8BA9;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x66F4;&#x7CBE;&#x786E;"><i class="fa fa-link" aria-hidden="true"></i></a>4. &#x6392;&#x9664;&#x989D;&#x5916;&#x5E72;&#x6270;&#xFF0C;&#x8BA9;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x66F4;&#x7CBE;&#x786E;</h1>
+<ul>
+<li>&#x6709;&#x4E9B;&#x590D;&#x6742;&#x7684;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x5728;&#x771F;&#x6B63;&#x6267;&#x884C;For&#x5FAA;&#x73AF;&#x4E4B;&#x524D;&#x6216;&#x8005;&#x5728;&#x6BCF;&#x4E2A;&#x5FAA;&#x73AF;&#x4E2D;&#xFF0C;&#x9664;&#x4E86;&#x6267;&#x884C;&#x771F;&#x6B63;&#x7684;&#x88AB;&#x6D4B;&#x4EE3;&#x7801;&#x4E4B;&#x5916;&#xFF0C;&#x53EF;&#x80FD;&#x8FD8;&#x9700;&#x8981;&#x505A;&#x4E00;&#x4E9B;&#x6D4B;&#x8BD5;&#x51C6;&#x5907;&#x5DE5;&#x4F5C;&#xFF0C; &#x6BD4;&#x5982;&#x5EFA;&#x7ACB;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x6240;&#x9700;&#x7684;&#x6D4B;&#x8BD5;&#x4E0A;&#x4E0B;&#x6587;&#x7B49;&#x3002;&#x5982;&#x679C;&#x4E0D;&#x505A;&#x7279;&#x6B8A;&#x5904;&#x7406;&#xFF0C;&#x8FD9;&#x4E9B;&#x6D4B;&#x8BD5; &#x51C6;&#x5907;&#x5DE5;&#x4F5C;&#x6240;&#x6D88;&#x8017;&#x7684;&#x65F6;&#x95F4;&#x4E5F;&#x4F1A;&#x88AB;&#x7B97;&#x5165;&#x6700;&#x7EC8;&#x7ED3;&#x679C;&#x4E2D;&#xFF0C;&#x8FD9;&#x5C31;&#x4F1A;&#x5BFC;&#x81F4;&#x6700;&#x7EC8;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x7684;&#x6570;&#x636E;&#x53D7;&#x5230;&#x5E72;&#x6270;&#x800C;&#x4E0D;&#x591F;&#x7CBE;&#x786E;&#x3002;</li>
+<li>&#x4E3A;&#x6B64;&#xFF0C;testing.B&#x4E2D;&#x63D0;&#x4F9B;&#x4E86;&#x591A;&#x79CD;&#x7075;&#x6D3B;&#x64CD;&#x63A7;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x8BA1;&#x65F6;&#x5668;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x901A;&#x8FC7;&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x6392;&#x9664;&#x6389;&#x989D;&#x5916;&#x5E72;&#x6270;&#xFF0C;&#x8BA9;&#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#x66F4;&#x80FD;&#x53CD;&#x6620;&#x88AB;&#x6D4B;&#x4EE3;&#x7801;&#x7684;&#x771F;&#x5B9E;&#x6027;&#x80FD;&#x3002;</li>
+</ul>
+<pre class="language-"><code class="lang-go"><span class="token comment">// chapter8/sources/benchmark_with_expensive_context_setup_test.go</span>
+<span class="token keyword">var</span> sl <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">{</span>
+    <span class="token string">&quot;Rob Pike &quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;Robert Griesemer &quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;Ken Thompson &quot;</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">concatStringByJoin</span><span class="token punctuation">(</span>sl <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> strings<span class="token punctuation">.</span><span class="token function">Join</span><span class="token punctuation">(</span>sl<span class="token punctuation">,</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">expensiveTestContextSetup</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">200</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Millisecond<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">BenchmarkStrcatWithTestContextSetup</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">expensiveTestContextSetup</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> n <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> n <span class="token operator">&amp;</span>lt<span class="token punctuation">;</span> b<span class="token punctuation">.</span>N<span class="token punctuation">;</span> n<span class="token operator">++</span> <span class="token punctuation">{</span>
+        <span class="token function">concatStringByJoin</span><span class="token punctuation">(</span>sl<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">BenchmarkStrcatWithTestContextSetupAndResetTimer</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">expensiveTestContextSetup</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    b<span class="token punctuation">.</span><span class="token function">ResetTimer</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> n <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> n <span class="token operator">&amp;</span>lt<span class="token punctuation">;</span> b<span class="token punctuation">.</span>N<span class="token punctuation">;</span> n<span class="token operator">++</span> <span class="token punctuation">{</span>
+        <span class="token function">concatStringByJoin</span><span class="token punctuation">(</span>sl<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">BenchmarkStrcatWithTestContextSetupAndRestartTimer</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    b<span class="token punctuation">.</span><span class="token function">StopTimer</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token function">expensiveTestContextSetup</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    b<span class="token punctuation">.</span><span class="token function">StartTimer</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> n <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> n <span class="token operator">&amp;</span>lt<span class="token punctuation">;</span> b<span class="token punctuation">.</span>N<span class="token punctuation">;</span> n<span class="token operator">++</span> <span class="token punctuation">{</span>
+        <span class="token function">concatStringByJoin</span><span class="token punctuation">(</span>sl<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">BenchmarkStrcat</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> n <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> n <span class="token operator">&amp;</span>lt<span class="token punctuation">;</span> b<span class="token punctuation">.</span>N<span class="token punctuation">;</span> n<span class="token operator">++</span> <span class="token punctuation">{</span>
+        <span class="token function">concatStringByJoin</span><span class="token punctuation">(</span>sl<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class="language-"><code class="lang-bash"><span class="token variable">$go</span> <span class="token builtin class-name">test</span> <span class="token parameter variable">-bench</span> <span class="token builtin class-name">.</span> benchmark_with_expensive_context_setup_test.go
+goos: darwin
+goarch: amd64
+BenchmarkStrcatWithTestContextSetup-8 <span class="token number">16943037</span> <span class="token number">65.9</span> ns/op
+BenchmarkStrcatWithTestContextSetupAndResetTimer-8 <span class="token number">21700249</span> <span class="token number">52.7</span> ns/op
+BenchmarkStrcatWithTestContextSetupAndRestartTimer-8 <span class="token number">21628669</span> <span class="token number">50.5</span> ns/op
+BenchmarkStrcat-8 <span class="token number">22915291</span> <span class="token number">50.7</span> ns/op
+PASS
+ok command-line-arguments <span class="token number">9</span>.838s
+</code></pre>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/poker-svg" target="_blank">YangXin Xu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-10-07 21:23:30 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="第45条-使用模糊测试让潜在bug无处遁形.html" class="navigation navigation-prev " aria-label="Previous page: 第45条-使用模糊测试让潜在bug无处遁形">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="第47条-使用pprof对程序进行性能剖析.html" class="navigation navigation-next " aria-label="Next page: 第47条-使用pprof对程序进行性能剖析">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"第46条-为被测对象建立性能基准","level":"1.47","depth":1,"next":{"title":"第47条-使用pprof对程序进行性能剖析","level":"1.48","depth":1,"path":"第47条-使用pprof对程序进行性能剖析.md","ref":"第47条-使用pprof对程序进行性能剖析.md","articles":[]},"previous":{"title":"第45条-使用模糊测试让潜在bug无处遁形","level":"1.46","depth":1,"path":"第45条-使用模糊测试让潜在bug无处遁形.md","ref":"第45条-使用模糊测试让潜在bug无处遁形.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","-lunr","-search","search-pro","-sharing","splitter","hide-element","insert-logo","code","livereload"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"livereload":{},"page-footer-ex":{"copyright":"By [YangXin Xu](https://github.com/poker-svg)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"expandable-chapters-small":{},"copy-code-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"style":"background: none; max-height: 120px; min-height: 120px","url":"./images/icon.png"},"expandable-chapters":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Go语言精进之路","gitbook":"*"},"file":{"path":"第46条-为被测对象建立性能基准.md","mtime":"2023-10-07T13:23:30.198Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-10-07T15:14:45.091Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-hide-element/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-insert-logo/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

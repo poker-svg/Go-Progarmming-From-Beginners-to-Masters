@@ -1,0 +1,1056 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>第45条-使用模糊测试让潜在bug无处遁形 · Go语言精进之路</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-insert-logo/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="第46条-为被测对象建立性能基准.html" />
+    
+    
+    <link rel="prev" href="第44条-正确使用fake、stub和mock等辅助单元测试.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="第1条-了解Go语言的诞生和演进.html">
+            
+                <a href="第1条-了解Go语言的诞生和演进.html">
+            
+                    
+                    第1条-了解Go语言的诞生和演进
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="第2条-选择适当的Go语言版本.html">
+            
+                <a href="第2条-选择适当的Go语言版本.html">
+            
+                    
+                    第2条-选择适当的Go语言版本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="第3条-理解Go语言的设计哲学.html">
+            
+                <a href="第3条-理解Go语言的设计哲学.html">
+            
+                    
+                    第3条-理解Go语言的设计哲学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                <a href="第4条-使用Go语言原生编程思维来写Go代码.html">
+            
+                    
+                    第4条-使用Go语言原生编程思维来写Go代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                <a href="第5条-使用得到工人且广泛使用的项目结构.html">
+            
+                    
+                    第5条-使用得到工人且广泛使用的项目结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="第6条-提交前使用gofmt格式化源码.html">
+            
+                <a href="第6条-提交前使用gofmt格式化源码.html">
+            
+                    
+                    第6条-提交前使用gofmt格式化源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                <a href="第7条-使用Go命名惯例对标识符进行命名.html">
+            
+                    
+                    第7条-使用Go命名惯例对标识符进行命名
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="第8条-使用一致的变量声明形式.html">
+            
+                <a href="第8条-使用一致的变量声明形式.html">
+            
+                    
+                    第8条-使用一致的变量声明形式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="第9条-使用无类型常量简化代码.html">
+            
+                <a href="第9条-使用无类型常量简化代码.html">
+            
+                    
+                    第9条-使用无类型常量简化代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="第10条-使用iota实现枚举常量.html">
+            
+                <a href="第10条-使用iota实现枚举常量.html">
+            
+                    
+                    第10条-使用iota实现枚举常量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="第11条-尽量定义零值可用的类型.html">
+            
+                <a href="第11条-尽量定义零值可用的类型.html">
+            
+                    
+                    第11条-尽量定义零值可用的类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="第12条-使用复合字面值作为初值构造器.html">
+            
+                <a href="第12条-使用复合字面值作为初值构造器.html">
+            
+                    
+                    第12条-使用复合字面值作为初值构造器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="第13条-了解切片实现原理并高效使用.html">
+            
+                <a href="第13条-了解切片实现原理并高效使用.html">
+            
+                    
+                    第13条-了解切片实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="第14条-了解map实现原理并高效使用.html">
+            
+                <a href="第14条-了解map实现原理并高效使用.html">
+            
+                    
+                    第14条-了解map实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="第15条-了解string实现原理并高效使用.html">
+            
+                <a href="第15条-了解string实现原理并高效使用.html">
+            
+                    
+                    第15条-了解string实现原理并高效使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="第16条-理解Go语言的包导入.html">
+            
+                <a href="第16条-理解Go语言的包导入.html">
+            
+                    
+                    第16条-理解Go语言的包导入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="第17条-理解Go语言表达式的求值顺序.html">
+            
+                <a href="第17条-理解Go语言表达式的求值顺序.html">
+            
+                    
+                    第17条-理解Go语言表达式的求值顺序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="第18条-理解Go语言代码块与作用域.html">
+            
+                <a href="第18条-理解Go语言代码块与作用域.html">
+            
+                    
+                    第18条-理解Go语言代码块与作用域
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="第19条-了解Go语言控制语句惯用法及使用注意事项.html">
+            
+                <a href="第19条-了解Go语言控制语句惯用法及使用注意事项.html">
+            
+                    
+                    第19条-了解Go语言控制语句惯用法及使用注意事项
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="第20条-在init函数中检查包级变量的初始状态.html">
+            
+                <a href="第20条-在init函数中检查包级变量的初始状态.html">
+            
+                    
+                    第20条-在init函数中检查包级变量的初始状态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="第21条-让自己习惯于函数是“一等公民”.html">
+            
+                <a href="第21条-让自己习惯于函数是“一等公民”.html">
+            
+                    
+                    第21条-让自己习惯于函数是“一等公民”
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="第22条-使用defer让函数更简洁、更健壮.html">
+            
+                <a href="第22条-使用defer让函数更简洁、更健壮.html">
+            
+                    
+                    第22条-使用defer让函数更简洁、更健壮
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="第23条-理解方法的本质以选择正确的receiver类型.html">
+            
+                <a href="第23条-理解方法的本质以选择正确的receiver类型.html">
+            
+                    
+                    第23条-理解方法的本质以选择正确的receiver类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="第24条-方法集合决定接口实现.html">
+            
+                <a href="第24条-方法集合决定接口实现.html">
+            
+                    
+                    第24条-方法集合决定接口实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="第25条-了解变长参数函数的妙用.html">
+            
+                <a href="第25条-了解变长参数函数的妙用.html">
+            
+                    
+                    第25条-了解变长参数函数的妙用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="第26条-了解接口类型变量的内部表示.html">
+            
+                <a href="第26条-了解接口类型变量的内部表示.html">
+            
+                    
+                    第26条-了解接口类型变量的内部表示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="第27条-尽量定义小接口.html">
+            
+                <a href="第27条-尽量定义小接口.html">
+            
+                    
+                    第27条-尽量定义小接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="第28条-尽量避免使用空接口作为函数参数类型.html">
+            
+                <a href="第28条-尽量避免使用空接口作为函数参数类型.html">
+            
+                    
+                    第28条-尽量避免使用空接口作为函数参数类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="第29条-使用接口作为程序水平组合的连接点.html">
+            
+                <a href="第29条-使用接口作为程序水平组合的连接点.html">
+            
+                    
+                    第29条-使用接口作为程序水平组合的连接
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="第30条-使用接口提高代码的可测试性.html">
+            
+                <a href="第30条-使用接口提高代码的可测试性.html">
+            
+                    
+                    第30条-使用接口提高代码的可测试性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="第31条-优先考虑并发设计.html">
+            
+                <a href="第31条-优先考虑并发设计.html">
+            
+                    
+                    第31条-优先考虑并发设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="第32条-了解goroutine的调度原理.html">
+            
+                <a href="第32条-了解goroutine的调度原理.html">
+            
+                    
+                    第32条-了解goroutine的调度原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="第33条-掌握Go并发模型和常见并发模式.html">
+            
+                <a href="第33条-掌握Go并发模型和常见并发模式.html">
+            
+                    
+                    第33条-掌握Go并发模型和常见并发模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="第34条-了解channel的妙用.html">
+            
+                <a href="第34条-了解channel的妙用.html">
+            
+                    
+                    第34条-了解channel的妙用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="第35条-了解sync包的正确用法.html">
+            
+                <a href="第35条-了解sync包的正确用法.html">
+            
+                    
+                    第35条-了解sync包的正确用法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="第36条-使用atomic包实现伸缩性更好的并发读取.html">
+            
+                <a href="第36条-使用atomic包实现伸缩性更好的并发读取.html">
+            
+                    
+                    第36条-使用atomic包实现伸缩性更好的并发读取
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="第37条-了解错误处理的4种策略.html">
+            
+                <a href="第37条-了解错误处理的4种策略.html">
+            
+                    
+                    第37条-了解错误处理的4种策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="第38条-尽量优化反复出现的if%20err != nil.md">
+            
+                <span>
+            
+                    
+                    第38条-尽量优化反复出现的if err != nil
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="第39条-不要使用panic进行正常的错误处理.html">
+            
+                <a href="第39条-不要使用panic进行正常的错误处理.html">
+            
+                    
+                    第39条-不要使用panic进行正常的错误处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="第40条-理解包内测试与包外测试的差别.html">
+            
+                <a href="第40条-理解包内测试与包外测试的差别.html">
+            
+                    
+                    第40条-理解包内测试与包外测试的差别
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="第41条-有层次地组织测试代码.html">
+            
+                <a href="第41条-有层次地组织测试代码.html">
+            
+                    
+                    第41条-有层次地组织测试代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="第42条-优先编写表驱动的测试.html">
+            
+                <a href="第42条-优先编写表驱动的测试.html">
+            
+                    
+                    第42条-优先编写表驱动的测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="第43条-使用testdata管理测试依赖的外部数据文件.html">
+            
+                <a href="第43条-使用testdata管理测试依赖的外部数据文件.html">
+            
+                    
+                    第43条-使用testdata管理测试依赖的外部数据文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="第44条-正确使用fake、stub和mock等辅助单元测试.html">
+            
+                <a href="第44条-正确使用fake、stub和mock等辅助单元测试.html">
+            
+                    
+                    第44条-正确使用fake、stub和mock等辅助单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.46" data-path="第45条-使用模糊测试让潜在bug无处遁形.html">
+            
+                <a href="第45条-使用模糊测试让潜在bug无处遁形.html">
+            
+                    
+                    第45条-使用模糊测试让潜在bug无处遁形
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="第46条-为被测对象建立性能基准.html">
+            
+                <a href="第46条-为被测对象建立性能基准.html">
+            
+                    
+                    第46条-为被测对象建立性能基准
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="第47条-使用pprof对程序进行性能剖析.html">
+            
+                <a href="第47条-使用pprof对程序进行性能剖析.html">
+            
+                    
+                    第47条-使用pprof对程序进行性能剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="第48条-使用expvar输出度量数据，辅助定位性能瓶颈点.html">
+            
+                <a href="第48条-使用expvar输出度量数据，辅助定位性能瓶颈点.html">
+            
+                    
+                    第48条-使用expvar输出度量数据，辅助定位性能瓶颈点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="第49条-使用Delve调试Go代码.html">
+            
+                <a href="第49条-使用Delve调试Go代码.html">
+            
+                    
+                    第49条-使用Delve调试Go代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >第45条-使用模糊测试让潜在bug无处遁形</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x5728;&#x6316;&#x6398;go&#x4EE3;&#x7801;&#x7684;&#x6F5C;&#x5728;bug&#x4E2D;&#x7684;&#x4F5C;&#x7528;"><b>1. </b>&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x5728;&#x6316;&#x6398;Go&#x4EE3;&#x7801;&#x7684;&#x6F5C;&#x5728;bug&#x4E2D;&#x7684;&#x4F5C;&#x7528;</a></li><li><span class="title-icon "></span><a href="#go-fuzz&#x7684;&#x521D;&#x6B65;&#x5DE5;&#x4F5C;&#x539F;&#x7406;"><b>2. </b>go-fuzz&#x7684;&#x521D;&#x6B65;&#x5DE5;&#x4F5C;&#x539F;&#x7406;</a></li><li><span class="title-icon "></span><a href="#go-fuzz&#x4F7F;&#x7528;&#x65B9;&#x6CD5;"><b>3. </b>go-fuzz&#x4F7F;&#x7528;&#x65B9;&#x6CD5;</a></li><ul><li><span class="title-icon "></span><a href="#&#x5B89;&#x88C5;go-fuzz"><b>3.1. </b>&#x5B89;&#x88C5;go-fuzz</a></li><li><span class="title-icon "></span><a href="#&#x5E26;&#x6709;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x7684;&#x9879;&#x76EE;&#x7EC4;&#x7EC7;"><b>3.2. </b>&#x5E26;&#x6709;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x7684;&#x9879;&#x76EE;&#x7EC4;&#x7EC7;</a></li><li><span class="title-icon "></span><a href="#go-fuzz-build"><b>3.3. </b>go-fuzz-build</a></li><li><span class="title-icon "></span><a href="#&#x6267;&#x884C;go-fuzz"><b>3.4. </b>&#x6267;&#x884C;go-fuzz</a></li></ul><li><span class="title-icon "></span><a href="#&#x4F7F;&#x7528;go-fuzz&#x5EFA;&#x7ACB;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x7684;&#x793A;&#x4F8B;"><b>4. </b>&#x4F7F;&#x7528;go-fuzz&#x5EFA;&#x7ACB;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x7684;&#x793A;&#x4F8B;</a></li><li><span class="title-icon "></span><a href="#&#x8BA9;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x6210;&#x4E3A;&#x4E00;&#x7B49;&#x516C;&#x6C11;"><b>5. </b>&#x8BA9;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x6210;&#x4E3A;&#x201C;&#x4E00;&#x7B49;&#x516C;&#x6C11;&#x201D;</a></li></ul></div><a href="#&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x5728;&#x6316;&#x6398;go&#x4EE3;&#x7801;&#x7684;&#x6F5C;&#x5728;bug&#x4E2D;&#x7684;&#x4F5C;&#x7528;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><p><a href="https://zh.wikipedia.org/zh-hans/%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95" target="_blank"><strong><u><code>&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;</code></u></strong></a>&#xFF1A;<u>&#x662F;&#x6307;&#x534A;&#x81EA;&#x52A8;&#x6216;&#x81EA;&#x52A8;&#x5730;&#x4E3A;&#x7A0B;&#x5E8F;&#x63D0;&#x4F9B;&#x975E;&#x6CD5;&#x7684;&#x3001;&#x975E;&#x9884;&#x671F;&#x3001;&#x968F;&#x673A;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5E76;&#x76D1;&#x63A7;&#x7A0B;&#x5E8F;&#x5728;&#x8FD9;&#x4E9B;&#x8F93;&#x5165;&#x6570;&#x636E;&#x4E0B;&#x662F;&#x5426;&#x4F1A;&#x51FA;&#x73B0;&#x5D29;&#x6E83;&#x3001;&#x5185;&#x7F6E;&#x65AD;&#x8A00;&#x5931;&#x8D25;&#x3001;&#x5185;&#x5B58;&#x6CC4;&#x9732;&#x3001;&#x5B89;&#x5168;&#x6F0F;&#x6D1E;&#x7B49;&#x60C5;&#x51B5;&#x3002;</u></p>
+<p><img src="images/image-20231007155826818.png" alt="image-20231007155826818" style="zoom:40%;"></p>
+<p>&#x5728;Go 1.5&#x7248;&#x672C;&#x53D1;&#x5E03;&#x7684;&#x540C;&#x65F6;&#xFF0C;&#x524D;&#x82F1;&#x7279;&#x5C14;&#x9ED1;&#x5E26;&#x7EA7;&#x5DE5;&#x7A0B;&#x5E08;&#x3001;&#x73B0;&#x8C37;&#x6B4C;&#x5DE5;&#x7A0B;&#x5E08;Dmitry Vyukov&#x53D1;&#x5E03;&#x4E86;Go&#x8BED;&#x8A00;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x5DE5;&#x5177;go-fuzz&#x3002;</p>
+<blockquote>
+<p>&#x4F20;&#x7EDF;&#x8F6F;&#x4EF6;&#x6D4B;&#x8BD5;&#x4E00;&#x822C;&#x4F1A;&#x9488;&#x5BF9;&#x88AB;&#x6D4B;&#x76EE;&#x6807;&#x7684;&#x7279;&#x6027;&#x8FDB;&#x884C;&#x4EBA;&#x5DE5;&#x6D4B;&#x8BD5;&#x8BBE;&#x8BA1;&#x3002;&#x5728;&#x8BBE;&#x8BA1;&#x4E00;&#x4E9B;&#x5F02;&#x5E38;&#x6D4B;&#x8BD5;&#x7528;&#x4F8B;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6D4B;&#x8BD5;&#x7528;&#x4F8B;&#x8D28;&#x91CF;&#x597D;&#x574F;&#x5F80;&#x5F80;&#x53D6;&#x51B3;&#x4E8E;&#x6D4B;&#x8BD5;&#x8BBE;&#x8BA1;&#x4EBA;&#x5458;&#x5BF9;&#x88AB;&#x6D4B;&#x7CFB;&#x7EDF;&#x7684;&#x7406;&#x89E3;&#x7A0B;&#x5EA6;&#x53CA;&#x5176;&#x4E2A;&#x4EBA;&#x80FD;&#x529B;&#x3002;&#x5373;&#x4FBF;&#x6D4B;&#x8BD5;&#x8BBE;&#x8BA1;&#x4EBA;&#x5458;&#x4E2A;&#x4EBA;&#x80FD;&#x529B;&#x5F88;&#x5F3A;&#xFF0C;&#x5BF9;&#x88AB;&#x6D4B;&#x7CFB;&#x7EDF;&#x4E5F;&#x6709;&#x8F83;&#x6DF1;&#x5165;&#x7684;&#x7406;&#x89E3;&#xFF0C;&#x4ED6;&#x4E5F;&#x5F88;&#x96BE;&#x5728;&#x6709;&#x9650;&#x7684;&#x65F6;&#x95F4;&#x5185;&#x60F3;&#x5230;&#x6240;&#x6709;&#x53EF;&#x80FD;&#x7684;&#x5F02;&#x5E38;&#x7EC4;&#x5408;&#x548C;&#x5F02;&#x5E38;&#x8F93;&#x5165;&#xFF0C;&#x5C24;&#x5176;&#x662F;&#x9762;&#x5BF9;&#x5E9E;&#x5927;&#x7684;&#x5206;&#x5E03;&#x5F0F;&#x7CFB;&#x7EDF;&#x7684;&#x65F6;&#x5019;&#x3002;&#x7CFB;&#x7EDF;&#x6D89;&#x53CA;&#x7684;&#x81EA;&#x8EAB;&#x670D;&#x52A1;&#x7EC4;&#x4EF6;&#x3001;&#x4E2D;&#x95F4;&#x4EF6;&#x3001;&#x7B2C;&#x4E09;&#x65B9;&#x7CFB;&#x7EDF;&#x7B49;&#x591A;&#x4E14;&#x590D;&#x6742;&#xFF0C;&#x8FD9;&#x4E9B;&#x7CFB;&#x7EDF;&#x4E2D;&#x7684;&#x6F5C;&#x5728;bug&#x6216;&#x8005;&#x7EC4;&#x5408;&#x540E;&#x5F62;&#x6210;&#x7684;&#x6F5C;&#x5728;bug&#x662F;&#x6211;&#x4EEC;&#x65E0;&#x6CD5;&#x9884;&#x77E5;&#x7684;&#x3002;</p>
+<p>&#x800C; <strong><u>&#x5C06;&#x968F;&#x673A;&#x6D4B;&#x8BD5;&#x3001;&#x8FB9;&#x754C;&#x6D4B;&#x8BD5;&#x3001;&#x8BD5;&#x63A2;&#x6027;&#x653B;&#x51FB;&#x7B49;&#x6D4B;&#x8BD5;&#x6280;&#x672F;&#x96C6;&#x4E8E;&#x4E00;&#x8EAB;&#x7684;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;</u></strong> &#x5BF9;&#x4E8E;&#x4E0A;&#x8FF0;&#x4F20;&#x7EDF;&#x6D4B;&#x8BD5;&#x6280;&#x672F;&#x5B58;&#x5728;&#x7684;&#x95EE;&#x9898;&#x662F;&#x4E00;&#x4E2A;&#x5F88;&#x597D;&#x7684;&#x8865;&#x5145;&#x548C;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;</p>
+</blockquote>
+<h1 id="&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x5728;&#x6316;&#x6398;go&#x4EE3;&#x7801;&#x7684;&#x6F5C;&#x5728;bug&#x4E2D;&#x7684;&#x4F5C;&#x7528;"><a name="&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x5728;&#x6316;&#x6398;go&#x4EE3;&#x7801;&#x7684;&#x6F5C;&#x5728;bug&#x4E2D;&#x7684;&#x4F5C;&#x7528;" class="anchor-navigation-ex-anchor" href="#&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x5728;&#x6316;&#x6398;go&#x4EE3;&#x7801;&#x7684;&#x6F5C;&#x5728;bug&#x4E2D;&#x7684;&#x4F5C;&#x7528;"><i class="fa fa-link" aria-hidden="true"></i></a>1. &#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x5728;&#x6316;&#x6398;Go&#x4EE3;&#x7801;&#x7684;&#x6F5C;&#x5728;bug&#x4E2D;&#x7684;&#x4F5C;&#x7528;</h1>
+<p>Dmitry Vyukov&#x4F7F;&#x7528;go-fuzz&#x5BF9;&#x5F53;&#x65F6;&#xFF08;2015&#x5E74;&#xFF09;&#x7684;Go&#x6807;&#x51C6;&#x5E93;&#x4EE5;&#x53CA;&#x5176;&#x4ED6;&#x7B2C;&#x4E09;&#x65B9;&#x5F00;&#x6E90;&#x5E93;&#x8FDB;&#x884C;&#x4E86;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x5E76;&#x53D6;&#x5F97;&#x4E86;&#x60CA;&#x4EBA;&#x7684;&#x6218;&#x679C;&#xFF1A;</p>
+<pre class="language-"><code class="lang-bash">// <span class="token number">60</span>&#x4E2A;&#x6D4B;&#x8BD5;
+<span class="token number">60</span> tests
+// &#x5728;Go&#x6807;&#x51C6;&#x5E93;&#x4E2D;&#x53D1;&#x73B0;137&#x4E2A;bug<span class="token punctuation">(</span><span class="token number">70</span>&#x4E2A;&#x5DF2;&#x7ECF;&#x4FEE;&#x590D;<span class="token punctuation">)</span>
+<span class="token number">137</span> bugs <span class="token keyword">in</span> std lib <span class="token punctuation">(</span><span class="token number">70</span> fixed<span class="token punctuation">)</span>
+// &#x5728;&#x5176;&#x4ED6;&#x9879;&#x76EE;&#x4E2D;&#x53D1;&#x73B0;165&#x4E2A;bug
+<span class="token number">165</span> elsewhere <span class="token punctuation">(</span><span class="token number">47</span> <span class="token keyword">in</span> gccgo, <span class="token number">30</span> <span class="token keyword">in</span> golang.org/x, <span class="token number">42</span> <span class="token keyword">in</span> freetype-go, protobuf, http2,
+bson<span class="token punctuation">)</span>
+</code></pre>
+<p>go-fuzz&#x7684;&#x6218;&#x7EE9;&#x5728;&#x6301;&#x7EED;&#x6269;&#x5927;&#xFF0C;&#x622A;&#x81F3;&#x672C;&#x4E66;&#x5199;&#x4F5C;&#x65F6;&#xFF0C;&#x5217;&#x5728;go-fuzz&#x5B98;&#x65B9;&#x7AD9;&#x70B9;&#x4E0A;&#x7684;&#x3001;&#x7531;&#x5E7F;&#x5927;Gopher&#x5206;&#x4EAB;&#x51FA;&#x6765;&#x7684;&#x5DF2;&#x53D1;&#x73B0;bug&#x5DF2;&#x6709;&#x8FD1;400&#x4E2A;&#xFF0C;&#x672A;&#x5206;&#x4EAB;&#x51FA;&#x6765;&#x7684;&#x901A;&#x8FC7;go-fuzz&#x53D1;&#x73B0;&#x7684;bug&#x4F30;&#x8BA1;&#x8FDC;&#x8FDC;&#x4E0D;&#x6B62;&#x8FD9;&#x4E2A;&#x6570;&#x91CF;&#x3002;</p>
+<h1 id="go-fuzz&#x7684;&#x521D;&#x6B65;&#x5DE5;&#x4F5C;&#x539F;&#x7406;"><a name="go-fuzz&#x7684;&#x521D;&#x6B65;&#x5DE5;&#x4F5C;&#x539F;&#x7406;" class="anchor-navigation-ex-anchor" href="#go-fuzz&#x7684;&#x521D;&#x6B65;&#x5DE5;&#x4F5C;&#x539F;&#x7406;"><i class="fa fa-link" aria-hidden="true"></i></a>2. go-fuzz&#x7684;&#x521D;&#x6B65;&#x5DE5;&#x4F5C;&#x539F;&#x7406;</h1>
+<p>go-fuzz&#x7684;&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A; </p>
+<ol>
+<li>&#x751F;&#x6210;&#x968F;&#x673A;&#x6570;&#x636E;&#xFF1B;</li>
+<li>&#x5C06;&#x4E0A;&#x8FF0;&#x6570;&#x636E;&#x4F5C;&#x4E3A;&#x8F93;&#x5165;&#x4F20;&#x9012;&#x7ED9;&#x88AB;&#x6D4B;&#x7A0B;&#x5E8F;&#xFF1B;</li>
+<li>&#x89C2;&#x5BDF;&#x662F;&#x5426;&#x6709;&#x5D29;&#x6E83;&#x8BB0;&#x5F55;&#xFF08;crash&#xFF09;&#xFF0C;&#x5982;&#x679C;&#x53D1;&#x73B0;&#x5D29;&#x6E83;&#x8BB0;&#x5F55;&#xFF0C;&#x5219;&#x8BF4;&#x660E;&#x627E;&#x5230;&#x4E86;&#x6F5C;&#x5728;&#x7684;bug&#xFF1B;</li>
+</ol>
+<p>go-fuzz&#x91C7;&#x7528;&#x7684;&#x662F; <strong><u>&#x4EE3;&#x7801;&#x8986;&#x76D6;&#x7387;&#x5F15;&#x5BFC;&#x7684;fuzzing&#x7B97;&#x6CD5;&#xFF08;Coverage-guided fuzzing&#xFF09;&#x3002;</u></strong></p>
+<p>go-fuzz&#x8FD0;&#x884C;&#x8D77;&#x6765;&#x540E;&#x5C06;&#x8FDB;&#x5165;&#x4E00;&#x4E2A;&#x6B7B;&#x5FAA;&#x73AF;&#xFF0C;&#x8BE5;&#x5FAA;&#x73AF;&#x4E2D;&#x7684;&#x903B;&#x8F91;&#x7684;&#x4F2A;&#x4EE3;&#x7801;&#x5927;&#x81F4;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre class="language-"><code class="lang-go"><span class="token comment">// go-fuzz-build&#x5728;&#x6784;&#x5EFA;&#x7528;&#x4E8E;go-fuzz&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;(*.zip)&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;</span>
+<span class="token comment">// &#x5728;&#x88AB;&#x6D4B;&#x5BF9;&#x8C61;&#x4EE3;&#x7801;&#x4E2D;&#x57CB;&#x5165;&#x7528;&#x4E8E;&#x7EDF;&#x8BA1;&#x4EE3;&#x7801;&#x8986;&#x76D6;&#x7387;&#x7684;&#x6869;&#x4EE3;&#x7801;&#x53CA;&#x5176;&#x4ED6;&#x4FE1;&#x606F;</span>
+Instrument program <span class="token keyword">for</span> code coverage
+Collect initial corpus of inputs <span class="token comment">// &#x6536;&#x96C6;&#x521D;&#x59CB;&#x8F93;&#x5165;&#x6570;&#x636E;&#x8BED;&#x6599;(&#x4F4D;&#x4E8E;&#x5DE5;&#x4F5C;&#x8DEF;&#x5F84;&#x4E0B;&#x7684;corpus&#x76EE;&#x5F55;&#x4E0B;)</span>
+<span class="token keyword">for</span> <span class="token punctuation">{</span>
+    <span class="token comment">// &#x4ECE;corpus&#x4E2D;&#x8BFB;&#x53D6;&#x8BED;&#x6599;&#x5E76;&#x505A;&#x968F;&#x673A;&#x53D8;&#x5316;</span>
+    Randomly mutate an input from the corpus
+    <span class="token comment">// &#x6267;&#x884C;Fuzz&#xFF0C;&#x6536;&#x96C6;&#x4EE3;&#x7801;&#x8986;&#x76D6;&#x7387;&#x6570;&#x636E;</span>
+    Execute and collect coverage
+    <span class="token comment">// &#x5982;&#x679C;&#x8F93;&#x5165;&#x6570;&#x636E;&#x63D0;&#x4F9B;&#x4E86;&#x65B0;&#x7684;&#x4EE3;&#x7801;&#x8986;&#x76D6;&#x7387;&#xFF0C;&#x5219;&#x5C06;&#x8BE5;&#x8F93;&#x5165;&#x6570;&#x636E;&#x5B58;&#x5165;&#x8BED;&#x6599;&#x5E93;(corpus)</span>
+    If the input gives <span class="token builtin">new</span> coverage<span class="token punctuation">,</span> add it to corpus
+<span class="token punctuation">}</span>
+</code></pre>
+<hr>
+<p>go-fuzz&#x7684;&#x6838;&#x5FC3;&#x662F; <strong><u>&#x5BF9;&#x8BED;&#x6599;&#x5E93;&#x7684;&#x8F93;&#x5165;&#x6570;&#x636E;&#x5982;&#x4F55;&#x8FDB;&#x884C;&#x53D8;&#x5316;</u></strong>&#x3002;go-fuzz&#x5185;&#x90E8;&#x4F7F;&#x7528;&#x4E24;&#x79CD;&#x5BF9;&#x8BED;&#x6599;&#x5E93;&#x7684;&#x8F93;&#x5165;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x53D8;&#x5316;&#x7684;&#x65B9;&#x6CD5;&#xFF1A;&#x7A81;&#x53D8;&#xFF08;mutation&#xFF09;&#x548C;&#x6539;&#x5199; &#xFF08;versify&#xFF09;&#xFF1A;</p>
+<ol>
+<li><strong><u>&#x7A81;&#x53D8;</u></strong>&#xFF1A;&#x662F;&#x4E00;&#x79CD;&#x4F4E;&#x7EA7;&#x65B9;&#x6CD5;&#xFF0C;&#x4E3B;&#x8981;&#x662F;&#x5BF9;&#x8BED;&#x6599;&#x5E93;&#x7684;&#x5B57;&#x8282;&#x8FDB;&#x884C;&#x5C0F;&#x4FEE;&#x6539;&#x3002;<ul>
+<li>&#x63D2;&#x5165;/&#x5220;&#x9664;/&#x91CD;&#x590D;/&#x590D;&#x5236;&#x968F;&#x673A;&#x8303;&#x56F4;&#x7684;&#x968F;&#x673A;&#x5B57;&#x8282;&#xFF1B; </li>
+<li>&#x4F4D;&#x7FFB;&#x8F6C;&#xFF1B; </li>
+<li>&#x4EA4;&#x6362;2&#x5B57;&#x8282;&#xFF1B; </li>
+<li>&#x5C06;&#x4E00;&#x4E2A;&#x5B57;&#x8282;&#x8BBE;&#x7F6E;&#x4E3A;&#x968F;&#x673A;&#x503C;&#xFF1B;</li>
+<li>&#x4ECE;&#x4E00;&#x4E2A;byte/uint16/uint32/uint64&#x4E2D;&#x6DFB;&#x52A0;/&#x51CF;&#x53BB;&#xFF1B;</li>
+<li>&#x5C06;&#x4E00;&#x4E2A;byte/uint16/uint32&#x66FF;&#x6362;&#x4E3A;&#x53E6;&#x4E00;&#x4E2A;&#x503C;&#xFF1B;</li>
+<li>&#x5C06;&#x4E00;&#x4E2A;ASCII&#x6570;&#x5B57;&#x66FF;&#x6362;&#x4E3A;&#x53E6;&#x4E00;&#x4E2A;&#x6570;&#x5B57;&#xFF1B;</li>
+<li>&#x62FC;&#x63A5;&#x53E6;&#x4E00;&#x4E2A;&#x8F93;&#x5165;&#xFF1B;</li>
+<li>&#x63D2;&#x5165;&#x5176;&#x4ED6;&#x8F93;&#x5165;&#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF1B;</li>
+<li>&#x63D2;&#x5165;&#x5B57;&#x7B26;&#x4E32;/&#x6574;&#x6570;&#x5B57;&#x9762;&#x503C;&#xFF1B;</li>
+<li>&#x66FF;&#x6362;&#x4E3A;&#x5B57;&#x7B26;&#x4E32;/&#x6574;&#x6570;&#x5B57;&#x9762;&#x503C;&#xFF1B;</li>
+</ul>
+</li>
+<li><strong><u>&#x6539;&#x5199;</u></strong>&#xFF1A;&#x662F;&#x6BD4;&#x8F83;&#x5148;&#x8FDB;&#x7684;&#x9AD8;&#x7EA7;&#x65B9;&#x6CD5;&#xFF0C;&#x5B83;&#x4F1A;&#x5B66;&#x4E60;&#x6587;&#x672C;&#x7684;&#x7ED3;&#x6784;&#xFF0C;&#x5BF9;&#x8F93;&#x5165;&#x8FDB;&#x884C;&#x7B80;&#x5355;&#x5206;&#x6790;&#xFF0C;&#x8BC6;&#x522B;&#x51FA;&#x8F93;&#x5165;&#x8BED;&#x6599;&#x6570;&#x636E;&#x4E2D;&#x5404;&#x4E2A;&#x90E8;&#x5206;&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x6BD4;&#x5982;&#x6570;&#x5B57;&#x3001;&#x5B57;&#x6BCD;&#x6570;&#x5B57;&#x3001;&#x5217;&#x8868;&#x3001;&#x5F15;&#x7528;&#x7B49;&#xFF0C;&#x7136;&#x540E;&#x9488;&#x5BF9;&#x4E0D;&#x540C;&#x90E8;&#x5206;&#x8FD0;&#x7528;&#x7A81;&#x53D8;&#x7B56;&#x7565;&#x3002;</li>
+</ol>
+<h1 id="go-fuzz&#x4F7F;&#x7528;&#x65B9;&#x6CD5;"><a name="go-fuzz&#x4F7F;&#x7528;&#x65B9;&#x6CD5;" class="anchor-navigation-ex-anchor" href="#go-fuzz&#x4F7F;&#x7528;&#x65B9;&#x6CD5;"><i class="fa fa-link" aria-hidden="true"></i></a>3. go-fuzz&#x4F7F;&#x7528;&#x65B9;&#x6CD5;</h1>
+<h2 id="&#x5B89;&#x88C5;go-fuzz"><a name="&#x5B89;&#x88C5;go-fuzz" class="anchor-navigation-ex-anchor" href="#&#x5B89;&#x88C5;go-fuzz"><i class="fa fa-link" aria-hidden="true"></i></a>3.1. &#x5B89;&#x88C5;go-fuzz</h2>
+<p>&#x4F7F;&#x7528;go-fuzz&#x9700;&#x8981;&#x5B89;&#x88C5;&#x4E24;&#x4E2A;&#x91CD;&#x8981;&#x5DE5;&#x5177;&#xFF1A;go-fuzz-build&#x548C;go-fuzz&#x3002;&#x901A;&#x8FC7;&#x6807;&#x51C6;go get&#x5C31;&#x53EF;&#x4EE5;&#x5B89;&#x88C5;&#x5B83;&#x4EEC;&#xFF1A; </p>
+<pre class="language-"><code class="lang-bash">$ go get github.com/dvyukov/go-fuzz/go-fuzz 
+$ go get github.com/dvyukov/go-fuzz/go-fuzz-build
+</code></pre>
+<h2 id="&#x5E26;&#x6709;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x7684;&#x9879;&#x76EE;&#x7EC4;&#x7EC7;"><a name="&#x5E26;&#x6709;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x7684;&#x9879;&#x76EE;&#x7EC4;&#x7EC7;" class="anchor-navigation-ex-anchor" href="#&#x5E26;&#x6709;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x7684;&#x9879;&#x76EE;&#x7EC4;&#x7EC7;"><i class="fa fa-link" aria-hidden="true"></i></a>3.2. &#x5E26;&#x6709;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x7684;&#x9879;&#x76EE;&#x7EC4;&#x7EC7;</h2>
+<p>&#x5047;&#x8BBE;&#x6211;&#x4EEC;&#x8981;&#x5BF9;foo&#x5305;&#x8FDB;&#x884C;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#xFF0C;&#x90A3;&#x4E48;&#x5176;&#x9879;&#x76EE;&#x7EC4;&#x7EC7;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre class="language-"><code class="lang-bash">github.com/bigwhite/fuzzexamples/foo/fuzztest<span class="token punctuation">]</span><span class="token variable">$tree</span>
+<span class="token builtin class-name">.</span>
+&#x251C;&#x2500;&#x2500; fuzz1
+&#x2502; &#x251C;&#x2500;&#x2500; corpus // &#x5B58;&#x653E;&#x8F93;&#x5165;&#x6570;&#x636E;&#x8BED;&#x6599;&#x7684;&#x76EE;&#x5F55;&#xFF0C;&#x5728;go-fuzz&#x6267;&#x884C;&#x4E4B;&#x524D;&#xFF0C;&#x53EF;&#x4EE5;&#x653E;&#x5165;&#x521D;&#x59CB;&#x8BED;&#x6599;&#xFF1B;
+&#x2502; &#x251C;&#x2500;&#x2500; fuzz.go // &#x5305;&#x542B;Fuzz&#x51FD;&#x6570;&#x7684;&#x6E90;&#x7801;&#x6587;&#x4EF6;
+&#x2502; &#x2514;&#x2500;&#x2500; gen // &#x5305;&#x542B;&#x624B;&#x5DE5;&#x751F;&#x6210;&#x521D;&#x59CB;&#x8BED;&#x6599;&#x7684;main.go&#x4EE3;&#x7801;
+&#x2502;   &#x2514;&#x2500;&#x2500; main.go
+&#x251C;&#x2500;&#x2500; fuzz2
+&#x2502; &#x251C;&#x2500;&#x2500; corpus
+&#x2502; &#x251C;&#x2500;&#x2500; fuzz.go
+&#x2502; &#x2514;&#x2500;&#x2500; gen
+&#x2502;   &#x2514;&#x2500;&#x2500; main.go
+<span class="token punctuation">..</span>.
+</code></pre>
+<p>&#x800C;fuzz.go&#x6E90;&#x6587;&#x4EF6;&#x6A21;&#x677F;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre class="language-"><code class="lang-go"><span class="token comment">// +build gofuzz</span>
+<span class="token keyword">package</span> foo
+<span class="token keyword">func</span> <span class="token function">Fuzz</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
+    <span class="token operator">...</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>go-fuzz-build&#x5728;&#x6784;&#x5EFA;&#x7528;&#x4E8E;go-fuzz&#x547D;&#x4EE4;&#x8F93;&#x5165;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x65F6;&#xFF0C;&#x4F1A;&#x641C;&#x7D22;&#x5E26;&#x6709;&#x201C;+build gofuzz&#x201D;&#x6307;&#x793A;&#x7B26;&#x7684;Go&#x6E90;&#x6587;&#x4EF6;&#x4EE5;&#x53CA;&#x5176;&#x4E2D;&#x7684;Fuzz&#x51FD;&#x6570;&#x3002;</p>
+</blockquote>
+<h2 id="go-fuzz-build"><a name="go-fuzz-build" class="anchor-navigation-ex-anchor" href="#go-fuzz-build"><i class="fa fa-link" aria-hidden="true"></i></a>3.3. go-fuzz-build</h2>
+<p>go-fuzz-build&#x4F1A;&#x6839;&#x636E;Fuzz&#x51FD;&#x6570;&#x6784;&#x5EFA;&#x4E00;&#x4E2A;&#x7528;&#x4E8E;go-fuzz&#x6267;&#x884C;&#x7684;zip&#x5305; &#xFF08;PACKAGENAME-fuzz.zip&#xFF09;&#xFF0C;&#x5305;&#x91CC;&#x5305;&#x542B;&#x4E86;&#x7528;&#x9014;&#x4E0D;&#x540C;&#x7684;&#x4E09;&#x4E2A;&#x6587;&#x4EF6;&#xFF1A; </p>
+<ol>
+<li><strong><u>cover.exe</u></strong>&#xFF1A;&#x88AB;&#x6CE8;&#x5165;&#x4E86;&#x4EE3;&#x7801;&#x6D4B;&#x8BD5;&#x8986;&#x76D6;&#x7387;&#x6869;&#x8BBE;&#x65BD;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x3002; </li>
+<li><strong><u>sonar.exe</u></strong>&#xFF1A;&#x88AB;&#x6CE8;&#x5165;&#x4E86;sonar&#x7EDF;&#x8BA1;&#x6869;&#x8BBE;&#x65BD;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x3002; </li>
+<li><strong><u>metadata</u></strong>&#xFF1A;&#x5305;&#x542B;&#x4EE3;&#x7801;&#x8986;&#x76D6;&#x7387;&#x7EDF;&#x8BA1;&#x3001;sonar&#x7684;&#x5143;&#x6570;&#x636E;&#x4EE5;&#x53CA;&#x4E00;&#x4E9B;&#x6574;&#x578B;&#x3001; &#x5B57;&#x7B26;&#x4E32;&#x5B57;&#x9762;&#x503C;&#x3002; </li>
+</ol>
+<blockquote>
+<p>&#x4E0D;&#x8FC7;&#x4F5C;&#x4E3A;&#x4F7F;&#x7528;&#x8005;&#xFF0C;&#x6211;&#x4EEC;&#x4E0D;&#x5FC5;&#x8FC7;&#x4E8E;&#x5173;&#x5FC3;&#x5B83;&#x4EEC;&#xFF0C;&#x70B9;&#x5230;&#x4E3A;&#x6B62;&#x3002;</p>
+</blockquote>
+<h2 id="&#x6267;&#x884C;go-fuzz"><a name="&#x6267;&#x884C;go-fuzz" class="anchor-navigation-ex-anchor" href="#&#x6267;&#x884C;go-fuzz"><i class="fa fa-link" aria-hidden="true"></i></a>3.4. &#x6267;&#x884C;go-fuzz</h2>
+<blockquote>
+<p>&#x4E00;&#x65E6;&#x751F;&#x6210;&#x4E86;foo-fuzz.zip&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x6267;&#x884C;&#x9488;&#x5BF9;fuzz1&#x7684;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x3002; </p>
+</blockquote>
+<pre class="language-"><code class="lang-bash"><span class="token variable">$cd</span> fuzz1
+<span class="token variable">$go</span>-fuzz <span class="token parameter variable">-bin</span><span class="token operator">=</span>./foo-fuzz.zip <span class="token parameter variable">-workdir</span><span class="token operator">=</span>./
+<span class="token number">2019</span>/12/08 <span class="token number">17</span>:51:48 workers: <span class="token number">4</span>, corpus: <span class="token number">8</span> <span class="token punctuation">(</span>1s ago<span class="token punctuation">)</span>, crashers: <span class="token number">0</span>, restarts: <span class="token number">1</span>/0, execs: <span class="token number">0</span> <span class="token punctuation">(</span><span class="token number">0</span>/sec<span class="token punctuation">)</span>, cover: <span class="token number">0</span>, uptime: 3s
+<span class="token number">2019</span>/12/08 <span class="token number">17</span>:51:51 workers: <span class="token number">4</span>, corpus: <span class="token number">9</span> <span class="token punctuation">(</span>2s ago<span class="token punctuation">)</span>, crashers: <span class="token number">0</span>, restarts: <span class="token number">1</span>/3851, execs: <span class="token number">11553</span> <span class="token punctuation">(</span><span class="token number">1924</span>/sec<span class="token punctuation">)</span>, cover: <span class="token number">143</span>, uptime: 6s
+<span class="token number">2019</span>/12/08 <span class="token number">17</span>:51:54 workers: <span class="token number">4</span>, corpus: <span class="token number">9</span> <span class="token punctuation">(</span>5s ago<span class="token punctuation">)</span>, crashers: <span class="token number">0</span>, restarts: <span class="token number">1</span>/3979, execs: <span class="token number">47756</span> <span class="token punctuation">(</span><span class="token number">5305</span>/sec<span class="token punctuation">)</span>, cover: <span class="token number">143</span>, uptime: 9s
+<span class="token punctuation">..</span>.
+</code></pre>
+<ul>
+<li>&#x5982;&#x679C;corpus&#x76EE;&#x5F55;&#x4E2D;&#x6CA1;&#x6709;&#x521D;&#x59CB;&#x8BED;&#x6599;&#x6570;&#x636E;&#xFF0C;&#x90A3;&#x4E48;go-fuzz&#x4E5F;&#x4F1A;&#x81EA;&#x884C;&#x751F;&#x6210;&#x76F8; &#x5173;&#x6570;&#x636E;&#x4F20;&#x9012;&#x7ED9;Fuzz&#x51FD;&#x6570;&#xFF0C;&#x5E76;&#x4E14;&#x91C7;&#x7528;&#x9057;&#x4F20;&#x7B97;&#x6CD5;&#xFF0C;&#x4E0D;&#x65AD;&#x57FA;&#x4E8E;corpus&#x4E2D;&#x7684;&#x8BED;&#x6599;&#x751F;&#x6210;&#x65B0;&#x7684;&#x8F93;&#x5165;&#x8BED;&#x6599;&#x3002;</li>
+<li>go-fuzz&#x4F5C;&#x8005;&#x5EFA;&#x8BAE;corpus&#x521D;&#x59CB;&#x65F6;&#x653E;&#x5165;&#x7684;&#x8BED;&#x6599;&#x8D8A;&#x591A;&#x8D8A;&#x597D;&#xFF0C;&#x800C;&#x4E14;&#x8981;&#x6709;&#x8DB3;&#x591F;&#x7684;&#x591A;&#x6837;&#x6027;&#xFF0C;&#x8FD9;&#x6837;&#x57FA;&#x4E8E;&#x8FD9;&#x4E9B;&#x521D;&#x59CB;&#x8BED;&#x6599;&#x65BD;&#x5C55;&#x9057;&#x4F20;&#x7B97;&#x6CD5;&#xFF0C;&#x6548;&#x679C;&#x624D;&#x4F1A;&#x66F4;&#x4F73;&#x3002;</li>
+<li><p>go-fuzz&#x5728;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;&#x8FD8;&#x4F1A;&#x5C06;&#x4E00;&#x4E9B;&#x65B0;&#x8BED;&#x6599;&#x6301;&#x4E45;&#x5316;&#x6210;&#x6587;&#x4EF6;&#x653E;&#x5728;corpus&#x4E2D;&#xFF0C;&#x4EE5;&#x4F9B;&#x4E0B;&#x6B21;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x6267;&#x884C;&#x65F6;&#x4F7F;&#x7528;&#x3002;</p>
+</li>
+<li><p>go-fuzz&#x6267;&#x884C;&#x65F6;&#x662F;&#x4E00;&#x4E2A;&#x65E0;&#x9650;&#x5FAA;&#x73AF;&#xFF0C;&#x4E0A;&#x9762;&#x7684;&#x6D4B;&#x8BD5;&#x9700;&#x8981;&#x624B;&#x52A8;&#x505C;&#x4E0B;&#x6765;&#x3002;</p>
+</li>
+<li>go-fuzz&#x4F1A;&#x5728;&#x6307;&#x5B9A;&#x7684;workdir&#x4E2D;&#x521B;&#x5EFA;&#x53E6;&#x4E24;&#x4E2A;&#x76EE;&#x5F55;&#xFF1A;crashers&#x548C;suppressions&#x3002;<ol>
+<li>crashers&#x4E2D;&#x5B58;&#x653E;&#x7684;&#x662F;&#x4EE3;&#x7801;&#x5D29;&#x6E83;&#x65F6;&#x7684;&#x76F8;&#x5173;&#x4FE1;&#x606F;&#x3002;</li>
+<li>suppressions&#x76EE;&#x5F55;&#x4E2D;&#x5219;&#x4FDD;&#x5B58;&#x7740;&#x5D29;&#x6E83;&#x65F6;&#x7684;&#x6808;&#x8DDF;&#x8E2A;&#x4FE1;&#x606F;&#xFF0C;&#x65B9;&#x4FBF;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#x5FEB;&#x901F;&#x5B9A;&#x4F4D;bug&#x3002;</li>
+</ol>
+</li>
+</ul>
+<h1 id="&#x4F7F;&#x7528;go-fuzz&#x5EFA;&#x7ACB;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x7684;&#x793A;&#x4F8B;"><a name="&#x4F7F;&#x7528;go-fuzz&#x5EFA;&#x7ACB;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x7684;&#x793A;&#x4F8B;" class="anchor-navigation-ex-anchor" href="#&#x4F7F;&#x7528;go-fuzz&#x5EFA;&#x7ACB;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x7684;&#x793A;&#x4F8B;"><i class="fa fa-link" aria-hidden="true"></i></a>4. &#x4F7F;&#x7528;go-fuzz&#x5EFA;&#x7ACB;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x7684;&#x793A;&#x4F8B;</h1>
+<p>&#xFF08;&#x7565;&#xFF09;</p>
+<h1 id="&#x8BA9;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x6210;&#x4E3A;&#x4E00;&#x7B49;&#x516C;&#x6C11;"><a name="&#x8BA9;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x6210;&#x4E3A;&#x4E00;&#x7B49;&#x516C;&#x6C11;" class="anchor-navigation-ex-anchor" href="#&#x8BA9;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x6210;&#x4E3A;&#x4E00;&#x7B49;&#x516C;&#x6C11;"><i class="fa fa-link" aria-hidden="true"></i></a>5. &#x8BA9;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x6210;&#x4E3A;&#x201C;&#x4E00;&#x7B49;&#x516C;&#x6C11;&#x201D;</h1>
+<blockquote>
+<p>&#x76EE;&#x524D;Go&#x5C1A;&#x672A;&#x5C06;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x5F53;&#x6210;&#x201C;&#x4E00; &#x7B49;&#x516C;&#x6C11;&#x201D;&#x5BF9;&#x5F85;&#xFF0C;&#x5373;&#x8FD8;&#x6CA1;&#x6709;&#x5728;Go&#x5DE5;&#x5177;&#x94FE;&#x4E0A;&#x539F;&#x751F;&#x652F;&#x6301;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#xFF0C;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x5728;Go&#x4E2D;&#x7684;&#x5E94;&#x7528;&#x8FD8;&#x4EC5;&#x9650;&#x4E8E;&#x4F7F;&#x7528;&#x7B2C;&#x4E09;&#x65B9;&#x7684;go-fuzz&#x6216;&#x8C37;&#x6B4C;&#x5F00;&#x6E90;&#x7684;gofuzz&#x3002;</p>
+</blockquote>
+<p>&#x5F53;&#x524D;&#x7684;go-fuzz&#x7B49;&#x5DE5;&#x5177;&#x7684;&#x5B9E;&#x73B0;&#x5B58;&#x5728;&#x4E00;&#x4E9B;&#x65E0;&#x6CD5;&#x89E3;&#x51B3;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;</p>
+<ol>
+<li>go-fuzz&#x6A21;&#x4EFF;Go&#x5DE5;&#x5177;&#x6784;&#x5EFA;&#x903B;&#x8F91;&#xFF0C;&#x4E00;&#x65E6;Go&#x539F;&#x751F;&#x5DE5;&#x5177;&#x6784;&#x5EFA;&#x903B;&#x8F91;&#x53D1;&#x751F;&#x53D8;&#x5316;&#xFF0C;&#x5C31;&#x4F1A;&#x5BFC;&#x81F4;go-fuzz-build&#x4E0D;&#x65AD;&#x635F;&#x574F;&#xFF1B;</li>
+<li>go-fuzz-build&#x65E0;&#x6CD5;&#x5904;&#x7406;cgo&#xFF0C;&#x5F88;&#x96BE;&#x5B9E;&#x73B0;&#xFF1B;</li>
+<li>&#x76EE;&#x524D;&#x7684;&#x4EE3;&#x7801;&#x8986;&#x76D6;&#x7387;&#x5DE5;&#x5177;&#xFF08;coverage&#xFF09;&#x662F;&#x901A;&#x8FC7;&#x5728;&#x6E90;&#x7801;&#x4E2D;&#x63D2;&#x5165;&#x6869;&#x4EE3;&#x7801;&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x8FD9;&#x4F7F;&#x5176;&#x5F88;&#x96BE;&#x4E0E;&#x5176;&#x4ED6;&#x6784;&#x5EFA;&#x7CFB;&#x7EDF;&#xFF08;build system&#xFF09;&#x96C6;&#x6210;&#xFF1B;</li>
+<li>&#x57FA;&#x4E8E;&#x4ECE;&#x6E90;&#x7801;&#x5230;&#x6E90;&#x7801;&#x7684;&#x8F6C;&#x6362;&#x65E0;&#x6CD5;&#x5904;&#x7406;&#x6240;&#x6709;&#x60C5;&#x51B5;&#xFF0C;&#x5E76;&#x4E14;&#x8F6C;&#x6362;&#x529F;&#x80FD;&#x6709;&#x9650;&#xFF0C;&#x67D0;&#x4E9B;&#x4EE3;&#x7801;&#x6A21;&#x5F0F;&#x53EF;&#x80FD;&#x4F1A;&#x5904;&#x7406;&#x4E0D;&#x5F53;&#x6216;&#x5BFC;&#x81F4;&#x6784;&#x5EFA;&#x5931;&#x8D25;&#xFF1B; </li>
+<li>&#x4F7F;&#x7528;&#x4ECE;&#x6E90;&#x7801;&#x5230;&#x6E90;&#x7801;&#x8F6C;&#x6362;&#x7684;&#x65B9;&#x6CD5;&#x4EA7;&#x751F;&#x7684;&#x4EE3;&#x7801;&#x8FD0;&#x884C;&#x5F88;&#x6162;&#x3002;&#x91CD;&#x7528;&#x9700;&#x6C42;&#xFF1B;</li>
+</ol>
+<blockquote>
+<p>&#x8FD9;&#x4E9B;&#x95EE;&#x9898;&#x9700;&#x8981;&#x7F16;&#x8BD1;&#x5668;&#x5C42;&#x9762;&#x7684;&#x652F;&#x6301;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x5728;&#x7F16;&#x8BD1;&#x5668;&#x5C42;&#x9762;&#x6DFB;&#x52A0;&#x652F;&#x6301;&#x6A21;&#x7CCA;&#x6D4B;&#x8BD5;&#x7684;&#x57FA;&#x7840;&#x8BBE;&#x65BD;&#xFF08;&#x6BD4;&#x5982;&#x4EE3;&#x7801;&#x8986;&#x76D6;&#x7387;&#x6869;&#x7684;&#x63D2;&#x5165;&#xFF09;&#x3002;</p>
+</blockquote>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/poker-svg" target="_blank">YangXin Xu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-10-07 18:56:10 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="第44条-正确使用fake、stub和mock等辅助单元测试.html" class="navigation navigation-prev " aria-label="Previous page: 第44条-正确使用fake、stub和mock等辅助单元测试">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="第46条-为被测对象建立性能基准.html" class="navigation navigation-next " aria-label="Next page: 第46条-为被测对象建立性能基准">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"第45条-使用模糊测试让潜在bug无处遁形","level":"1.46","depth":1,"next":{"title":"第46条-为被测对象建立性能基准","level":"1.47","depth":1,"path":"第46条-为被测对象建立性能基准.md","ref":"第46条-为被测对象建立性能基准.md","articles":[]},"previous":{"title":"第44条-正确使用fake、stub和mock等辅助单元测试","level":"1.45","depth":1,"path":"第44条-正确使用fake、stub和mock等辅助单元测试.md","ref":"第44条-正确使用fake、stub和mock等辅助单元测试.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","-lunr","-search","search-pro","-sharing","splitter","hide-element","insert-logo","code","livereload"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"livereload":{},"page-footer-ex":{"copyright":"By [YangXin Xu](https://github.com/poker-svg)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"expandable-chapters-small":{},"copy-code-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"style":"background: none; max-height: 120px; min-height: 120px","url":"./images/icon.png"},"expandable-chapters":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Go语言精进之路","gitbook":"*"},"file":{"path":"第45条-使用模糊测试让潜在bug无处遁形.md","mtime":"2023-10-07T10:56:10.946Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-10-07T15:14:45.091Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-hide-element/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-insert-logo/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

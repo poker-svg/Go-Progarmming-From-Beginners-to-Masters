@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>第17条-理解Go语言表达式的求值顺序 · Go语言精进之路</title>
+        <title>第49条-使用Delve调试Go代码 · Go语言精进之路</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -85,10 +85,8 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="第18条-理解Go语言代码块与作用域.html" />
     
-    
-    <link rel="prev" href="第16条-理解Go语言的包导入.html" />
+    <link rel="prev" href="第48条-使用expvar输出度量数据，辅助定位性能瓶颈点.html" />
     
 
     </head>
@@ -338,7 +336,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.18" data-path="第17条-理解Go语言表达式的求值顺序.html">
+        <li class="chapter " data-level="1.18" data-path="第17条-理解Go语言表达式的求值顺序.html">
             
                 <a href="第17条-理解Go语言表达式的求值顺序.html">
             
@@ -754,7 +752,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.50" data-path="第49条-使用Delve调试Go代码.html">
+        <li class="chapter active" data-level="1.50" data-path="第49条-使用Delve调试Go代码.html">
             
                 <a href="第49条-使用Delve调试Go代码.html">
             
@@ -797,7 +795,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >第17条-理解Go语言表达式的求值顺序</a>
+        <a href="." >第49条-使用Delve调试Go代码</a>
     </h1>
 </div>
 
@@ -812,40 +810,61 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#&#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x987A;&#x5E8F;"><b>1. </b>&#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x987A;&#x5E8F;</a></li><li><span class="title-icon "></span><a href="#&#x666E;&#x901A;&#x6C42;&#x503C;&#x987A;&#x5E8F;"><b>2. </b>&#x666E;&#x901A;&#x6C42;&#x503C;&#x987A;&#x5E8F;</a></li><li><span class="title-icon "></span><a href="#&#x8D4B;&#x503C;&#x8BED;&#x53E5;&#x7684;&#x6C42;&#x503C;"><b>3. </b>&#x8D4B;&#x503C;&#x8BED;&#x53E5;&#x7684;&#x6C42;&#x503C;</a></li><li><span class="title-icon "></span><a href="#switchselect&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;"><b>4. </b>switch/select&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;</a></li><ul><li><span class="title-icon "></span><a href="#switch-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;"><b>4.1. </b>switch-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;</a></li><li><span class="title-icon "></span><a href="#select-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;"><b>4.2. </b>select-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;</a></li></ul></ul></div><a href="#&#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x987A;&#x5E8F;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="&#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x987A;&#x5E8F;"><a name="&#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x987A;&#x5E8F;" class="anchor-navigation-ex-anchor" href="#&#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x987A;&#x5E8F;"><i class="fa fa-link" aria-hidden="true"></i></a>1. &#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x987A;&#x5E8F;</h1>
-<p>&#x5728;&#x4E00;&#x4E2A;Go&#x5305;&#x5185;&#x90E8;&#xFF0C;&#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x8BED;&#x53E5;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x987A;&#x5E8F;&#x662F;&#x7531; <strong><u>&#x521D;&#x59CB;&#x5316;&#x4F9D;&#x8D56;&#x89C4;&#x5219;</u></strong> &#x51B3;&#x5B9A;&#x7684;&#xFF1A;</p>
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#go&#x8C03;&#x8BD5;&#x5DE5;&#x5177;&#x7684;&#x9009;&#x62E9;"><b>1. </b>Go&#x8C03;&#x8BD5;&#x5DE5;&#x5177;&#x7684;&#x9009;&#x62E9;</a></li><li><span class="title-icon "></span><a href="#delve&#x8C03;&#x8BD5;&#x57FA;&#x7840;&#x3001;&#x539F;&#x7406;&#x4E0E;&#x67B6;&#x6784;"><b>2. </b>Delve&#x8C03;&#x8BD5;&#x57FA;&#x7840;&#x3001;&#x539F;&#x7406;&#x4E0E;&#x67B6;&#x6784;</a></li><ul><li><span class="title-icon "></span><a href="#&#x5B89;&#x88C5;delve"><b>2.1. </b>&#x5B89;&#x88C5;Delve</a></li><li><span class="title-icon "></span><a href="#&#x4F7F;&#x7528;delve&#x8C03;&#x8BD5;go&#x4EE3;&#x7801;&#x793A;&#x4F8B;"><b>2.2. </b>&#x4F7F;&#x7528;Delve&#x8C03;&#x8BD5;Go&#x4EE3;&#x7801;&#x793A;&#x4F8B;</a></li><li><span class="title-icon "></span><a href="#delve&#x67B6;&#x6784;&#x4E0E;&#x539F;&#x7406;"><b>2.3. </b>Delve&#x67B6;&#x6784;&#x4E0E;&#x539F;&#x7406;</a></li></ul><li><span class="title-icon "></span><a href="#&#x5E76;&#x53D1;&#x3001;coredump&#x6587;&#x4EF6;&#x4E0E;&#x6302;&#x63A5;&#x8FDB;&#x7A0B;&#x8C03;&#x8BD5;"><b>3. </b>&#x5E76;&#x53D1;&#x3001;Coredump&#x6587;&#x4EF6;&#x4E0E;&#x6302;&#x63A5;&#x8FDB;&#x7A0B;&#x8C03;&#x8BD5;</a></li><ul><li><span class="title-icon "></span><a href="#delve&#x8C03;&#x8BD5;&#x5E76;&#x53D1;&#x7A0B;&#x5E8F;"><b>3.1. </b>Delve&#x8C03;&#x8BD5;&#x5E76;&#x53D1;&#x7A0B;&#x5E8F;</a></li><li><span class="title-icon "></span><a href="#&#x4F7F;&#x7528;delve&#x8C03;&#x8BD5;core-dump&#x6587;&#x4EF6;"><b>3.2. </b>&#x4F7F;&#x7528;Delve&#x8C03;&#x8BD5;core dump&#x6587;&#x4EF6;</a></li><li><span class="title-icon "></span><a href="#&#x4F7F;&#x7528;delve&#x6302;&#x63A5;&#x5230;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x7684;&#x8FDB;&#x7A0B;&#x8FDB;&#x884C;&#x8C03;&#x8BD5;"><b>3.3. </b>&#x4F7F;&#x7528;Delve&#x6302;&#x63A5;&#x5230;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x7684;&#x8FDB;&#x7A0B;&#x8FDB;&#x884C;&#x8C03;&#x8BD5;</a></li></ul></ul></div><a href="#go&#x8C03;&#x8BD5;&#x5DE5;&#x5177;&#x7684;&#x9009;&#x62E9;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="go&#x8C03;&#x8BD5;&#x5DE5;&#x5177;&#x7684;&#x9009;&#x62E9;"><a name="go&#x8C03;&#x8BD5;&#x5DE5;&#x5177;&#x7684;&#x9009;&#x62E9;" class="anchor-navigation-ex-anchor" href="#go&#x8C03;&#x8BD5;&#x5DE5;&#x5177;&#x7684;&#x9009;&#x62E9;"><i class="fa fa-link" aria-hidden="true"></i></a>1. Go&#x8C03;&#x8BD5;&#x5DE5;&#x5177;&#x7684;&#x9009;&#x62E9;</h1>
+<p>&#x5728;Go&#x5B98;&#x65B9;&#x7684;2019&#x5E74;Go&#x5F00;&#x53D1;&#x8005;&#x62A5;&#x544A;&#x4E2D;&#xFF0C;&#x6709;&#x5173;Go&#x5F00;&#x53D1;&#x8FC7;&#x7A0B;&#x4F9D;&#x8D56;&#x7684;&#x8C03;&#x8BD5;&#x5DE5;&#x5177;&#x4E0E;&#x6280;&#x672F;&#x7684;&#x8C03;&#x67E5;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="images/image-20231007225625206.png" alt="image-20231007225625206" style="zoom: 50%;"></p>
+<ul>
+<li><strong><u>print&#x8F85;&#x52A9;&#x8C03;&#x8BD5;</u></strong> &#xFF1A;&#x66F4;&#x591A;&#x7528;&#x4E8E;&#x4EE3;&#x7801;&#x53EF;&#x4FEE;&#x6539;&#x7684;&#x672C;&#x5730;&#x73AF;&#x5883;&#xFF0C;&#x901A;&#x8FC7;&#x201C;&#x5728;&#x7279;&#x5B9A;&#x4F4D;&#x7F6E;&#x6DFB;&#x52A0;&#x6253;&#x5370;&#x503C;&#x2192;&#x7F16;&#x8BD1;&#x6267;&#x884C;&#x2192;&#x6839;&#x636E;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x8C03;&#x67E5;&#x601D;&#x8003;&#x201D;&#x7684;&#x8C03;&#x8BD5;&#x5FAA;&#x73AF;&#x6765;&#x9010;&#x6E10;&#x903C;&#x8FD1;&#x201C;&#x771F;&#x76F8;&#x201D;&#x3002;</li>
+<li><strong><u>&#x4E13;&#x4E1A;&#x8C03;&#x8BD5;&#x5668;</u></strong> &#xFF1A;&#x5177;&#x6709;&#x540C;&#x6837;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x53EA;&#x662F;&#x8C03;&#x8BD5;&#x5FAA;&#x73AF;&#x7565;&#x70E6;&#x7410;&#xFF0C;&#x4F46;&#x662F;&#x5B83;&#x5177;&#x6709;&#x5982;&#x4E0B;&#x4F18;&#x70B9;&#xFF1A;<ul>
+<li>&#x4E0E;IDE&#x96C6;&#x6210;&#xFF0C;&#x901A;&#x8FC7;&#x56FE;&#x5F62;&#x5316;&#x64CD;&#x4F5C;&#x53EF;&#x5927;&#x5E45;&#x7B80;&#x5316;&#x4E13;&#x4E1A;&#x8C03;&#x8BD5;&#x5668;&#x7684;&#x8C03;&#x8BD5;&#x5FAA;&#x73AF;&#xFF0C;&#x63D0;&#x4F9B;&#x66F4;&#x4F73;&#x7684;&#x4F53;&#x9A8C;&#xFF1B;</li>
+<li>&#x4E8B;&#x540E;&#x8C03;&#x67E5;&#xFF08;postmortem&#xFF09;<ul>
+<li>&#x8C03;&#x8BD5;core dump&#x6587;&#x4EF6;&#xFF1B;</li>
+<li>&#x5728;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x901A;&#x8FC7;&#x6302;&#x63A5;&#xFF08;attach&#xFF09;&#x5E94;&#x7528;&#x8FDB;&#x7A0B;&#xFF0C;&#x6DF1;&#x5165;&#x5E94;&#x7528;&#x8FDB;&#x7A0B;&#x5185;&#x90E8;&#x8FDB;&#x884C;&#x8C03;&#x8BD5;&#x3002;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>&#x5728;Go&#x53D1;&#x884C;&#x7248;&#x4E2D;&#xFF0C;&#x9664;&#x4E86;&#x6807;&#x51C6;&#x7684;Go&#x7F16;&#x8BD1;&#x5668;&#x4E4B;&#x5916;&#xFF0C;&#x8FD8;&#x6709;&#x4E00;&#x4E2A;&#x540D;&#x4E3A; <strong><u><code>gccgo</code></u></strong> &#x7684;&#x7F16;&#x8BD1;&#x5668;&#x3002;&#x548C;&#x6807;&#x51C6;Go&#x7F16;&#x8BD1;&#x5668;&#x76F8;&#x6BD4;&#xFF0C;gccgo&#x5177;&#x6709;&#x5982;&#x4E0B;&#x7279;&#x70B9;&#xFF1A;</p>
 <ol>
-<li>&#x5728;Go&#x5305;&#x4E2D;&#xFF0C;&#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x7684;&#x521D;&#x59CB;&#x5316;&#x6309;&#x7167;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x7684;&#x5148;&#x540E;&#x987A;&#x5E8F;&#x8FDB;&#x884C;&#xFF1B;</li>
-<li>&#x5982;&#x679C;&#x67D0;&#x4E2A;&#x53D8;&#x91CF;&#xFF08;&#x5982;&#x53D8;&#x91CF;a&#xFF09;&#x7684;&#x521D;&#x59CB;&#x5316;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x76F4;&#x63A5;&#x6216;&#x95F4;&#x63A5;&#x4F9D;&#x8D56;&#x5176;&#x4ED6;&#x53D8;&#x91CF;&#xFF08;&#x5982;&#x53D8;&#x91CF;b&#xFF09;&#xFF0C;&#x90A3;&#x4E48;&#x53D8;&#x91CF;a&#x7684;&#x521D;&#x59CB;&#x5316;&#x987A;&#x5E8F;&#x6392;&#x5728;&#x53D8;&#x91CF;b&#x540E;&#x9762;&#xFF1B;</li>
-<li>&#x672A;&#x521D;&#x59CB;&#x5316;&#x7684;&#x4E14;&#x4E0D;&#x542B;&#x6709;&#x5BF9;&#x5E94;&#x521D;&#x59CB;&#x5316;&#x8868;&#x8FBE;&#x5F0F;&#x6216;&#x521D;&#x59CB;&#x5316;&#x8868;&#x8FBE;&#x5F0F;&#x4E0D;&#x4F9D;&#x8D56;&#x4EFB;&#x4F55;&#x672A;&#x521D;&#x59CB;&#x5316;&#x53D8;&#x91CF;&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x6211;&#x4EEC;&#x79F0;&#x4E4B;&#x4E3A; <strong><u>&#x201C;ready for initialization&#x201D;&#x53D8;&#x91CF;</u></strong> &#xFF1B;</li>
-<li>&#x5305;&#x7EA7;&#x522B;&#x53D8;&#x91CF;&#x7684;&#x521D;&#x59CB;&#x5316;&#x662F;&#x9010;&#x6B65;&#x8FDB;&#x884C;&#x7684;&#xFF0C;&#x6BCF;&#x4E00;&#x6B65;&#x5C31;&#x662F;&#x6309;&#x7167;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x987A;&#x5E8F;&#x627E;&#x5230;&#x4E0B;&#x4E00;&#x4E2A;&#x201C;ready for initialization&#x201D;&#x53D8;&#x91CF;&#x5E76;&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#x7684;&#x8FC7;&#x7A0B;&#x3002;&#x53CD;&#x590D;&#x91CD;&#x590D;&#x8FD9;&#x4E00;&#x6B65;&#x9AA4;&#xFF0C;&#x76F4;&#x5230;&#x6CA1;&#x6709;&#x201C;ready for initialization&#x201D;&#x53D8;&#x91CF;&#x4E3A;&#x6B62;&#xFF1B;</li>
-<li>&#x4F4D;&#x4E8E;&#x540C;&#x4E00;&#x5305;&#x5185;&#x4F46;&#x4E0D;&#x540C;&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x53D8;&#x91CF;&#x7684;&#x58F0;&#x660E;&#x987A;&#x5E8F;&#x4F9D;&#x8D56;&#x7F16;&#x8BD1;&#x5668;&#x5904;&#x7406;&#x6587;&#x4EF6;&#x7684;&#x987A;&#x5E8F;&#xFF1A;&#x5148;&#x5904;&#x7406;&#x7684;&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x53D8;&#x91CF;&#x7684;&#x58F0;&#x660E;&#x987A;&#x5E8F;&#x5148;&#x4E8E;&#x540E;&#x5904;&#x7406;&#x7684;&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x53D8;&#x91CF;&#xFF1B;</li>
+<li>gccgo&#x662F;GCC&#x7F16;&#x8BD1;&#x5668;&#x7684;&#x65B0;&#x524D;&#x7AEF;&#xFF1B;</li>
+<li>Go&#x8BED;&#x8A00;&#x7531; <a href="https://tip.golang.org/ref/spec" target="_blank">Go&#x8BED;&#x8A00;&#x89C4;&#x8303;</a> &#x5B9A;&#x4E49;&#x548C;&#x9A71;&#x52A8;&#x6F14;&#x8FDB;&#xFF0C;gccgo&#x662F;&#x53E6;&#x4E00;&#x4E2A;&#x5B9E;&#x73B0;&#x4E86;&#x8BE5;&#x8BED;&#x8A00;&#x89C4;&#x8303;&#x7684;&#x7F16;&#x8BD1;&#x5668;&#xFF0C;&#x4F46;&#x4E0E;&#x6807;&#x51C6;Go&#x7F16;&#x8BD1;&#x5668;&#x5B9E;&#x73B0;&#x7684;&#x4FA7;&#x91CD;&#x70B9;&#x6709;&#x6240;&#x4E0D;&#x540C;&#xFF1B;</li>
+<li>gccgo&#x7F16;&#x8BD1;&#x901F;&#x5EA6;&#x8F83;&#x6162;&#xFF0C;&#x4F46;&#x5177;&#x6709;&#x66F4;&#x4E3A;&#x5F3A;&#x5927;&#x7684;&#x4F18;&#x5316;&#x80FD;&#x529B;&#xFF1B; </li>
+<li>gccgo&#x590D;&#x7528;&#x4E86;GCC&#x540E;&#x7AEF;&#xFF0C;&#x56E0;&#x6B64;&#x652F;&#x6301;&#x7684;&#x5904;&#x7406;&#x5668;&#x67B6;&#x6784;&#x66F4;&#x591A;&#xFF1B; </li>
+<li>gccgo&#x7684;&#x6F14;&#x8FDB;&#x901F;&#x5EA6;&#x4E0E;&#x6807;&#x51C6;Go&#x7F16;&#x8BD1;&#x5668;&#x7684;&#x901F;&#x5EA6;&#x5E76;&#x4E0D;&#x4E00;&#x81F4;&#xFF0C;&#x6309;&#x7167; <a href="https://tip.golang.org/doc/install/gccgo" target="_blank">&#x6700;&#x65B0;&#x5B98;&#x65B9;&#x6587;&#x6863;</a>&#xFF0C;gcc8&#x7B49;&#x4EF7;&#x4E8E;go 1.10.1&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x800C;gcc9&#x7B49;&#x4EF7;&#x4E8E;Go 1.12.2&#x7684;&#x5B9E;&#x73B0;&#x3002;</li>
+<li>&#x901A;&#x8FC7;gccgo&#x7F16;&#x8BD1;&#x800C;&#x6210;&#x7684;Go&#x7A0B;&#x5E8F;&#x53EF;&#x4EE5;&#x5F97;&#x5230;GCC&#x6210;&#x719F;&#x5DE5;&#x5177;&#x94FE;&#x96C6;&#x5408;&#x7684;&#x539F;&#x751F;&#x652F;&#x6301;&#xFF0C;&#x5305;&#x62EC;&#x4F7F;&#x7528;&#x5F3A;&#x5927;&#x7684;GDB&#x8FDB;&#x884C;&#x8C03;&#x8BD5;&#x3002;</li>
+<li>&#x867D;&#x7136;GDB&#x8C03;&#x8BD5;&#x5668;&#x662F;&#x53EF;&#x4EE5;&#x8C03;&#x8BD5;&#x901A;&#x8FC7;&#x6807;&#x51C6;Go&#x7F16;&#x8BD1;&#x5668;&#x7F16;&#x8BD1;&#x751F;&#x6210;&#x7684;Go&#x7A0B;&#x5E8F;&#x7684;&#xFF0C;&#x4F46;GDB&#x5BF9;&#x6807;&#x51C6;Go&#x7F16;&#x8BD1;&#x5668;&#x8F93;&#x51FA;&#x7684;&#x7A0B;&#x5E8F;&#x7684;&#x652F;&#x6301;&#x662F;&#x4E0D;&#x5B8C;&#x5584;&#x7684;&#x3002;</li>
 </ol>
-<h1 id="&#x666E;&#x901A;&#x6C42;&#x503C;&#x987A;&#x5E8F;"><a name="&#x666E;&#x901A;&#x6C42;&#x503C;&#x987A;&#x5E8F;" class="anchor-navigation-ex-anchor" href="#&#x666E;&#x901A;&#x6C42;&#x503C;&#x987A;&#x5E8F;"><i class="fa fa-link" aria-hidden="true"></i></a>2. &#x666E;&#x901A;&#x6C42;&#x503C;&#x987A;&#x5E8F;</h1>
-<p>Go&#x89C4;&#x5B9A;&#x8868;&#x8FBE;&#x5F0F;&#x64CD;&#x4F5C;&#x6570;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x51FD;&#x6570;&#x3001;&#x65B9;&#x6CD5;&#x4EE5;&#x53CA;channel&#x64CD;&#x4F5C;&#x5B89;&#x88C5;&#x4ECE;&#x5DE6;&#x5230;&#x53F3;&#x7684;&#x6B21;&#x5E8F;&#x8FDB;&#x884C;&#x6C42;&#x503C;</p>
-<h1 id="&#x8D4B;&#x503C;&#x8BED;&#x53E5;&#x7684;&#x6C42;&#x503C;"><a name="&#x8D4B;&#x503C;&#x8BED;&#x53E5;&#x7684;&#x6C42;&#x503C;" class="anchor-navigation-ex-anchor" href="#&#x8D4B;&#x503C;&#x8BED;&#x53E5;&#x7684;&#x6C42;&#x503C;"><i class="fa fa-link" aria-hidden="true"></i></a>3. &#x8D4B;&#x503C;&#x8BED;&#x53E5;&#x7684;&#x6C42;&#x503C;</h1>
-<p>Go&#x8BED;&#x8A00;&#x89C4;&#x5B9A;&#xFF0C;&#x8D4B;&#x503C;&#x8BED;&#x53E5;&#x6C42;&#x503C;&#x5206;&#x4E3A;&#x4E24;&#x4E2A;&#x9636;&#x6BB5;&#xFF1A; </p>
-<ol>
-<li>&#x7B2C;&#x4E00;&#x9636;&#x6BB5;&#xFF0C;&#x5BF9;&#x4E8E;&#x7B49;&#x53F7;&#x5DE6;&#x8FB9;&#x7684;&#x4E0B;&#x6807;&#x8868;&#x8FBE;&#x5F0F;&#x3001;&#x6307;&#x9488;&#x89E3;&#x5F15;&#x7528;&#x8868;&#x8FBE;&#x5F0F;&#x548C;&#x7B49;&#x53F7;&#x53F3;&#x8FB9;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x7684;&#x64CD;&#x4F5C;&#x6570;&#xFF0C;&#x6309;&#x7167;&#x666E;&#x901A;&#x6C42;&#x503C;&#x89C4;&#x5219;&#x4ECE;&#x5DE6;&#x5230;&#x53F3;&#x8FDB;&#x884C;&#x6C42;&#x503C;&#xFF1B;</li>
-<li>&#x7B2C;&#x2F06;&#x9636;&#x6BB5;&#xFF0C;&#x6309;&#x4ECE;&#x5DE6;&#x5230;&#x53F3;&#x7684;&#x987A;&#x5E8F;&#x5BF9;&#x53D8;&#x91CF;&#x8FDB;&#x884C;&#x8D4B;&#x503C;&#xFF1B;</li>
-</ol>
-<h1 id="switchselect&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;"><a name="switchselect&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;" class="anchor-navigation-ex-anchor" href="#switchselect&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;"><i class="fa fa-link" aria-hidden="true"></i></a>4. switch/select&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;</h1>
-<h2 id="switch-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;"><a name="switch-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;" class="anchor-navigation-ex-anchor" href="#switch-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;"><i class="fa fa-link" aria-hidden="true"></i></a>4.1. switch-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;</h2>
-<p>&#x8FD9;&#x7C7B;&#x6C42;&#x503C;&#x5C5E;&#x4E8E;&#x201C;&#x60F0;&#x6027;&#x6C42;&#x503C;&#x201D;&#x7684;&#x8303;&#x7574;</p>
 <blockquote>
-<p>&#x60F0;&#x6027;&#x6C42;&#x503C;&#xFF1A;&#x53EA;&#x5728;&#x9700;&#x8981;&#x6C42;&#x503C;&#x65F6;&#x624D;&#x4F1A;&#x5BF9;&#x8868;&#x8FBE;&#x5F0F;&#x8FDB;&#x884C;&#x6C42;&#x503C;&#xFF0C;&#x76EE;&#x7684;&#x662F;&#x8BA9;&#x8BA1;&#x7B97;&#x673A;&#x5C11;&#x505A;&#x4E8B;&#xFF0C;&#x4ECE;&#x800C;&#x964D;&#x4F4E;&#x7A0B;&#x5E8F;&#x7684;&#x6D88;&#x8017;</p>
+<p>&#x7531;&#x4E8E;gccgo&#x4E0D;&#x662F;&#x4E3B;&#x6D41;&#xFF0C;&#x4E5F;&#x4E0D;&#x662F;&#x6211;&#x4EEC;&#x91CD;&#x70B9;&#x8003;&#x8651;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x8FD9;&#x91CC;&#x8003;&#x8651;&#x7684;&#x662F;&#x57FA;&#x4E8E;&#x6807;&#x51C6;Go&#x7F16;&#x8BD1;&#x5668;&#x7F16;&#x8BD1;&#x7684;&#x4EE3;&#x7801;&#x7684;&#x8C03;&#x8BD5;&#x3002;</p>
 </blockquote>
-<ol>
-<li>&#x5BF9;&#x4E8E;switch-case&#x8BED;&#x53E5;&#x800C;&#x8A00;&#xFF0C;&#x9996;&#x5148;&#x8FDB;&#x884C;&#x6C42;&#x503C;&#x7684;&#x662F;switch&#x540E;&#x9762;&#x7684;&#x8868;&#x8FBE;&#xFF1B;</li>
-<li>&#x63A5;&#x4E0B;&#x6765;&#x5C06;&#x6309;&#x7167;&#x4ECE;&#x4E0A;&#x5230;&#x4E0B;&#x3001;&#x4ECE;&#x5DE6;&#x5230;&#x53F3;&#x7684;&#x987A;&#x5E8F;&#x5BF9;case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x8FDB;&#x884C;&#x6C42;&#x503C;&#x3002;&#x5982;&#x679C;&#x67D0;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x7ED3;&#x679C;&#x4E0E;switch&#x8868;&#x8FBE;&#x5F0F;&#x7ED3;&#x679C;&#x4E00;&#x81F4;&#xFF0C;&#x90A3;&#x4E48;&#x6C42;&#x503C;&#x505C;&#x6B62;&#xFF0C;&#x540E;&#x9762;&#x672A;&#x6C42;&#x503C;&#x7684;case&#x8868;&#x8FBE;&#x5F0F;&#x5C06;&#x88AB;&#x5FFD;&#x7565;&#xFF1B;</li>
-</ol>
-<h2 id="select-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;"><a name="select-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;" class="anchor-navigation-ex-anchor" href="#select-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;"><i class="fa fa-link" aria-hidden="true"></i></a>4.2. select-case&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;</h2>
-<p>Go&#x8BED;&#x8A00;&#x4E2D;&#x7684;select&#x4E3A;&#x6211;&#x4EEC;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x79CD;&#x5728;&#x591A;&#x4E2A;channel&#x95F4;&#x5B9E;&#x73B0;&#x201C;&#x591A;&#x8DEF;&#x590D;&#x7528;&#x201D;&#x7684;&#x673A;&#x5236;&#xFF0C;&#x662F;&#x7F16;&#x5199;Go&#x5E76;&#x53D1;&#x7A0B;&#x5E8F;&#x6700;&#x5E38;&#x7528;&#x7684;&#x5E76;&#x53D1;&#x539F;&#x8BED;&#x4E4B;&#x4E00;</p>
-<ol>
-<li>select&#x6267;&#x884C;&#x5F00;&#x59CB;&#x65F6;&#xFF0C;&#x9996;&#x5148;&#x6240;&#x6709;case&#x8868;&#x8FBE;&#x5F0F;&#x90FD;&#x4F1A;&#x88AB;&#x6309;&#x51FA;&#x73B0;&#x7684;&#x5148;&#x540E;&#x987A;&#x5E8F;&#x6C42;&#x503C;&#x4E00;&#x904D;&#xFF1B;</li>
-<li>&#x5982;&#x679C;&#x9009;&#x62E9;&#x8981;&#x6267;&#x884C;&#x7684;&#x662F;&#x4E00;&#x4E2A;&#x4ECE;channel&#x63A5;&#x6536;&#x6570;&#x636E;&#x7684;case&#xFF0C;&#x90A3;&#x4E48;&#x8BE5;case&#x7B49;&#x53F7;&#x5DE6;&#x8FB9;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x5728;&#x63A5;&#x6536;&#x524D;&#x624D;&#x4F1A;&#x88AB;&#x6C42;&#x503C;&#xFF1B;</li>
-</ol>
-<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/poker-svg" target="_blank">YangXin Xu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-10-04 16:01:10 </span> </footer>
+<hr>
+<p><a href="https://github.com/go-delve/delve" target="_blank">Delve</a> &#x662F;&#x53E6;&#x4E00;&#x4E2A;Go&#x8BED;&#x8A00;&#x8C03;&#x8BD5;&#x5668;&#xFF0C; &#x8BE5;&#x8C03;&#x8BD5;&#x5668;&#x5DE5;&#x7A0B;&#x4E8E;2014&#x5E74;&#x7531;Derek Parker&#x521B;&#x5EFA;&#x3002;</p>
+<ul>
+<li>Delve&#x65E8;&#x5728;&#x4E3A;Go&#x63D0;&#x4F9B;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x3001;&#x529F;&#x80FD;&#x9F50;&#x5168;&#x3001;&#x6613;&#x7528;&#x4F7F;&#x7528;&#x548C;&#x8C03;&#x7528;&#x7684;&#x8C03;&#x8BD5;&#x5DE5;&#x5177;&#x3002;</li>
+<li>&#x5B83;&#x7D27;&#x8DDF;Go&#x8BED;&#x8A00;&#x7248;&#x672C;&#x6F14;&#x8FDB;&#xFF0C;&#x662F;&#x76EE;&#x524D;Go&#x8C03;&#x8BD5;&#x5668;&#x7684;&#x4E8B;&#x5B9E;&#x6807;&#x51C6;&#x3002;</li>
+<li>&#x548C;GDB&#x76F8;&#x6BD4;&#xFF0C;Delve&#x53EF;&#x4EE5;&#x66F4;&#x597D;&#x5730;&#x7406;&#x89E3;Go&#xFF0C;&#x5BF9;&#x5E76;&#x53D1;&#x7A0B;&#x5E8F;&#x6709;&#x7740;&#x5F88;&#x597D;&#x7684;&#x652F;&#x6301;&#xFF0C;&#x652F;&#x6301;&#x8DE8;&#x5E73;&#x53F0;&#x3002;</li>
+<li>&#x524D;&#x540E;&#x7AEF;&#x5206;&#x79BB;&#x7684;&#x8BBE;&#x8BA1;&#x4F7F;&#x5F97;&#x5B83;&#x53EF;&#x4EE5;&#x975E;&#x5E38;&#x5BB9;&#x6613;&#x5730;&#x88AB;&#x96C6;&#x6210;&#x5230;&#x5404;&#x79CD;IDE&#x3001;&#x7F16;&#x8BD1;&#x5668;&#x63D2;&#x4EF6;&#x3001;&#x56FE;&#x5F62;&#x5316;&#x8C03;&#x8BD5;&#x5668;&#x524D;&#x7AEF;&#x4E2D;&#x3002;</li>
+</ul>
+<h1 id="delve&#x8C03;&#x8BD5;&#x57FA;&#x7840;&#x3001;&#x539F;&#x7406;&#x4E0E;&#x67B6;&#x6784;"><a name="delve&#x8C03;&#x8BD5;&#x57FA;&#x7840;&#x3001;&#x539F;&#x7406;&#x4E0E;&#x67B6;&#x6784;" class="anchor-navigation-ex-anchor" href="#delve&#x8C03;&#x8BD5;&#x57FA;&#x7840;&#x3001;&#x539F;&#x7406;&#x4E0E;&#x67B6;&#x6784;"><i class="fa fa-link" aria-hidden="true"></i></a>2. Delve&#x8C03;&#x8BD5;&#x57FA;&#x7840;&#x3001;&#x539F;&#x7406;&#x4E0E;&#x67B6;&#x6784;</h1>
+<h2 id="&#x5B89;&#x88C5;delve"><a name="&#x5B89;&#x88C5;delve" class="anchor-navigation-ex-anchor" href="#&#x5B89;&#x88C5;delve"><i class="fa fa-link" aria-hidden="true"></i></a>2.1. &#x5B89;&#x88C5;Delve</h2>
+<pre class="language-"><code class="lang-powershell"><span class="token variable">$go</span> get github<span class="token punctuation">.</span>com/go-delve/delve/cmd/dlv
+<span class="token variable">$dlv</span> version
+Delve Debugger
+Version: 1<span class="token punctuation">.</span>4<span class="token punctuation">.</span>1
+Build: <span class="token variable">$Id</span>: bda606147ff48b58bde39e20b9e11378eaa4db46
+</code></pre>
+<blockquote>
+<p>&#x5B89;&#x88C5;&#x6210;&#x529F;&#x540E;&#xFF0C;&#x53EF;&#x6267;&#x884C;&#x6587;&#x4EF6;dlv&#x5C06;&#x51FA;&#x73B0;&#x5728;$GOPATH/bin&#x4E0B;</p>
+</blockquote>
+<h2 id="&#x4F7F;&#x7528;delve&#x8C03;&#x8BD5;go&#x4EE3;&#x7801;&#x793A;&#x4F8B;"><a name="&#x4F7F;&#x7528;delve&#x8C03;&#x8BD5;go&#x4EE3;&#x7801;&#x793A;&#x4F8B;" class="anchor-navigation-ex-anchor" href="#&#x4F7F;&#x7528;delve&#x8C03;&#x8BD5;go&#x4EE3;&#x7801;&#x793A;&#x4F8B;"><i class="fa fa-link" aria-hidden="true"></i></a>2.2. &#x4F7F;&#x7528;Delve&#x8C03;&#x8BD5;Go&#x4EE3;&#x7801;&#x793A;&#x4F8B;</h2>
+<h2 id="delve&#x67B6;&#x6784;&#x4E0E;&#x539F;&#x7406;"><a name="delve&#x67B6;&#x6784;&#x4E0E;&#x539F;&#x7406;" class="anchor-navigation-ex-anchor" href="#delve&#x67B6;&#x6784;&#x4E0E;&#x539F;&#x7406;"><i class="fa fa-link" aria-hidden="true"></i></a>2.3. Delve&#x67B6;&#x6784;&#x4E0E;&#x539F;&#x7406;</h2>
+<h1 id="&#x5E76;&#x53D1;&#x3001;coredump&#x6587;&#x4EF6;&#x4E0E;&#x6302;&#x63A5;&#x8FDB;&#x7A0B;&#x8C03;&#x8BD5;"><a name="&#x5E76;&#x53D1;&#x3001;coredump&#x6587;&#x4EF6;&#x4E0E;&#x6302;&#x63A5;&#x8FDB;&#x7A0B;&#x8C03;&#x8BD5;" class="anchor-navigation-ex-anchor" href="#&#x5E76;&#x53D1;&#x3001;coredump&#x6587;&#x4EF6;&#x4E0E;&#x6302;&#x63A5;&#x8FDB;&#x7A0B;&#x8C03;&#x8BD5;"><i class="fa fa-link" aria-hidden="true"></i></a>3. &#x5E76;&#x53D1;&#x3001;Coredump&#x6587;&#x4EF6;&#x4E0E;&#x6302;&#x63A5;&#x8FDB;&#x7A0B;&#x8C03;&#x8BD5;</h1>
+<h2 id="delve&#x8C03;&#x8BD5;&#x5E76;&#x53D1;&#x7A0B;&#x5E8F;"><a name="delve&#x8C03;&#x8BD5;&#x5E76;&#x53D1;&#x7A0B;&#x5E8F;" class="anchor-navigation-ex-anchor" href="#delve&#x8C03;&#x8BD5;&#x5E76;&#x53D1;&#x7A0B;&#x5E8F;"><i class="fa fa-link" aria-hidden="true"></i></a>3.1. Delve&#x8C03;&#x8BD5;&#x5E76;&#x53D1;&#x7A0B;&#x5E8F;</h2>
+<h2 id="&#x4F7F;&#x7528;delve&#x8C03;&#x8BD5;core-dump&#x6587;&#x4EF6;"><a name="&#x4F7F;&#x7528;delve&#x8C03;&#x8BD5;core-dump&#x6587;&#x4EF6;" class="anchor-navigation-ex-anchor" href="#&#x4F7F;&#x7528;delve&#x8C03;&#x8BD5;core-dump&#x6587;&#x4EF6;"><i class="fa fa-link" aria-hidden="true"></i></a>3.2. &#x4F7F;&#x7528;Delve&#x8C03;&#x8BD5;core dump&#x6587;&#x4EF6;</h2>
+<h2 id="&#x4F7F;&#x7528;delve&#x6302;&#x63A5;&#x5230;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x7684;&#x8FDB;&#x7A0B;&#x8FDB;&#x884C;&#x8C03;&#x8BD5;"><a name="&#x4F7F;&#x7528;delve&#x6302;&#x63A5;&#x5230;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x7684;&#x8FDB;&#x7A0B;&#x8FDB;&#x884C;&#x8C03;&#x8BD5;" class="anchor-navigation-ex-anchor" href="#&#x4F7F;&#x7528;delve&#x6302;&#x63A5;&#x5230;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x7684;&#x8FDB;&#x7A0B;&#x8FDB;&#x884C;&#x8C03;&#x8BD5;"><i class="fa fa-link" aria-hidden="true"></i></a>3.3. &#x4F7F;&#x7528;Delve&#x6302;&#x63A5;&#x5230;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x7684;&#x8FDB;&#x7A0B;&#x8FDB;&#x884C;&#x8C03;&#x8BD5;</h2>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/poker-svg" target="_blank">YangXin Xu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2023-10-07 23:11:36 </span> </footer>
                                 
                                 </section>
                             
@@ -872,14 +891,10 @@
 
             
                 
-                <a href="第16条-理解Go语言的包导入.html" class="navigation navigation-prev " aria-label="Previous page: 第16条-理解Go语言的包导入">
+                <a href="第48条-使用expvar输出度量数据，辅助定位性能瓶颈点.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 第48条-使用expvar输出度量数据，辅助定位性能瓶颈点">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
-                
-                <a href="第18条-理解Go语言代码块与作用域.html" class="navigation navigation-next " aria-label="Next page: 第18条-理解Go语言代码块与作用域">
-                    <i class="fa fa-angle-right"></i>
-                </a>
                 
             
         
@@ -888,7 +903,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"第17条-理解Go语言表达式的求值顺序","level":"1.18","depth":1,"next":{"title":"第18条-理解Go语言代码块与作用域","level":"1.19","depth":1,"path":"第18条-理解Go语言代码块与作用域.md","ref":"第18条-理解Go语言代码块与作用域.md","articles":[]},"previous":{"title":"第16条-理解Go语言的包导入","level":"1.17","depth":1,"path":"第16条-理解Go语言的包导入.md","ref":"第16条-理解Go语言的包导入.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","-lunr","-search","search-pro","-sharing","splitter","hide-element","insert-logo","code","livereload"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"livereload":{},"page-footer-ex":{"copyright":"By [YangXin Xu](https://github.com/poker-svg)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"expandable-chapters-small":{},"copy-code-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"style":"background: none; max-height: 120px; min-height: 120px","url":"./images/icon.png"},"expandable-chapters":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Go语言精进之路","gitbook":"*"},"file":{"path":"第17条-理解Go语言表达式的求值顺序.md","mtime":"2023-10-04T08:01:10.174Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-10-07T15:14:45.091Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"第49条-使用Delve调试Go代码","level":"1.50","depth":1,"previous":{"title":"第48条-使用expvar输出度量数据，辅助定位性能瓶颈点","level":"1.49","depth":1,"path":"第48条-使用expvar输出度量数据，辅助定位性能瓶颈点.md","ref":"第48条-使用expvar输出度量数据，辅助定位性能瓶颈点.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","copy-code-button","page-footer-ex","anchor-navigation-ex","expandable-chapters-small","prism","-highlight","-lunr","-search","search-pro","-sharing","splitter","hide-element","insert-logo","code","livereload"],"ignores":["_book","node_modules"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"flow":"typescript"}},"livereload":{},"page-footer-ex":{"copyright":"By [YangXin Xu](https://github.com/poker-svg)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"expandable-chapters-small":{},"copy-code-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"style":"background: none; max-height: 120px; min-height: 120px","url":"./images/icon.png"},"expandable-chapters":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Go语言精进之路","gitbook":"*"},"file":{"path":"第49条-使用Delve调试Go代码.md","mtime":"2023-10-07T15:11:36.620Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-10-07T15:14:45.091Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
